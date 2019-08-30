@@ -37,6 +37,7 @@ import token from '../common/helpers/token';
 import addressExcerpt from '../common/helpers/address-excerpt';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
+import SubscriptionTierCarousel from './tiers/SubscriptionTierCarousel';
 
 /**
  * Wire Fab Screen
@@ -114,13 +115,6 @@ export default class FabScreen extends Component {
     const owner = this.getOwner();
     const txtAmount = this.getTextAmount();
 
-    let carousel = null;
-
-    // show carousel?
-    if (this.props.wire.owner.wire_rewards && this.props.wire.owner.wire_rewards.length) {
-      carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards.tokens} textAlign={'center'} backgroundColor="#F8F8F8" hideIcon={true} />
-    }
-
     // sending?
     let icon;
     if (this.props.wire.sending) {
@@ -128,6 +122,10 @@ export default class FabScreen extends Component {
     } else {
       icon = <Icon size={64} name="ios-flash" style={styles.icon} />
     }
+
+    const amount = this.props.wire.amount.toString();
+
+    const currency = this.props.wire.currency;
 
     return (
       <ScrollView contentContainerStyle={styles.body}>
@@ -137,19 +135,28 @@ export default class FabScreen extends Component {
           name: <Text style={styles.bold}>@{ owner.username }</Text>
         })}</Text>
 
-        <View style={{ flexDirection: 'row', marginTop: 32, marginBottom: 32, }}>
+        <View style={{height: 180, paddingTop: 20}}>
+          <SubscriptionTierCarousel
+            amount={amount}
+            rewards={this.props.wire.owner.wire_rewards.rewards}
+            currency={this.props.wire.currency}
+            onTierSelected={this.props.wire.setTier}
+          />
+        </View>
+
+        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 32, }}>
           <TextInput
             ref="input"
             onChangeText={this.changeInput}
             style={[CommonStyle.field, styles.input]}
             underlineColorAndroid="transparent"
-            value={this.props.wire.amount.toString()}
+            value={amount}
             keyboardType="numeric"
             />
 
           <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <Text style={{ fontSize: 24, fontWeight: '600', fontFamily: 'Roboto', padding: 16, color: '#555' }}>
-              {i18n.t('tokens')}
+              {currency.toUpperCase()}
             </Text>
           </View>
         </View>
@@ -172,8 +179,6 @@ export default class FabScreen extends Component {
           <Text style={styles.rewards}>{i18n.t('wire.nameReward',{name: owner.username})}</Text>
           <Text style={styles.lastmonth}>{i18n.to('wire.youHaveSent', null, {amount: <Text style={styles.bold}>{txtAmount}</Text>})}</Text>
           </View> }
-
-        {carousel}
 
         <Button
           title={(this.props.wire.amount == 0) ? i18n.t('ok') : i18n.t('send')}

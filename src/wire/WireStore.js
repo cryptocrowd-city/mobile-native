@@ -6,13 +6,15 @@ import {
 import { Alert } from 'react-native';
 
 import wireService from './WireService';
+import currency from '../common/helpers/currency';
 
 /**
  * Wire store
  */
 class WireStore {
 
-  @observable amount  = 1;
+  @observable currency = 'tokens';
+  @observable amount = 1;
   @observable sending = false;
   @observable.shallow owner = null;
   @observable recurring = false;
@@ -24,8 +26,19 @@ class WireStore {
   }
 
   @action
+  setCurrency(value) {
+    this.currency = value;
+  }
+
+  @action
   setAmount(val) {
     this.amount = val;
+  }
+
+  @action
+  setTier = (tier) => {
+    this.amount = tier.amount;
+    if (tier.currency) this.currency = tier.currency;
   }
 
   @action
