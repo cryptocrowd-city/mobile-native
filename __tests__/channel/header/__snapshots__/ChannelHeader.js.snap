@@ -221,7 +221,7 @@ exports[`channel header component owner should render correctly 1`] = `
               "height": 40,
               "justifyContent": "flex-end",
               "paddingLeft": 8,
-              "width": 40,
+              "width": 60,
             }
           }
         >
