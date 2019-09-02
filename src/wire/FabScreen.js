@@ -31,7 +31,7 @@ import { CommonStyle } from '../styles/Common';
 import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
 
-import FeaturesService from '../common/services/features.service';
+import featuresService from '../common/services/features.service';
 import number from '../common/helpers/number';
 import token from '../common/helpers/token';
 import addressExcerpt from '../common/helpers/address-excerpt';
@@ -49,8 +49,8 @@ export default class FabScreen extends Component {
 
   componentWillMount() {
 
-    if (!FeaturesService.has('crypto')) {
-      FeaturesService.showAlert();
+    if (!featuresService.has('crypto')) {
+      featuresService.showAlert();
       return this.props.navigation.goBack();
     }
 
@@ -131,7 +131,7 @@ export default class FabScreen extends Component {
       <ScrollView contentContainerStyle={styles.body}>
         {icon}
 
-        <Text style={styles.subtext}>{i18n.to('wire.supportMessage', null, {
+        <Text style={styles.subtext}>{i18n.to('wire.supportMessage', {payments: featuresService.has('wire-multi-currency') ? 'tokens , ETH, BTC or USD' : 'tokens' }, {
           name: <Text style={styles.bold}>@{ owner.username }</Text>
         })}</Text>
 

@@ -562,7 +562,7 @@
     "pleaseTryUnlockingMessage":"Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.",
     "onlySupportersWhoWire":"Only supporters who wire you over {{amount}}/month will see this post.",
     "wireMeOver":"Wire me over {{amount}}/month to see this post.",
-    "supportMessage":"Support &{name}& by sending them tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.",
+    "supportMessage":"Support &{name}& by sending them {{payments}}. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.",
     "repeatMessage":"Repeat this transaction every month",
     "youHaveSent":"You have sent &{amount}& in the last month.",
     "confirmMessage":"You will send {{amount}} to @{{name}}",
