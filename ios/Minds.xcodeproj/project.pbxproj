@@ -514,6 +514,20 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
+		D70A2934231B876E00F5286B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
+			remoteInfo = RNDeviceInfo;
+		};
+		D70A2936231B876E00F5286B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
+			remoteInfo = "RNDeviceInfo-tvOS";
+		};
 		EC20F06421FBA068001431A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1E0815484EB546DA9557C74B /* RNExitApp.xcodeproj */;
@@ -1416,6 +1430,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D70A28FB231B876D00F5286B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D70A2935231B876E00F5286B /* libRNDeviceInfo.a */,
+				D70A2937231B876E00F5286B /* libRNDeviceInfo-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		EC20F06121FBA068001431A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1733,6 +1756,10 @@
 				{
 					ProductGroup = EC8753D122A09BEB003494BA /* Products */;
 					ProjectRef = 3200C0F71F234F28B5891CB2 /* RNCWebView.xcodeproj */;
+				},
+				{
+					ProductGroup = D70A28FB231B876D00F5286B /* Products */;
+					ProjectRef = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
 					ProductGroup = EC20F06121FBA068001431A8 /* Products */;
@@ -2190,6 +2217,20 @@
 			fileType = archive.ar;
 			path = libRCTCameraRoll.a;
 			remoteRef = C3EF7CD02005336C00CFC22C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D70A2935231B876E00F5286B /* libRNDeviceInfo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDeviceInfo.a;
+			remoteRef = D70A2934231B876E00F5286B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D70A2937231B876E00F5286B /* libRNDeviceInfo-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNDeviceInfo-tvOS.a";
+			remoteRef = D70A2936231B876E00F5286B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		EC20F06521FBA068001431A8 /* libRNExitApp.a */ = {
