@@ -50,13 +50,15 @@ export default class SubscriptionTierCarousel extends PureComponent {
     }
 
     for (const { method, currency } of methodsMap) {
-      for (const reward of this.props.rewards[method]) {
-        const amount = parseInt(reward.amount);
-        rewards.push({
-          amount,
-          description: reward.description,
-          currency,
-        });
+      if (this.props.rewards[method]) {
+        for (const reward of this.props.rewards[method]) {
+          const amount = parseInt(reward.amount);
+          rewards.push({
+            amount,
+            description: reward.description,
+            currency,
+          });
+        }
       }
     }
 
