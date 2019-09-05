@@ -1,60 +1,92 @@
+// @flow
 import {
   observable,
   action
 } from 'mobx'
 
-import { Alert } from 'react-native';
-
 import wireService from './WireService';
-import currency from '../common/helpers/currency';
+import i18n from '../common/services/i18n.service';
+
+export type PayloadType =
+  | 'onchain'
+  | 'offchain'
+  | 'usd'
+  | 'eth'
+  | 'erc20'
+  | 'btc';
 
 /**
  * Wire store
  */
 class WireStore {
-
   @observable currency = 'tokens';
   @observable amount = 1;
   @observable sending = false;
   @observable.shallow owner = null;
   @observable recurring = false;
+  @observable showBtc = false;
+  @observable loaded = false;
+  @observable errors = [];
 
-  guid = null;
-
-  setGuid(guid) {
-    this.guid = guid;
+  @action
+  setShowBtc = (value: boolean) => {
+    this.showBtc = value;
   }
 
   @action
-  setCurrency(value) {
+  setCurrency = (value: string) => {
     this.currency = value;
+
+    // only tokens and usd can be recurring
+    if (this.currency !== 'tokens' && this.currency !== 'usd') {
+      this.recurring = false;
+    }
+    this.validate();
   }
 
   @action
-  setAmount(val) {
+  setAmount(val: number) {
     this.amount = val;
+    this.validate();
   }
 
   @action
-  setTier = (tier) => {
+  setTier = (tier: any) => {
     this.amount = tier.amount;
-    if (tier.currency) this.currency = tier.currency;
+    if (tier.currency) {
+      this.setCurrency(tier.currency);
+    } else {
+      this.validate();
+    }
   }
 
   @action
-  setOwner(owner) {
+  setOwner(owner: any) {
     this.owner = owner;
   }
 
-  loadUser(guid) {
-    return wireService.userRewards(guid)
-      .then(owner => {
-        this.setOwner(owner);
-        return owner;
-      });
+  async loadUserRewards(): Promise<any> {
+    const owner = await wireService.userRewards(this.owner.guid);
+    const { merchant, eth_wallet, wire_rewards, sums } = owner;
+
+    if (this.owner) {
+      this.owner.merchant = merchant;
+      this.owner.eth_wallet = eth_wallet;
+      this.owner.wire_rewards = wire_rewards;
+      this.owner.sums = sums;
+    }
+
+    this.setLoaded(true);
+
+    return owner;
   }
 
-  round(number, precision) {
+  @action
+  setLoaded(value: boolean) {
+    this.loaded = value;
+  }
+
+  round(number: number, precision: number): number {
     const factor = Math.pow(10, precision);
     const tempNumber = number * factor;
     const roundedTempNumber = Math.round(tempNumber);
@@ -64,16 +96,32 @@ class WireStore {
   /**
    * Get formated amount
    */
-  formatAmount(amount) {
+  formatAmount(amount: number): string {
     return amount.toLocaleString('en-US') + ' tokens';
   }
 
+  /**
+   * Validate payment
+   */
+  @action
   validate() {
-    //TODO: implement wire validation
+    this.errors = [];
+
+    switch (this.currency) {
+      case 'btc':
+        if (this.owner && !this.owner.btc_address) {
+          this.errors.push(i18n.t('wire.noBtcAddress'));
+        }
+        break;
+    }
+
+    if (this.amount <= 0) {
+      this.errors.push(i18n.t('boosts.errorAmountSholdbePositive'));
+    }
   }
 
   @action
-  setRecurring(recurring) {
+  setRecurring(recurring: boolean) {
     this.recurring = !!recurring;
   }
 
@@ -85,12 +133,18 @@ class WireStore {
   /**
    * Confirm and Send wire
    */
-  async send() {
+  @action
+  async send(): Promise<any> {
     if (this.sending) {
       return;
     }
 
     let done;
+
+    // for btc we only show the btc component
+    if (this.currency === 'btc') {
+      return this.setShowBtc(true);
+    }
 
     try {
       this.sending = true;
@@ -99,7 +153,8 @@ class WireStore {
         amount: this.amount,
         guid: this.guid,
         owner: this.owner,
-        recurring: this.recurring
+        recurring: this.recurring,
+        currency: this.currency
       });
 
       this.stopSending();
@@ -119,10 +174,13 @@ class WireStore {
   @action
   reset() {
     this.amount = 1;
+    this.showBtc = false;
+    this.currency = 'tokens';
     this.sending = false;
     this.owner = null;
     this.recurring = false;
-    this.guid = null;
+    this.loaded = false;
+    this.errors = [];
   }
 
 }

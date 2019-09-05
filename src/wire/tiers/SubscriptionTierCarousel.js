@@ -1,11 +1,8 @@
-import React, {PureComponent, Fragment} from 'react';
-import { Text, Dimensions, View, StyleSheet } from 'react-native';
+import React, { PureComponent } from 'react';
+import { Text, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 import featuresService from '../../common/services/features.service';
-import i18n from '../../common/services/i18n.service';
-import ModalPicker from '../../common/components/ModalPicker';
-import RewardsStateDecreaseView from '../../notifications/notification/view/RewardsStateDecreaseView';
 import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 
@@ -32,6 +29,10 @@ export default class SubscriptionTierCarousel extends PureComponent {
         return amount > 1 ? 'Tokens' : 'Token';
       case 'usd':
         return 'USD';
+      case 'eth':
+        return 'ETH';
+      case 'btc':
+        return 'BTC';
     }
   }
 
@@ -82,7 +83,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
     const amount = row.item.amount || this.props.amount;
     const currency = row.item.currency || this.props.currency;
     return (
-      <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, CS.backgroundLightGreyed, CS.borderRadius5x, CS.shadow, CS.padding2x, CS.border, CS.borderGreyed]}>
+      <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, CS.backgroundLightGreyed, CS.borderRadius5x, CS.padding2x, CS.border, CS.borderGreyed]}>
         <View style={CS.columnAlignCenter}>
           <Text style={[CS.fontXXL, CS.fontMedium, CS.colorDark]}>{amount} {this.getPluralizedCurrency(currency, row.item.amount)} / month</Text>
           <Text numberOfLines={5} style={[CS.fontL, CS.fontHairline, CS.colorDark]}>{row.item.description}</Text>

@@ -1,3 +1,4 @@
+// @flow
 import api from './../common/services/api.service';
 import i18n from '../common/services/i18n.service';
 import BlockchainWireService from '../blockchain/services/BlockchainWireService';
@@ -13,9 +14,9 @@ class WireService {
    * Unlock an activity
    * @param {string} guid
    */
-  unlock(guid) {
+  unlock(guid: string): Promise<any> {
     return api.get(`api/v1/wire/threshold/${guid}`)
-      .then((response) => {
+      .then((response: any): any => {
         if (response.hasOwnProperty('activity')) {
           return response.activity;
         } else if (response.hasOwnProperty('entity')) {
@@ -29,7 +30,7 @@ class WireService {
    * Get overview
    * @param {string} guid
    */
-  overview(guid) {
+  overview(guid: string): Promise<any> {
     return api.get(`api/v1/wire/sums/overview/${guid}?merchant=1`);
   }
 
@@ -37,7 +38,7 @@ class WireService {
    * Get user rewards
    * @param {string} guid
    */
-  userRewards(guid) {
+  userRewards(guid: string): Promise<any>{
     return api.get(`api/v1/wire/rewards/${guid}/entity`);
   }
 
@@ -45,14 +46,14 @@ class WireService {
    * Get rewards
    * @param {string} guid
    */
-  rewards(guid) {
+  rewards(guid: string): Promise<any>{
     return api.get(`api/v1/wire/rewards/${guid}`)
-      .then(rewards => {
+      .then((rewards: any): any=> {
         rewards = (rewards.wire_rewards) ? rewards.wire_rewards.rewards : null
         if (rewards) {
           // map types
           for (let type in rewards) {
-            rewards[type] = rewards[type].map((reward) => {
+            rewards[type] = rewards[type].map((reward): any => {
               reward.type = type;
               return reward;
             });
@@ -66,7 +67,7 @@ class WireService {
    * Send wire
    * @param {object} opts
    */
-  async send(opts) {
+  async send(opts): Promise<any> {
     const payload = await this.getTransactionPayloads(opts);
 
     if (!payload) {
@@ -78,7 +79,7 @@ class WireService {
       method: 'tokens',
       amount: opts.amount,
       recurring: !!opts.recurring
-    }).then(result => {
+    }).then((result: any): any => {
       result.payload = payload;
       return result;
     });
@@ -88,8 +89,12 @@ class WireService {
    * Get transaction payloads
    * @param {object} opts
    */
-  async getTransactionPayloads(opts) {
-    const payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
+  async getTransactionPayloads(opts: Object): any {
+
+    if (opts.currency == 'tokens') {
+      const payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
+    }
+
 
     if (!payload || payload.cancelled) {
       return;

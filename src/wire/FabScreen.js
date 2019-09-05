@@ -1,5 +1,5 @@
 import React, {
-  Component
+  Component, Fragment
 } from 'react';
 
 import {
@@ -20,13 +20,11 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { Button } from 'react-native-elements';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import colors from '../styles/Colors';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 
 import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
@@ -38,6 +36,11 @@ import addressExcerpt from '../common/helpers/address-excerpt';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import SubscriptionTierCarousel from './tiers/SubscriptionTierCarousel';
+import PaymentMethodSelector from './methods/PaymentMethodSelector';
+import BtcPayment from './methods/BtcPayment';
+import PaymentMethodIcon from './methods/PaymentMethodIcon';
+import Button from '../common/components/Button';
+import numberFromat from '../common/helpers/number';
 
 /**
  * Wire Fab Screen
@@ -49,22 +52,38 @@ export default class FabScreen extends Component {
 
   componentWillMount() {
 
+    this.paymethodRef = React.createRef();
+
     if (!featuresService.has('crypto')) {
       featuresService.showAlert();
       return this.props.navigation.goBack();
     }
 
-    const owner = this.getOwner();
-    this.props.wire.setGuid(owner.guid);
-
-    this.props.wire.loadUser(owner.guid)
-      .then(() => this.setDefaults());
+    this.loadUserAndSetDefaults();
 
     this.props.wallet.refresh();
-    }
+  }
 
   componentWillUnmount() {
     this.props.wire.setOwner(null);
+  }
+
+  async loadUserAndSetDefaults() {
+    const params = this.props.navigation.state.params;
+
+    // if there is no default data we reset the store
+    if (!params || !params.default) {
+      this.props.wire.reset();
+    }
+
+    const owner = this.getOwner();
+
+
+    this.props.wire.setOwner(owner);
+
+    await this.props.wire.loadUserRewards();
+
+    this.setDefaults();
   }
 
   setDefaults() {
@@ -94,74 +113,88 @@ export default class FabScreen extends Component {
    */
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <View style={styles.header}>
-        <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
+      <View style={[CS.backgroundLight, CS.rowJustifyEnd]}>
+        <Icon size={40} name="ios-close" onPress={() => navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x]}/>
       </View>
     ),
     transitionConfig: {
       isModal: true
     }
-  })
+  });
 
-  /**
-   * Render screen
-   */
-  render() {
-    if (!this.props.wire.owner) {
-      return <CenteredLoading/>
+  selectMethod = () => {
+    if (this.paymethodRef.current) {
+      this.paymethodRef.current.show();
+    }
+  }
+
+  onCancelBtc = () => {
+    this.props.wire.setShowBtc(false);
+  }
+
+  getBody() {
+    if (this.props.wire.showBtc) {
+      return (
+        <BtcPayment amount={this.props.wire.amount} address={this.props.wire.owner.btc_address} onCancel={this.onCancelBtc}/>
+      )
     }
 
-    // get the owner passed as a parameter in navigation
     const owner = this.getOwner();
     const txtAmount = this.getTextAmount();
-
-    // sending?
-    let icon;
-    if (this.props.wire.sending) {
-      icon = <ActivityIndicator size={'large'} color={selectedcolor}/>
-    } else {
-      icon = <Icon size={64} name="ios-flash" style={styles.icon} />
-    }
-
     const amount = this.props.wire.amount.toString();
+    const buttonDisabled = this.props.wire.sending || this.props.wire.errors.length > 0;
 
-    const currency = this.props.wire.currency;
-
+    const currencySelector = (
+      <View style={CS.alignCenter}>
+        <PaymentMethodIcon value={this.props.wire.currency} size={30} style={CS.colorPrimary} onPress={this.selectMethod}/>
+        <Text style={[CS.fontL, CS.colorPrimary]} onPress={this.selectMethod}>
+          {this.props.wire.currency.toUpperCase()}
+        </Text>
+      </View>
+    )
     return (
-      <ScrollView contentContainerStyle={styles.body}>
-        {icon}
-
-        <Text style={styles.subtext}>{i18n.to('wire.supportMessage', {payments: featuresService.has('wire-multi-currency') ? 'tokens , ETH, BTC or USD' : 'tokens' }, {
-          name: <Text style={styles.bold}>@{ owner.username }</Text>
+      <Fragment>
+        <Text style={[CS.fontM, CS.textCenter]}>{i18n.to('wire.supportMessage', {payments: featuresService.has('wire-multi-currency') ? 'tokens , ETH, BTC or USD' : 'tokens' }, {
+          name: <Text style={CS.bold}>@{ owner.username }</Text>
         })}</Text>
 
-        <View style={{height: 180, paddingTop: 20}}>
-          <SubscriptionTierCarousel
+        <View style={[styles.carouselContainer, CS.paddingTop2x]}>
+          {this.props.wire.owner.wire_rewards.rewards && <SubscriptionTierCarousel
             amount={amount}
             rewards={this.props.wire.owner.wire_rewards.rewards}
             currency={this.props.wire.currency}
             onTierSelected={this.props.wire.setTier}
-          />
+          />}
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: 15, marginBottom: 32, }}>
+        <View>
+          {this.props.wire.errors.map(e => <Text style={[CS.colorDanger, CS.fontM, CS.textCenter]}>{e}</Text>)}
+        </View>
+        {this.props.wire.currency === 'btc' && <Text style={[CS.fontM, CS.textCenter]}>You can send BTC to this user, however it will not recur.</Text>}
+
+
+        <View style={[CS.rowJustifySpaceEvenly, CS.marginBottom3x, CS.marginTop3x, CS.alignJustifyCenter, CS.alignCenter]}>
+
+          <View style={[CS.flexContainer, CS.centered]}>
+            <PaymentMethodSelector
+              button={currencySelector}
+              ref={this.paymethodRef}
+              value={this.props.wire.currency}
+              onSelect={this.props.wire.setCurrency}
+            />
+          </View>
           <TextInput
+
             ref="input"
             onChangeText={this.changeInput}
-            style={[CommonStyle.field, styles.input]}
+            style={[CS.field, CS.fontXXXL, CS.backgroundLightGreyed, CS.padding3x, CS.textRight, CS.flexContainer, CS.borderRadius5x]}
             underlineColorAndroid="transparent"
             value={amount}
             keyboardType="numeric"
-            />
-
-          <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-            <Text style={{ fontSize: 24, fontWeight: '600', fontFamily: 'Roboto', padding: 16, color: '#555' }}>
-              {currency.toUpperCase()}
-            </Text>
-          </View>
+          />
         </View>
 
-        <View style={{ width: '100%', alignSelf: 'flex-start', }}>
+        <View>
           <CheckBox
             title={i18n.t('wire.repeatMessage')}
             checked={this.props.wire.recurring}
@@ -171,7 +204,7 @@ export default class FabScreen extends Component {
             checkedColor={ colors.primary }
             uncheckedIcon="circle-o"
             uncheckedColor={ colors.greyed }
-            containerStyle={{ margin: 0 }}
+            containerStyle={[CS.backgroundLight]}
           />
         </View>
 
@@ -181,44 +214,40 @@ export default class FabScreen extends Component {
           </View> }
 
         <Button
-          title={(this.props.wire.amount == 0) ? i18n.t('ok') : i18n.t('send')}
-          buttonStyle={styles.send}
-          disabled={this.props.wire.sending}
+          text={(this.props.wire.amount == 0) ? i18n.t('ok').toUpperCase() : i18n.t('send').toUpperCase()}
+          disabled={buttonDisabled}
           onPress={this.confirmSend}
-          backgroundColor={selectedcolor}
+          textStyle={[CS.fontL, CS.padding]}
+          inverted
         />
-
-        {!!this.props.wallet.addresses && false && <View style={styles.addressViewWrapper}>
-          {this.props.wallet.addresses.map((address, i) => (
-            <View style={styles.addressView} key={address.address}>
-              <View style={styles.addressMetaView}>
-                <Text style={styles.addressLabel}>{i18n.t('wire.addressLabel', {label:address.label})}</Text>
-                <Text style={styles.addressAddress} ellipsizeMode='tail' numberOfLines={1}>{addressExcerpt(address.address)}</Text>
-              </View>
-
-              <View style={styles.addressBalanceView}>
-                <Text style={styles.addressBalanceText}>{number(token(address.balance, 18), 3)}</Text>
-              </View>
-            </View>
-          ))}
-        </View>}
-      </ScrollView>
-    );
+      </Fragment>
+    )
   }
 
-  validate() {
-    try {
-      this.props.wire.validate();
-      return true;
-    } catch(e) {
-      Alert.alert(
-        'Atention',
-        (e && e.message) || 'Unknown internal error',
-        [{ text: 'OK' }],
-        { cancelable: false }
-      )
-      return false;
+  /**
+   * Render screen
+   */
+  render() {
+    if (!this.props.wire.loaded) {
+      return <CenteredLoading/>
     }
+
+    // sending?
+    let icon;
+    if (this.props.wire.sending) {
+      icon = <ActivityIndicator size={'large'} color={colors.primary}/>
+    } else {
+      icon = <Icon size={64} name="ios-flash" style={CS.colorPrimary} />
+    }
+
+    const body = this.getBody();
+
+    return (
+      <ScrollView contentContainerStyle={[CS.backgroundLight, CS.paddingLeft2x, CS.paddingRight2x, CS.flexContainer, CS.alignCenter]}>
+        {icon}
+        {body}
+      </ScrollView>
+    );
   }
 
   confirmSend = () => {
@@ -230,7 +259,9 @@ export default class FabScreen extends Component {
       return;
     }
 
-    if (!this.validate()) return;
+    if (this.props.wire.currency === 'btc') {
+      return this.send();
+    }
 
     Alert.alert(
       i18n.t('confirmMessage'),
@@ -287,117 +318,7 @@ const selectedcolor = '#4690D6';
 const color = '#444'
 
 const styles = {
-  body: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    alignItems: 'center',
-    backgroundColor: '#F8F8F8',
-    opacity: 0.97,
-    flex:1
-  },
-  send: {
-    marginTop: 20
-  },
-  input: {
-    fontSize: 50,
-    paddingRight: 16,
-    backgroundColor: '#eee',
-    borderRadius: 3,
-    color: '#666',
-    flex: 1,
-    textAlign: 'right',
-  },
-  bold: {
-    fontWeight: 'bold'
-  },
-  subtext: {
-    fontWeight: '200',
-    textAlign: 'left',
-    fontSize: 12,
-    color: '#666666',
-    marginTop: 12,
-  },
-  icon: {
-    color: '#4690D6'
-  },
-  header: {
-    backgroundColor: '#F8F8F8',
-  },
-  iconclose: {
-    alignSelf: 'flex-end',
-    padding: 10
-  },
-  rewards: {
-    fontSize: 18,
-    fontWeight: '300',
-    marginTop: 32
-  },
-  lastmonth: {
-    color: '#666',
-    fontSize: 13,
-    fontWeight: '200',
-    marginTop: 5,
-    marginBottom: 10
-  },
-  // options styles
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 12,
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  topbar: {
-    flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  buttontext: {
-    paddingTop: 5,
-    fontSize: 16
-  },
-  button: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: 3,
-  },
-  selected: {
-    color: selectedcolor
-  },
-  carousel: {
-    paddingTop: 20
-  },
-
-  addressViewWrapper: {
-    marginTop: 30,
-    borderWidth: 1,
-    borderColor: colors.greyed,
-    borderRadius: 4,
-    width: '100%',
-  },
-  addressView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    margin: 10
-  },
-  addressMetaView: {
-    flexGrow: 1,
-  },
-  addressLabel: {
-    fontWeight: '700',
-  },
-  addressAddress: {
-    color: colors.darkGreyed,
-    fontSize: 10
-  },
-  addressBalanceView: {
-    paddingLeft: 10,
-  },
-  addressBalanceText: {
-    color: 'green',
-    fontSize: 18,
-    fontWeight: '700'
+  carouselContainer: {
+    height: 180
   }
 }

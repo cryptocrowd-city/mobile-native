@@ -22,26 +22,26 @@ export const CommonStyle = StyleSheet.create({
     alignContent: 'center',
   },
   centered: {
-    alignItems: 'center',
-    justifyContent: 'center',
     alignContent: 'center',
-    alignSelf: 'center'
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   columnAlignCenter: {
-    flexDirection: 'column',
     alignItems: 'center',
+    flexDirection: 'column',
   },
   columnAlignStart: {
-    flexDirection: 'column',
     alignItems: 'flex-start',
+    flexDirection: 'column',
   },
   columnAlignEnd: {
-    flexDirection: 'column',
     alignItems: 'flex-end',
+    flexDirection: 'column',
   },
   columnStretch: {
-    flexDirection: 'column',
     alignItems: 'stretch',
+    flexDirection: 'column',
   },
   rowJustifyEnd: {
     flexDirection: 'row',
@@ -74,12 +74,11 @@ export const CommonStyle = StyleSheet.create({
   fillFlex: {
     flexGrow: 1,
   },
-  // color
   colorWhite: {
-    color: 'white'
+    color: '#FFFFFF'
   },
   colorBlack: {
-    color: 'black'
+    color: '#000000'
   },
   colorLight: {
     color: colors.light
@@ -157,6 +156,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderLight: {
     borderColor: colors.light
+  },
+  borderLightGreyed: {
+    borderColor: colors.lightGreyed
   },
   borderSecondary: {
     borderColor: colors.secondary
