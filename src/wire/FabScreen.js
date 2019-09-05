@@ -310,6 +310,11 @@ export default class FabScreen extends Component {
   }
 
   changeInput = (val) => {
+    if (val !== '') {
+      val = val.replace(',','.');
+      val = val.replace('..','.');
+      val = val.replace(/(?<=\w)\.(?=\w+\.)|\G\w+\K\./g, '');
+    }
     this.props.wire.setAmount(val);
   }
 }
