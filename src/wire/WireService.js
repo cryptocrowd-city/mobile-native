@@ -76,7 +76,7 @@ class WireService {
 
     return await api.post(`api/v1/wire/${opts.guid}`, {
       payload,
-      method: 'tokens',
+      method: payload.method,
       amount: opts.amount,
       recurring: !!opts.recurring
     }).then((result: any): any => {
@@ -91,8 +91,10 @@ class WireService {
    */
   async getTransactionPayloads(opts: Object): any {
 
-    if (opts.currency == 'tokens') {
-      const payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
+    let payload
+
+    if (opts.currency == 'tokens' || opts.currency == 'eth') {
+      payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: opts.currency === 'tokens', buyable: opts.currency === 'tokens', confirmTokenExchange: opts.amount, currency: opts.currency });
     }
 
 
@@ -132,6 +134,18 @@ class WireService {
           address: payload.wallet.address,
           receiver: opts.owner.eth_wallet,
           txHash: await BlockchainWireService.create(opts.owner.eth_wallet, opts.amount)
+        };
+
+      case 'eth':
+        if (!opts.owner.eth_wallet) {
+          throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
+        }
+
+        return {
+          method: payload.type,
+          address: payload.wallet.address,
+          receiver: opts.owner.eth_wallet,
+          txHash: await BlockchainWireService.createEth(opts.owner.eth_wallet, opts.amount)
         };
     }
 

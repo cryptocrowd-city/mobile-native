@@ -557,7 +557,7 @@
   },
   "wire":{
     "amountMonth":"{{amount}}/month",
-    "noBtcAddress":"This channel has not configured their Bitcoin address yet",
+    "noAddress":"This channel has not configured their {{type}} address yet",
     "amountMonthDescription":"THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {{amount}}/MONTH TO @{{name}}",
     "weHaveReceivedYourTransaction":"We've received your transaction",
     "pleaseTryUnlockingMessage":"Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.",

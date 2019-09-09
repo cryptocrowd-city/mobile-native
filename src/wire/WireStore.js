@@ -97,7 +97,7 @@ class WireStore {
    * Get formated amount
    */
   formatAmount(amount: number): string {
-    return amount.toLocaleString('en-US') + ' tokens';
+    return amount.toLocaleString('en-US') + ' ' + this.currency;
   }
 
   /**
@@ -110,7 +110,12 @@ class WireStore {
     switch (this.currency) {
       case 'btc':
         if (this.owner && !this.owner.btc_address) {
-          this.errors.push(i18n.t('wire.noBtcAddress'));
+          this.errors.push(i18n.t('wire.noAddress', {type: 'Bitcoin'}));
+        }
+        break;
+      case 'eth':
+        if (this.owner && !this.owner.eth_wallet) {
+          this.errors.push(i18n.t('wire.noAddress', {type: 'ETH'}));
         }
         break;
     }

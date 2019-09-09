@@ -66,8 +66,21 @@ export default class BlockchainWalletModalScreen extends Component {
         return;
       }
 
+      let type;
+
+      switch(opts.currency) {
+        case 'tokens':
+          type = 'onchain';
+          break;
+        case 'eth':
+          type = 'eth';
+          break;
+        default:
+          throw new Error('BlockchainWalletModal: currency not supported '+ opts.currency);
+      }
+
       payload = {
-        type: 'onchain',
+        type,
         wallet: toJS(wallet)
       }
     }
