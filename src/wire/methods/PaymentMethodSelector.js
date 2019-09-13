@@ -1,9 +1,7 @@
 // @flow
 import * as React from 'react'
 
-import { Text, StyleSheet } from 'react-native';
-
-import Menu, { MenuItem } from 'react-native-material-menu';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import featuresService from '../../common/services/features.service';
 import testID from '../../common/helpers/testID';
@@ -72,18 +70,16 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
   render(): React.Node {
 
     return (
-      <Menu ref={this.menuRef} button={this.props.button}>
-        {this.methods.map((method: any, i: number): MenuItem  => (
-          <MenuItem
-            key={i}
-            onPress={method.handle}
-            textStyle={CS.fontXL}
-            {...testID(`PAYMENT METHOD ${method.label}`)}
-          >
-            <Text style={(method.label.toLowerCase() === this.props.value) ? styles.selected : null}><PaymentMethodIcon value={method.label} size={15} /> {method.label}</Text>
-          </MenuItem>
+      <View style={[CS.rowJustifySpaceEvenly, CS.fullWidth]}>
+        {this.methods.map((method: any, i: number): React.Node  => (
+          <TouchableOpacity style={[CS.alignCenter, CS.padding ]} {...testID(`PAYMENT METHOD ${method.label}`)} key={i} onPress={method.handle}>
+            <PaymentMethodIcon value={method.label} size={30} style={(method.label.toLowerCase() === this.props.value) ? styles.selected : null} />
+            <Text style={[CS.fontL, (method.label.toLowerCase() === this.props.value) ? styles.selected : null]} >
+              {method.label.toUpperCase()}
+            </Text>
+          </TouchableOpacity>
         ))}
-      </Menu>
+      </View>
     );
   }
 }
