@@ -52,8 +52,8 @@ export default class ActivityScreen extends Component {
       this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity));
 
       // change metadata source
-      if (params.entity._list && params.entity._list.metadataServie) {
-        params.entity._list.metadataServie.pushSource('single');
+      if (params.entity._list && params.entity._list.metadataService) {
+        params.entity._list.metadataService.pushSource('single');
       }
     } else {
       const urn = 'urn:entity:' + params.guid;
@@ -72,8 +72,8 @@ export default class ActivityScreen extends Component {
   componentWillUnmount() {
     const entity = this.entityStore.entity;
 
-    if (entity._list && entity._list.metadataServie) {
-      entity._list.metadataServie.popSource();
+    if (entity._list && entity._list.metadataService) {
+      entity._list.metadataService.popSource();
     }
   }
 
