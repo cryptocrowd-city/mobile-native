@@ -233,7 +233,7 @@ export default class DiscoveryScreen extends Component {
         removeClippedSubviews={false}
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
-        onViewableItemsChanged={this.onViewableItemsChanged}
+        //onViewableItemsChanged={this.onViewableItemsChanged}
         viewabilityConfig={this.cols == 3 ? undefined : this.viewOptsFeed}
       />
     );

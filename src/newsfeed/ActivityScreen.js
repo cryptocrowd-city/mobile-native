@@ -59,6 +59,11 @@ export default class ActivityScreen extends Component {
       const urn = 'urn:entity:' + params.guid;
       this.entityStore.loadEntity(urn);
     }
+
+    params.entity._list.viewed.addViewed(
+      params.entity,
+      params.entity._list.metadataService
+    );
   }
 
   /**

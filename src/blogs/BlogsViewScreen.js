@@ -107,6 +107,12 @@ export default class BlogsViewScreen extends Component {
 
         await this.props.blogsView.loadBlog(guid);
       }
+
+      this.props.blogsView.blog._list.viewed.addViewed(
+        this.props.blogsView.blog,
+        this.props.blogsView.blog._list.metadataService
+      );
+
     } catch (error) {
       logService.exception(error);
       Alert.alert(
