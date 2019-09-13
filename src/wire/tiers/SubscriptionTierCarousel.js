@@ -42,7 +42,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
    */
   getRewards() {
     const rewards = [{
-      amount:0,
+      amount: 0,
       description: 'Custom',
     }];
     const methodsMap = [{ method: 'tokens', currency: 'tokens' }];
@@ -83,10 +83,15 @@ export default class SubscriptionTierCarousel extends PureComponent {
   _renderItem = (row) => {
     const amount = row.item.amount || this.props.amount;
     const currency = row.item.currency || this.props.currency;
+    const recurring = this.props.recurring;
+    const amountText = amount + ' ' + this.getPluralizedCurrency(currency, row.item.amount);
+
+    const text = recurring ? i18n.t('wire.amountMonth', {amount: amountText}) : amountText;
+
     return (
       <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, CS.backgroundLightGreyed, CS.borderRadius5x, CS.padding2x, CS.border, CS.borderGreyed]}>
         <View style={CS.columnAlignCenter}>
-          <Text style={[CS.fontXXL, CS.fontMedium, CS.colorDark]}>{i18n.t('wire.amountMonth',{amount: amount + ' ' + this.getPluralizedCurrency(currency, row.item.amount)})}</Text>
+          <Text style={[CS.fontXXL, CS.fontMedium, CS.colorDark]}>{text}</Text>
           <Text numberOfLines={5} style={[CS.fontL, CS.fontHairline, CS.colorDark]}>{row.item.description}</Text>
         </View>
       </View>

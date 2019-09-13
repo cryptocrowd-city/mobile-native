@@ -185,6 +185,7 @@ export default class FabScreen extends Component {
             amount={amount}
             rewards={this.props.wire.owner.wire_rewards.rewards}
             currency={this.props.wire.currency}
+            recurring={this.props.wire.recurring}
             onTierSelected={this.props.wire.setTier}
           />}
         </View>
