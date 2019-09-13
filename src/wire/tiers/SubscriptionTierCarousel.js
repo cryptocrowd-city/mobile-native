@@ -43,7 +43,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
   getRewards() {
     const rewards = [{
       amount: 0,
-      description: 'Custom',
+      description: i18n.t('wire.customDonation'),
     }];
     const methodsMap = [{ method: 'tokens', currency: 'tokens' }];
 

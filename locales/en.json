@@ -557,6 +557,7 @@
     }
   },
   "wire":{
+    "customDonation":"Custom Donation",
     "selectCredit":"Select a credit card.",
     "willNotRecur":"You can send {{currency}} to this user, however it will not recur.",
     "amountMonth":"{{amount}} / month",
