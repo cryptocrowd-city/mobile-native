@@ -9339,6 +9339,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tipsi-stripe@8.0.0-beta.6:
+  version "8.0.0-beta.6"
+  resolved "https://registry.yarnpkg.com/tipsi-stripe/-/tipsi-stripe-8.0.0-beta.6.tgz#801c9e4c4d8dfab4a57c6f59ec507da478be2973"
+  integrity sha512-+/XErvJdiQofIO+dMN1AC9mxQiwYKvCekRHCFSCftTHS6Skn3Lx131GDhNqf0tM+IMAaAJhwq1HNluREm1rcpQ==
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
