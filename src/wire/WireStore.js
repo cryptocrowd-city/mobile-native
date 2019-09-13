@@ -7,14 +7,6 @@ import {
 import wireService from './WireService';
 import i18n from '../common/services/i18n.service';
 
-export type PayloadType =
-  | 'onchain'
-  | 'offchain'
-  | 'usd'
-  | 'eth'
-  | 'erc20'
-  | 'btc';
-
 /**
  * Wire store
  */
@@ -25,12 +17,27 @@ class WireStore {
   @observable.shallow owner = null;
   @observable recurring = false;
   @observable showBtc = false;
+  @observable showCardselector = false;
   @observable loaded = false;
   @observable errors = [];
+
+  @observable paymentMethodId: ?string = null;
+
+  guid: string;
 
   @action
   setShowBtc = (value: boolean) => {
     this.showBtc = value;
+  }
+
+  @action
+  setShowCardselector = (value: boolean) => {
+    this.paymentMethodId = null;
+    this.showCardselector = value;
+  }
+
+  setPaymentMethodId(value: string) {
+    this.paymentMethodId = value;
   }
 
   @action
@@ -63,6 +70,7 @@ class WireStore {
   @action
   setOwner(owner: any) {
     this.owner = owner;
+    this.guid = owner.guid || owner.entity_guid;
   }
 
   async loadUserRewards(): Promise<any> {
@@ -159,7 +167,8 @@ class WireStore {
         guid: this.guid,
         owner: this.owner,
         recurring: this.recurring,
-        currency: this.currency
+        currency: this.currency,
+        paymentMethodId: this.paymentMethodId
       });
 
       this.stopSending();
@@ -178,8 +187,10 @@ class WireStore {
 
   @action
   reset() {
+    this.paymentMethodId = null,
     this.amount = 1;
     this.showBtc = false;
+    this.showCardselector = false;
     this.currency = 'tokens';
     this.sending = false;
     this.owner = null;

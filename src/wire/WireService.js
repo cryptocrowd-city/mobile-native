@@ -67,7 +67,7 @@ class WireService {
    * Send wire
    * @param {object} opts
    */
-  async send(opts): Promise<any> {
+  async send(opts: Object): Promise<any> {
     const payload = await this.getTransactionPayloads(opts);
 
     if (!payload) {
@@ -91,12 +91,26 @@ class WireService {
    */
   async getTransactionPayloads(opts: Object): any {
 
-    let payload
+    let payload: Object;
 
-    if (opts.currency == 'tokens' || opts.currency == 'eth') {
-      payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: opts.currency === 'tokens', buyable: opts.currency === 'tokens', confirmTokenExchange: opts.amount, currency: opts.currency });
+    switch (opts.currency) {
+      case 'tokens':
+      case 'eth':
+        payload = await BlockchainWalletService.selectCurrent(
+          i18n.t('wire.selectWalletMessage'),
+          {
+            signable: true,
+            offchain: opts.currency === 'tokens',
+            buyable: opts.currency === 'tokens',
+            confirmTokenExchange: opts.amount,
+            currency: opts.currency
+          }
+        );
+      break;
+      case 'usd':
+        payload = {type: 'usd'};
+      break;
     }
-
 
     if (!payload || payload.cancelled) {
       return;
@@ -147,6 +161,12 @@ class WireService {
           receiver: opts.owner.eth_wallet,
           txHash: await BlockchainWireService.createEth(opts.owner.eth_wallet, opts.amount)
         };
+
+      case 'usd':
+        return {
+          method: payload.type,
+          paymentMethodId: opts.paymentMethodId
+        }
     }
 
     throw new Error('Unknown type');
