@@ -47,7 +47,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
     }];
     const methodsMap = [{ method: 'tokens', currency: 'tokens' }];
 
-    if (featuresService.has('wire-multi-currency') || true) {
+    if (featuresService.has('wire-multi-currency')) {
       methodsMap.push({ method: 'money', currency: 'usd' });
     }
 
