@@ -26,7 +26,6 @@ import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
 
-import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
 
 import featuresService from '../common/services/features.service';
@@ -41,6 +40,7 @@ import BtcPayment from './methods/BtcPayment';
 import PaymentMethodIcon from './methods/PaymentMethodIcon';
 import Button from '../common/components/Button';
 import numberFromat from '../common/helpers/number';
+import StripeCardSelector from './methods/StripeCardSelector';
 
 /**
  * Wire Fab Screen
@@ -112,11 +112,7 @@ export default class FabScreen extends Component {
    * Modal navigation
    */
   static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={[CS.backgroundLight, CS.rowJustifyEnd]}>
-        <Icon size={40} name="ios-close" onPress={() => navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x]}/>
-      </View>
-    ),
+    header: null,
     transitionConfig: {
       isModal: true
     }
@@ -132,33 +128,59 @@ export default class FabScreen extends Component {
     this.props.wire.setShowBtc(false);
   }
 
+  onSelectCard = (card) => {
+    this.props.wire.setPaymentMethodId(card.id);
+  }
+
+  goBackUSD = () => {
+    this.props.wire.setShowCardselector(false)
+  }
+
   getBody() {
+    const buttonDisabled = this.props.wire.sending || this.props.wire.errors.length > 0;
+
     if (this.props.wire.showBtc) {
       return (
         <BtcPayment amount={this.props.wire.amount} address={this.props.wire.owner.btc_address} onCancel={this.onCancelBtc}/>
       )
     }
 
+    if (this.props.wire.showCardselector) {
+      return (
+        <View style={CS.columnAlignCenter}>
+          <Text style={[CS.marginTop2x, CS.fontHairline, CS.fontXL, CS.marginBottom2x]}>{i18n.t('wire.selectCredit')}</Text>
+          <StripeCardSelector onCardSelected={this.onSelectCard}/>
+
+          <View style={[CS.rowJustifyCenter, CS.paddingTop3x, CS.marginTop4x]}>
+            <Button
+              text={i18n.t('goback').toUpperCase()}
+              disabled={buttonDisabled || !this.props.wire.paymentMethodId}
+              onPress={this.goBackUSD}
+              textStyle={[CS.fontL, CS.padding]}
+            />
+            <Button
+              text={i18n.t('send').toUpperCase()}
+              disabled={buttonDisabled || !this.props.wire.paymentMethodId}
+              onPress={this.confirmSend}
+              textStyle={[CS.fontL, CS.padding]}
+              inverted
+            />
+          </View>
+        </View>
+      )
+    }
+
     const owner = this.getOwner();
     const txtAmount = this.getTextAmount();
     const amount = this.props.wire.amount.toString();
-    const buttonDisabled = this.props.wire.sending || this.props.wire.errors.length > 0;
 
-    const currencySelector = (
-      <View style={CS.alignCenter}>
-        <PaymentMethodIcon value={this.props.wire.currency} size={30} style={CS.colorPrimary} onPress={this.selectMethod}/>
-        <Text style={[CS.fontL, CS.colorPrimary]} onPress={this.selectMethod}>
-          {this.props.wire.currency.toUpperCase()}
-        </Text>
-      </View>
-    )
     return (
       <Fragment>
-        <Text style={[CS.fontM, CS.textCenter]}>{i18n.to('wire.supportMessage', {payments: featuresService.has('wire-multi-currency') ? 'tokens , ETH, BTC or USD' : 'tokens' }, {
+        <Text style={[CS.fontL, CS.textCenter, CS.marginTop2x]}>{i18n.to('wire.supportMessage', {payments: featuresService.has('wire-multi-currency') ? 'tokens , ETH, BTC or USD' : 'tokens' }, {
           name: <Text style={CS.bold}>@{ owner.username }</Text>
         })}</Text>
 
-        <View style={[styles.carouselContainer, CS.paddingTop2x]}>
+        <View style={[CS.paddingBottom, CS.paddingTop3x]}>
           {this.props.wire.owner.wire_rewards.rewards && <SubscriptionTierCarousel
             amount={amount}
             rewards={this.props.wire.owner.wire_rewards.rewards}
@@ -167,22 +189,18 @@ export default class FabScreen extends Component {
           />}
         </View>
 
-        <View>
+        <View style={CS.marginTop3x, CS.marginBottom2x}>
           {this.props.wire.errors.map(e => <Text style={[CS.colorDanger, CS.fontM, CS.textCenter]}>{e}</Text>)}
         </View>
-        {this.props.wire.currency === 'btc' && <Text style={[CS.fontM, CS.textCenter]}>You can send BTC to this user, however it will not recur.</Text>}
 
+        <PaymentMethodSelector
+          ref={this.paymethodRef}
+          value={this.props.wire.currency}
+          onSelect={this.props.wire.setCurrency}
+        />
 
         <View style={[CS.rowJustifySpaceEvenly, CS.marginBottom3x, CS.marginTop3x, CS.alignJustifyCenter, CS.alignCenter]}>
 
-          <View style={[CS.flexContainer, CS.centered]}>
-            <PaymentMethodSelector
-              button={currencySelector}
-              ref={this.paymethodRef}
-              value={this.props.wire.currency}
-              onSelect={this.props.wire.setCurrency}
-            />
-          </View>
           <TextInput
 
             ref="input"
@@ -195,17 +213,20 @@ export default class FabScreen extends Component {
         </View>
 
         <View>
-          <CheckBox
-            title={i18n.t('wire.repeatMessage')}
-            checked={this.props.wire.recurring}
-            onPress={() => this.props.wire.toggleRecurring()}
-            left
-            checkedIcon="check-circle-o"
-            checkedColor={ colors.primary }
-            uncheckedIcon="circle-o"
-            uncheckedColor={ colors.greyed }
-            containerStyle={[CS.backgroundLight]}
-          />
+          { ['usd','tokens'].includes(this.props.wire.currency) ?
+            <CheckBox
+              title={i18n.t('wire.repeatMessage')}
+              checked={this.props.wire.recurring}
+              onPress={() => this.props.wire.toggleRecurring()}
+              left
+              checkedIcon="check-circle-o"
+              checkedColor={ colors.primary }
+              uncheckedIcon="circle-o"
+              uncheckedColor={ colors.greyed }
+              containerStyle={[CS.backgroundLight]}
+            />:
+            <Text style={[CS.fontM, CS.textCenter, CS.marginTop2x, CS.marginBottom2x]}>{i18n.t('wire.willNotRecur', {currency: this.props.wire.currency.toUpperCase()})}</Text>
+          }
         </View>
 
         { this.props.wire.owner.wire_rewards && this.props.wire.owner.wire_rewards.length && <View>
@@ -228,22 +249,19 @@ export default class FabScreen extends Component {
    * Render screen
    */
   render() {
-    if (!this.props.wire.loaded) {
-      return <CenteredLoading/>
-    }
-
     // sending?
     let icon;
     if (this.props.wire.sending) {
       icon = <ActivityIndicator size={'large'} color={colors.primary}/>
     } else {
-      icon = <Icon size={64} name="ios-flash" style={CS.colorPrimary} />
+      icon = <Icon size={64} name="ios-flash" style={[CS.colorPrimary, CS.paddingBottom2x]} />
     }
 
-    const body = this.getBody();
+    const body = !this.props.wire.loaded ? <ActivityIndicator size={'large'} color={colors.primary}/> : this.getBody();
 
     return (
-      <ScrollView contentContainerStyle={[CS.backgroundLight, CS.paddingLeft2x, CS.paddingRight2x, CS.flexContainer, CS.alignCenter]}>
+      <ScrollView contentContainerStyle={[CS.backgroundLight, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]}>
+        <Icon size={40} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight]}/>
         {icon}
         {body}
       </ScrollView>
@@ -259,8 +277,13 @@ export default class FabScreen extends Component {
       return;
     }
 
+    // we only show the btc component
     if (this.props.wire.currency === 'btc') {
       return this.send();
+    }
+
+    if (this.props.wire.currency === 'usd' && !this.props.wire.showCardselector) {
+      return this.props.wire.setShowCardselector(true);
     }
 
     Alert.alert(
@@ -320,10 +343,4 @@ export default class FabScreen extends Component {
 }
 
 const selectedcolor = '#4690D6';
-const color = '#444'
-
-const styles = {
-  carouselContainer: {
-    height: 180
-  }
-}
+const color = '#444';

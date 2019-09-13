@@ -89,8 +89,8 @@ export const CommonStyle = StyleSheet.create({
   colorSecondary: {
     color: colors.secondary
   },
-  colorTerciary: {
-    color: colors.terciary
+  colorTertiary: {
+    color: colors.tertiary
   },
   colorPrimary: {
     color: colors.primary
@@ -144,8 +144,8 @@ export const CommonStyle = StyleSheet.create({
   backgroundTransparent: {
     backgroundColor: 'transparent'
   },
-  backgroundTerciary: {
-    backgroundColor: colors.terciary
+  backgroundTertiary: {
+    backgroundColor: colors.tertiary
   },
   // borders
   borderWhite: {
@@ -163,8 +163,8 @@ export const CommonStyle = StyleSheet.create({
   borderSecondary: {
     borderColor: colors.secondary
   },
-  borderTerciary: {
-    borderColor: colors.terciary
+  borderTertiary: {
+    borderColor: colors.tertiary
   },
   borderPrimary: {
     borderColor: colors.primary
@@ -449,6 +449,14 @@ export const CommonStyle = StyleSheet.create({
   },
   textJustify: {
     textAlign: 'justify'
+  },
+
+  fullWidth: {
+    width: '100%'
+  },
+
+  halfWidth: {
+    width: '50%'
   },
 
   // Overlay∫
