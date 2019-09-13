@@ -206,7 +206,7 @@ export default class FabScreen extends Component {
 
             ref="input"
             onChangeText={this.changeInput}
-            style={[CS.field, CS.fontXXXL, CS.backgroundLightGreyed, CS.padding3x, CS.textRight, CS.flexContainer, CS.borderRadius5x]}
+            style={[CS.field, CS.fontXXXL, CS.backgroundLight, CS.padding3x, CS.textRight, CS.flexContainer, CS.borderRadius5x, CS.border, CS.borderLightGreyed]}
             underlineColorAndroid="transparent"
             value={amount}
             keyboardType="numeric"
@@ -224,7 +224,7 @@ export default class FabScreen extends Component {
               checkedColor={ colors.primary }
               uncheckedIcon="circle-o"
               uncheckedColor={ colors.greyed }
-              containerStyle={[CS.backgroundLight]}
+              containerStyle={[CS.backgroundWhite, CS.noBorder]}
             />:
             <Text style={[CS.fontM, CS.textCenter, CS.marginTop2x, CS.marginBottom2x]}>{i18n.t('wire.willNotRecur', {currency: this.props.wire.currency.toUpperCase()})}</Text>
           }
@@ -261,7 +261,7 @@ export default class FabScreen extends Component {
     const body = !this.props.wire.loaded ? <ActivityIndicator size={'large'} color={colors.primary}/> : this.getBody();
 
     return (
-      <ScrollView contentContainerStyle={[CS.backgroundLight, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]}>
+      <ScrollView contentContainerStyle={[CS.backgroundWhite, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]}>
         <Icon size={40} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight]}/>
         {icon}
         {body}
