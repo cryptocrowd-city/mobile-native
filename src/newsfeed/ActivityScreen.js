@@ -60,10 +60,12 @@ export default class ActivityScreen extends Component {
       this.entityStore.loadEntity(urn);
     }
 
-    params.entity._list.viewed.addViewed(
-      params.entity,
-      params.entity._list.metadataService
-    );
+    if (params.entity && params.entity._list) {
+      params.entity._list.viewed.addViewed(
+        params.entity,
+        params.entity._list.metadataService
+      );
+    }
   }
 
   /**
