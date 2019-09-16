@@ -23,7 +23,7 @@ class WireStore {
 
   @observable paymentMethodId: ?string = null;
 
-  guid: string;
+  guid: ?string;
 
   @action
   setShowBtc = (value: boolean) => {
@@ -188,6 +188,7 @@ class WireStore {
   @action
   reset() {
     this.paymentMethodId = null,
+    this.guid = undefined;
     this.amount = 1;
     this.showBtc = false;
     this.showCardselector = false;
