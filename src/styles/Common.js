@@ -240,6 +240,20 @@ export const CommonStyle = StyleSheet.create({
   marginBottom: {
     marginBottom: 5
   },
+
+  marginTop0x: {
+    marginTop: 0
+  },
+  marginLeft0x: {
+    marginLeft: 0
+  },
+  marginRight0x: {
+    marginRight: 0
+  },
+  marginBottom0x: {
+    marginBottom: 0
+  },
+
   // padding
   padding4x: {
     padding: 20
