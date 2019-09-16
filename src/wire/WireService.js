@@ -101,7 +101,6 @@ class WireService {
           {
             signable: true,
             offchain: opts.currency === 'tokens',
-            buyable: opts.currency === 'tokens',
             confirmTokenExchange: opts.amount,
             currency: opts.currency
           }
