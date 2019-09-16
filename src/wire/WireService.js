@@ -74,7 +74,7 @@ class WireService {
       return;
     }
 
-    return await api.post(`api/v1/wire/${opts.guid}`, {
+    return await api.post(`api/v2/wire/${opts.guid}`, {
       payload,
       method: payload.method,
       amount: opts.amount,
