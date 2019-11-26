@@ -292,7 +292,7 @@ export default class CapturePoster extends Component {
             uri={attachment.uri}
             type={attachment.type}
           />
-          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} {...testID('Attachment Delete Button')} />
+          <Icon raised reverse name="md-close" type="ionicon" color='#4690DF' size={18} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} {...testID('Attachment Delete Button')} />
         </View>}
         <CaptureTabs onSelectedMedia={this.onAttachedMedia} />
       </React.Fragment>
@@ -371,7 +371,7 @@ export default class CapturePoster extends Component {
       Alert.alert(i18n.t('capture.pleaseTryAgain'));
       return false;
     }
-    
+
     if (
       !attachment.hasAttachment &&
       !text &&
@@ -542,9 +542,6 @@ const styles = StyleSheet.create({
   },
   deleteAttachment: {
     position: 'absolute',
-    backgroundColor:'#4690DF',
-    width:28,
-    height:28,
     right: 8,
     top: 0,
   }
