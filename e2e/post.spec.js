@@ -1,13 +1,6 @@
 import sleep from '../src/common/helpers/sleep';
-import capturePoster from './actions/capturePoster';
 import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
-
-const deletePost = async () => {
-  await waitForAndTap(by.id, 'ActivityMoreButton');
-  await waitForAndTap(by.id, 'deleteOption');
-  await waitForAndTap(by.text, 'Ok');
-  await waitForAndTap(by.text, 'Ok');
-}
+import { deletePost, capturePoster } from './actions/capturePoster';
 
 describe('Post Flow', () => {
   beforeEach(async () => {
@@ -27,11 +20,11 @@ describe('Post Flow', () => {
     const text = 'e2eTest';
 
     // create post
-    await waitForAndType(by.id, 'PostInput', text);
-    await tapElement(by.id, 'CapturePostButton');
+    await waitForAndType(by.id('PostInput'), text);
+    await tapElement(by.id('CapturePostButton'));
 
     // wait for newsfeed
-    await waitForElement(by.id, 'NewsfeedScreen');
+    await waitForElement(by.id('NewsfeedScreen'));
     
     await deletePost();
     
@@ -41,15 +34,15 @@ describe('Post Flow', () => {
     const text = 'e2eTest';
 
     // create post
-    await waitForAndType(by.id, 'PostInput', text);
-    await tapElement(by.id, 'NsfwToggle');
-    await tapElement(by.id, 'NsfwToggle');
-    await waitForAndTap(by.id, 'NsfwReasonNudity');
-    await tapElement(by.id, 'NsfwToggle');
-    await tapElement(by.id, 'CapturePostButton');
+    await waitForAndType(by.id('PostInput'), text);
+    await tapElement(by.id('NsfwToggle'));
+    await tapElement(by.id('NsfwToggle'));
+    await waitForAndTap(by.id('NsfwReasonNudity'));
+    await tapElement(by.id('NsfwToggle'));
+    await tapElement(by.id('CapturePostButton'));
 
     // wait for newsfeed
-    await waitForElement(by.id, 'NewsfeedScreen');
+    await waitForElement(by.id('NewsfeedScreen'));
     
     await deletePost();
     
@@ -59,15 +52,15 @@ describe('Post Flow', () => {
     const text = 'e2eTest';
 
     // create post
-    await waitForAndType(by.id, 'PostInput', text);
-    await tapElement(by.id, 'GalleryImage0');
-    await tapElement(by.id, 'GalleryImage0');
+    await waitForAndType(by.id('PostInput'), text);
+    await tapElement(by.id('GalleryImage0'));
+    await tapElement(by.id('GalleryImage0'));
 
     await waitFor(element(by.id('CapturePostButton'))).toBeVisible().withTimeout(120000);
-    await tapElement(by.id, 'CapturePostButton');
+    await tapElement(by.id('CapturePostButton'));
 
     // wait for newsfeed
-    await waitForElement(by.id, 'NewsfeedScreen');
+    await waitForElement(by.id('NewsfeedScreen'));
     
     await deletePost();
     
@@ -77,15 +70,15 @@ describe('Post Flow', () => {
     const text = 'e2eTest';
 
     // create post
-    await waitForAndType(by.id, 'PostInput', text);
-    await tapElement(by.id, 'GalleryImage0');
-    await tapElement(by.id, 'GalleryImage0');
+    await waitForAndType(by.id('PostInput'), text);
+    await tapElement(by.id('GalleryImage0'));
+    await tapElement(by.id('GalleryImage0'));
 
-    await waitForAndTap(by.id, 'AttachmentDeleteButton');
-    await tapElement(by.id, 'CapturePostButton');
+    await waitForAndTap(by.id('AttachmentDeleteButton'));
+    await tapElement(by.id('CapturePostButton'));
 
     // wait for newsfeed
-    await waitForElement(by.id, 'NewsfeedScreen');
+    await waitForElement(by.id('NewsfeedScreen'));
     
     await deletePost();
     

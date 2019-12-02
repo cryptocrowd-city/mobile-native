@@ -1,13 +1,7 @@
 import sleep from '../src/common/helpers/sleep';
-import capturePoster from './actions/capturePoster';
-import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 
-const deletePost = async () => {
-  await waitForAndTap(by.id, 'ActivityMoreButton');
-  await waitForAndTap(by.id, 'deleteOption');
-  await waitForAndTap(by.text, 'Ok');
-  await waitForAndTap(by.text, 'Ok');
-}
+import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
+import { capturePoster, deletePost } from './actions/capturePoster';
 
 describe('Comment Flow', () => {
   beforeEach(async () => {
@@ -29,25 +23,24 @@ describe('Comment Flow', () => {
     const replyText = 'replyE2ETest';
 
     // create post
-    await waitForAndType(by.id, 'PostInput', text);
-    await tapElement(by.id, 'CapturePostButton');
+    await waitForAndType(by.id('PostInput'), text);
+    await tapElement(by.id('CapturePostButton'));
 
     // wait for newsfeed
-    await waitForElement(by.id, 'NewsfeedScreen');
+    await waitForElement(by.id('NewsfeedScreen'));
 
     // add comment
-    await waitForAndTap(by.id, 'ActivityCommentButton');
-    await waitForAndType(by.id, 'CommentText', commentText);
-    await tapElement(by.id, 'PostCommentButton');
+    await waitForAndTap(by.id('ActivityCommentButton'));
+    await waitForAndType(by.id('CommentText'), commentText);
+    await tapElement(by.id('PostCommentButton'));
 
     // add reply
-    await waitForAndTap(by.id, 'ReplyCommentButton');
-    await waitFor(element(by.id('CommentText').withAncestor(by.id('CommentParentView')))).toBeVisible().withTimeout(10000);
-    await element(by.id('CommentText').withAncestor(by.id('CommentParentView'))).typeText(replyText);
-    await element(by.id('PostCommentButton').withAncestor(by.id('CommentParentView'))).tap();
+    await waitForAndTap(by.id('ReplyCommentButton'));
+    await waitForAndType(by.id('CommentText').withAncestor(by.id('CommentParentView')), replyText);
+    await tapElement(by.id('PostCommentButton').withAncestor(by.id('CommentParentView')));
 
     // check reply
-    await waitFor(element(by.label(`@${process.env.loginUser} ${replyText}`))).toBeVisible().withTimeout(10000);
+    await waitForElement(by.label(`@${process.env.loginUser} ${replyText}`));
     
     // finish
     await deletePost();
