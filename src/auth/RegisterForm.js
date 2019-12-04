@@ -27,6 +27,7 @@ import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
+import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
 
 /**
  * Register Form
@@ -100,7 +101,7 @@ export default class RegisterForm extends Component {
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.password')}
-          secureTextEntry={true}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
           autoCapitalize={'none'}
           returnKeyType={'done'}
           placeholderTextColor="#444"
@@ -113,7 +114,7 @@ export default class RegisterForm extends Component {
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.confirmpassword')}
-          secureTextEntry={true}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
           autoCapitalize={'none'}
           returnKeyType={'done'}
           placeholderTextColor="#444"
