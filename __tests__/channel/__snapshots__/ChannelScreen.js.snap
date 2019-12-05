@@ -7,6 +7,7 @@ exports[`Channel screen component should renders correctly 1`] = `
       "flex": 1,
     }
   }
+  testID="ChannelScreen"
 >
   <FeedList
     emptyMessage={null}
@@ -523,6 +524,7 @@ exports[`Channel screen component should renders correctly 1`] = `
         },
       }
     }
+    testID="captureFab"
   />
 </View>
 `;
@@ -534,6 +536,7 @@ exports[`Channel screen component should show closed channel message 1`] = `
       "flex": 1,
     }
   }
+  testID="ChannelScreen"
 >
   <View>
     <ChannelHeader
@@ -1018,6 +1021,7 @@ exports[`Channel screen component should show closed channel message 1`] = `
         },
       }
     }
+    testID="captureFab"
   />
 </View>
 `;
