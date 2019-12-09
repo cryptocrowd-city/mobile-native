@@ -34,7 +34,6 @@ class ApiService {
 
   async parseJSON(response) {
     try {
-      console.log(response);
       return await response.json(); 
     } catch (error) {
       Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}`);
