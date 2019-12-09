@@ -36,7 +36,7 @@ class ApiService {
     try {
       return await response.json(); 
     } catch (error) {
-      Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}`);
+      Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}, STATUS: ${response.status} STATUSTEXT: ${response.statusText}`);
       throw error;
     }
   }
