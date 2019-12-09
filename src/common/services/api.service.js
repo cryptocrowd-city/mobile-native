@@ -8,6 +8,8 @@ import abortableFetch from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
 import logService from './log.service';
 
+import * as Sentry from '@sentry/react-native';
+
 /**
  * Api Error
  */
@@ -29,6 +31,17 @@ export const isApiForbidden = function(err) {
  * Api service
  */
 class ApiService {
+
+  async parseJSON(response) {
+    try {
+      console.log(response);
+      return await response.json(); 
+    } catch (error) {
+      Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}`);
+      throw error;
+    }
+  }
+
   /**
    * Clear cookies
    */
@@ -113,7 +126,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status != 'success') {
@@ -144,7 +157,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status != 'success') {
@@ -175,7 +188,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status === 'error') {
@@ -251,7 +264,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status === 'error') {
