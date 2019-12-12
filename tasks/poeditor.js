@@ -72,8 +72,10 @@ function req(uri, method = 'get', data = null, extraOptions = {}) {
 /**
  * Upload a locale to poeditor
  * @param {string} locale
+ * @param {number} overwrite Overwrite translations
+ * @param {number} sync_terms Remove deleted terms on poeditor
  */
-const uploadLocale = (locale, overwrite = 0) => {
+const uploadLocale = (locale, overwrite = 0, sync_terms = 0) => {
 
   overwrite = overwrite ? 1 : 0;
 
@@ -86,7 +88,7 @@ const uploadLocale = (locale, overwrite = 0) => {
       file: createReadStream(source),
       api_token: argv['poeditor-key'],
       id: argv['poeditor-id'] || PROJECT_ID,
-      sync_terms:1,
+      sync_terms,
       updating: 'terms_translations',
       language: locale,
       overwrite,
@@ -224,7 +226,7 @@ const run = async () => {
         downloadAllLocales();
         break;
       case 'upload': {
-        const response = await uploadLocale('en', argv['overwrite']);
+        const response = await uploadLocale('en', argv['overwrite'], argv['sync_terms']);
         console.log('Terms:', response.terms);
         console.log('Translations:', response.translations);
       }
