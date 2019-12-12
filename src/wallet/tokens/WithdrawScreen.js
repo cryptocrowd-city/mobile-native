@@ -169,11 +169,11 @@ export default class WithdrawScreen extends Component {
                 amount: this.getAmount()
               },
               {
-                onchain: <Text style={CommonStyle.bold}>OnChain</Text>,
+                onchain: <Text style={CommonStyle.bold}>OnChain</Text>
               }
-            ) +
-            '\n'
+            )
           }
+          {'\n'}
           <Text style={{fontSize: 11}}>
             {i18n.to('wallet.withdraw.youCanRequest2',
               null,
