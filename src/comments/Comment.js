@@ -60,7 +60,7 @@ class Comment extends Component {
 
   componentDidMount() {
     if (this.props.commentFocusCall) {
-      this.props.commentFocusCall();
+      this.props.commentFocusCall(this.props.comment, this.props.index);
     }
   }
 
