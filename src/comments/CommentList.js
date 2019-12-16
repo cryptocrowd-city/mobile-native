@@ -416,7 +416,6 @@ class CommentList extends React.Component<PropsType, StateType> {
         onTextInputfocus={this.onChildFocus}
         onCommentFocus={this.onCommentFocus}
         navigation={this.props.navigation}
-        index={row.index}
         commentFocusCall={commentFocusCall}
       />
     );
