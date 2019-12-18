@@ -127,6 +127,9 @@ export default class FeedList extends Component {
         ListEmptyComponent={empty}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
+        onScroll={e => {
+          this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
+        }}
         {...passThroughProps}
       />
     );
