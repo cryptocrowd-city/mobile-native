@@ -80,6 +80,7 @@ export default class Activity extends Component {
           offset: offsetToScrollTo,
           animated: true
         });
+        this.props.entity.listRef = null;
       }, 1000);
     }
   }
