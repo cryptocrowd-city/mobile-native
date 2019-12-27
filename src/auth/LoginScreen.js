@@ -109,7 +109,7 @@ export default class LoginScreen extends Component {
    * On press register
    */
   onPressRegister = () => {
-    if (featuresService.has('on-boarding')) {
+    if (featuresService.has('register_pages-december-2019')) {
       this.props.navigation.push('RegisterNew');
     } else {
       this.props.navigation.push('Register');

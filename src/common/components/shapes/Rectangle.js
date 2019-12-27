@@ -2,10 +2,13 @@ import React, {
   Component,
 } from 'react';
 
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, Dimensions} from 'react-native';
 import TriangleCorner from './TriangleCorner';
 import {CommonStyle} from '../../../styles/Common';
 import TriangleCornerYellow from './TriangleCornerYellow';
+
+const wHeight = Dimensions.get('window').height,
+  wWidth = Dimensions.get('window').width;
 
 export default class Rectangle extends Component {
   render() {
@@ -18,9 +21,9 @@ export default class Rectangle extends Component {
         <TriangleCornerYellow />
         <View style={CommonStyle.flexContainerCenter}>
           <View style={[styles.rectangle, styles.shadow]}>
-            <TriangleCorner style={styles.triangleTop} />
+            <TriangleCorner style={[styles.triangle, styles.triangleTop]} />
             {this.props.children}
-            <TriangleCorner style={styles.triangleBottom} />
+            <TriangleCorner style={[styles.triangle, styles.triangleBottom]} />
           </View>
         </View>
       </View>
@@ -39,20 +42,19 @@ const styles = StyleSheet.create({
     shadowRadius: 6.68,
     elevation: 11,
   },
-  triangleTop: {
-    top: -10,
-    right: 2.5,
-    borderRightWidth: 345,
-    borderTopWidth: 10,
+  triangle: {
+    borderRightWidth: wWidth * 0.837,
+    borderTopWidth: wHeight * 0.01,
     borderTopColor: '#FFF',
+  },
+  triangleTop: {
+    top: wHeight * -0.01,
+    right: 2.5,
     transform: [{rotate: '180deg'}],
   },
   triangleBottom: {
-    top: 132,
+    top: wHeight * 0.01,
     right: 0,
-    borderRightWidth: 345,
-    borderTopWidth: 10,
-    borderTopColor: '#FFF',
   },
   rectangle: {
     position: 'absolute',
@@ -60,8 +62,8 @@ const styles = StyleSheet.create({
     left: 20,
     backgroundColor: '#FFF',
     zIndex: -5,
-    width: '87.5%',
-    height: '78.78%',
+    width: wWidth * 0.83,
+    height: wHeight * 0.65,
   },
   bulb: {
     width: 26.25,

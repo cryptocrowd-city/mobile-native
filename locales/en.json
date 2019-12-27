@@ -532,7 +532,11 @@
     "welcomToWallet":"Welcome to your wallet",
     "tokensDescription":"Tokens are the cryptocurrency used on Minds. Your total balance of tokens will be stored in two different types of addresses.",
     "onchainDescription":"OnChain payments will be published to the public blockchain and require a small ETH gas fee. You can setup your own private keys or create new wallets.",
-    "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address."
+    "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address.",
+    "welcomeNew":"WELCOME",
+    "welcomePrivacy":"Your privacy is our priority. You are free to provide as much or as little information as you wish for better recommendations and to connect with people in your local area.",
+    "welcomeLater":"No thanks, I’ll do it later",
+    "welcomeSetup":"Let’s Get Setup"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",

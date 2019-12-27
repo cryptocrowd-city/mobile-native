@@ -50,6 +50,7 @@ import {withErrorBoundaryScreen} from '../common/components/ErrorBoundary';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
+import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 
 /**
  * Main stack navigator
@@ -195,6 +196,9 @@ const Stack = createStackNavigator({
   },
   Wizard: {
     screen: withErrorBoundaryScreen(Wizard),
+  },
+  OnboardingScreenNew: {
+    screen: withErrorBoundaryScreen(OnboardingScreenNew),
   },
 });
 
