@@ -1,6 +1,7 @@
 import {Alert} from 'react-native';
 import remoteAction from '../../src/common/RemoteAction';
 import connectivityService from '../../src/common/services/connectivity.service';
+import { ApiError } from '../../src/common/services/api.service';
 
 jest.mock('../../src/common/services/connectivity.service');
 
@@ -10,6 +11,7 @@ describe('remote action', () => {
 
   beforeEach(() => {
     Alert.alert.mockClear();
+    connectivityService.isConnected = true;
   });
 
   it('should not auto retry on generic error', async () => {
@@ -66,6 +68,46 @@ describe('remote action', () => {
 
     // should have been called
     expect(action).toHaveBeenCalledTimes(2);
+  });
+
+  it('should show offline error message', async () => {
+    const action = jest.fn();
+
+    action.mockImplementation(async () => {
+      throw new TypeError('Network request failed');
+    });
+
+    connectivityService.isConnected = false;
+
+    await remoteAction(action, '', 0);
+
+    // should have been called
+    expect(action).toHaveBeenCalledTimes(1);
+
+    // should call alert with the correct messages
+    expect(Alert.alert.mock.calls[0][0]).toBe('Sorry!');
+    expect(Alert.alert.mock.calls[0][1]).toBe('No Internet Connection');
+    expect(Alert.alert.mock.calls[0][2][0].text).toBe('Ok');
+    expect(Alert.alert.mock.calls[0][2][1].text).toBe('Try again');
+  });
+
+  it('should show api errors message', async () => {
+    const action = jest.fn();
+
+    action.mockImplementation(async () => {
+      throw new ApiError('Some Error');
+    });
+
+    await remoteAction(action, '', 0);
+
+    // should have been called
+    expect(action).toHaveBeenCalledTimes(1);
+
+    // should call alert with the correct messages
+    expect(Alert.alert.mock.calls[0][0]).toBe('Sorry!');
+    expect(Alert.alert.mock.calls[0][1]).toBe('Some Error');
+    expect(Alert.alert.mock.calls[0][2][0].text).toBe('Ok');
+    expect(Alert.alert.mock.calls[0][2][1].text).toBe('Try again');
   });
 
   it('should show error message with retry on failure', async () => {
