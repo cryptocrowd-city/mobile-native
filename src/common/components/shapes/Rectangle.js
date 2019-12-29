@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     zIndex: -5,
     width: wWidth * 0.83,
-    height: wHeight * 0.65,
+    height: wHeight * 0.75,
   },
   bulb: {
     width: 26.25,

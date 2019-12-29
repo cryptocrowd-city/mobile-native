@@ -595,5 +595,22 @@ export const CommonStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e4e4e4',
     borderRadius: 2
-  }
+  },
+  onboardingTitle: {
+    color: '#A2A2A2',
+    fontSize: 13,
+    lineHeight: 18,
+    letterSpacing: 2,
+  },
+  onboardingSubtitle: {
+    color: '#4A4A4A',
+    fontSize: 26,
+    lineHeight: 37,
+    fontWeight: '600',
+  },
+  onboardingSteps: {
+    color: '#A2A2A2',
+    fontSize: 11,
+    lineHeight: 15,
+  },
 });

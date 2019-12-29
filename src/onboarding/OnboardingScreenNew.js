@@ -21,7 +21,7 @@ import {
 } from 'mobx-react/native'
 
 import Wizard from '../common/components/Wizard';
-import HashtagsStep from './steps/HashtagsStep';
+
 import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
 import SuggestedGroupsStep from './steps/SuggestedGroupsStep';
 import ChannelSetupStep from './steps/ChannelSetupStep';
@@ -31,6 +31,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import navigationService from '../navigation/NavigationService';
 import i18nService from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
+import HashtagsStepNew from './steps/HashtagsStepNew';
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -65,13 +66,13 @@ export default class OnboardingScreenNew extends Component {
     if (!this.props.onboarding.progress) {
       return <CenteredLoading/>
     }
-    const completed_items = this.props.onboarding.progress.completed_items;
+    const completed_items = [];//this.props.onboarding.progress.completed_items;
 
     if (!completed_items.some(r => r == 'creator_frequency')) {
       steps.push({component: <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish}/>, ready: () => false});
     }
     if (!completed_items.some(r => r == 'suggested_hashtags')) {
-      steps.push({component: <HashtagsStep/>});
+      steps.push({component: <HashtagsStepNew onNext={this.onNext}/>});
     }
     if (!completed_items.some(r => r == 'suggested_channels')) {
       steps.push({component: <SuggestedChannelsStep/>});

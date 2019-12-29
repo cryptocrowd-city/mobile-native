@@ -536,7 +536,12 @@
     "welcomeNew":"WELCOME",
     "welcomePrivacy":"Your privacy is our priority. You are free to provide as much or as little information as you wish for better recommendations and to connect with people in your local area.",
     "welcomeLater":"No thanks, I’ll do it later",
-    "welcomeSetup":"Let’s Get Setup"
+    "welcomeSetup":"Let’s Get Setup",
+    "profileSetup":"PROFILE SETUP",
+    "hashtagTitle":"Hashtags",
+    "hashtagStep":"Step 1 of 4",
+    "hashtagInterest":"Some hashtags that may be of interest to you.",
+    "skipStep":"Skip"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",

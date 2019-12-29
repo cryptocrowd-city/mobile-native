@@ -27,9 +27,9 @@ export default class WelcomeStep extends Component {
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <Icon name="md-thumbs-up" size={36} color="#FED12F" style={{paddingTop:1}}/>
-        <Text style={styles.welcome}>{i18nService.t('onboarding.welcomeNew')}</Text>
+        <Text style={CS.onboardingTitle}>{i18nService.t('onboarding.welcomeNew')}</Text>
 
-        <Text style={styles.username}>@{this.props.user.me.name}</Text>
+        <Text style={CS.onboardingSubtitle}>@{this.props.user.me.name}</Text>
 
         <Text style={styles.privacy}>{i18nService.t('onboarding.welcomePrivacy')}</Text>
 
@@ -61,18 +61,6 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 40,
     alignSelf: 'stretch',
-  },
-  welcome: {
-    color: '#A2A2A2',
-    fontSize: 13,
-    lineHeight: 18,
-    letterSpacing: 2,
-  },
-  username: {
-    color: '#4A4A4A',
-    fontSize: 26,
-    lineHeight: 37,
-    fontWeight: '600',
   },
   privacy: {
     color: '#9B9B9B',
