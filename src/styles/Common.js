@@ -613,4 +613,9 @@ export const CommonStyle = StyleSheet.create({
     fontSize: 11,
     lineHeight: 15,
   },
+  linkNew: {
+    color: '#9B9B9B',
+    fontSize: 15,
+    lineHeight: 20
+  }
 });

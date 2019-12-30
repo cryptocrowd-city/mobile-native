@@ -14,6 +14,7 @@ import TagInput from '../../common/components/TagInput';
 import i18n from '../../common/services/i18n.service';
 import { Button } from 'react-native-elements';
 import { ComponentsStyle } from '../../styles/Components';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 @inject('hashtag')
 @observer
@@ -33,7 +34,7 @@ export default class HashtagsStepNew extends Component {
           <Text style={[CS.onboardingTitle, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
           <Text style={CS.onboardingSubtitle}>{i18n.t('onboarding.hashtagTitle')}</Text>
           <Text style={CS.onboardingSteps}>{i18n.t('onboarding.hashtagStep')}</Text>
-          <Text style={[CS.fontM, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagInterest')}</Text>
+          <Text style={[CS.linkNew, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagInterest')}</Text>
         </View>
         <View style={styles.hashtagContainer}>
           <TagSelect
@@ -48,22 +49,12 @@ export default class HashtagsStepNew extends Component {
           />
         </View>
         <View style={[styles.containerButton]}>
-            <Button
-              onPress={this.props.onNext}
-              title={i18n.t('onboarding.skip')}
-              backgroundColor="#FFF"
-              borderRadius={2}
-              containerViewStyle={[styles.button, ComponentsStyle.loginButton]}
-              textStyle={ComponentsStyle.loginButtonText}
-            />
-            <Button
-              onPress={this.props.onNext}
-              title={i18n.t('continue')}
-              backgroundColor="#5DBAC0"
-              borderRadius={2}
-              containerViewStyle={[styles.button, ComponentsStyle.loginButton]}
-              textStyle={ComponentsStyle.loginButtonText}
-            />
+            <TouchableOpacity style={styles.skip} onPress={this.props.onNext}>
+              <Text style={styles.skipText}>{i18n.t('onboarding.skipStep')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity  style={styles.continue} onPress={this.props.onNext}>
+              <Text style={styles.continueText}>{i18n.t('continue')}</Text>
+            </TouchableOpacity>
         </View>
       </View>
     );
@@ -73,15 +64,36 @@ export default class HashtagsStepNew extends Component {
 const styles = StyleSheet.create({
   containerButton: {
     flex: 2,
+    flexDirection: 'row',
     marginLeft: 10,
     marginRight: 20,
     marginBottom: 20,
+    marginTop: 40,
     justifyContent: 'flex-end',
     width: '80%',
   },
-  button: {
-    marginTop: 40,
-    alignSelf: 'stretch',
+  continue: {
+    backgroundColor: "#5DBAC0",
+    borderRadius: 2,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+  },
+  continueText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    lineHeight: 26,
+    fontWeight: "500",
+  },
+  skip: {
+    backgroundColor: "transparent",
+    borderRadius: 2,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+  },
+  skipText: {
+    color: '#9B9B9B',
+    fontSize: 16,
+    lineHeight: 21,
   },
   hashtagContainer: {
     flex: 3,

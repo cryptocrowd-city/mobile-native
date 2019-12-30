@@ -34,13 +34,12 @@ export default class WelcomeStep extends Component {
         <Text style={styles.privacy}>{i18nService.t('onboarding.welcomePrivacy')}</Text>
 
         <View style={[styles.containerButton]}>
-            <Text style={[CS.linkNew, {alignSelf: 'center'}]} onPress={ this.props.onFinish }>{i18nService.t('onboarding.welcomeLater')}</Text>
+            <Text style={[CS.linkNew, styles.later]} onPress={ this.props.onFinish }>{i18nService.t('onboarding.welcomeLater')}</Text>
             <Button
               onPress={this.props.onNext}
               title={i18nService.t('onboarding.welcomeSetup')}
-              backgroundColor="#5DBAC0"
               borderRadius={2}
-              containerViewStyle={[styles.button, ComponentsStyle.loginButton]}
+              buttonStyle={[styles.button]}
               textStyle={ComponentsStyle.loginButtonText}
             />
         </View>
@@ -59,8 +58,9 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   button: {
-    marginTop: 40,
     alignSelf: 'stretch',
+    backgroundColor: "#5DBAC0",
+    borderRadius: 2,
   },
   privacy: {
     color: '#9B9B9B',
@@ -71,5 +71,9 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginTop: 20,
     marginBottom: 50,
+  },
+  later: {
+    alignSelf: 'center',
+    marginBottom: 40
   }
 });

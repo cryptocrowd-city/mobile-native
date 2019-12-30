@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
       width: 5,
       height: 5,
     },
-    shadowOpacity: 0.8,
-    shadowRadius: 6.68,
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
     elevation: 11,
   },
   triangle: {
