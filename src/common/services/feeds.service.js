@@ -337,9 +337,18 @@ export default class FeedsService {
         duration: 1300,
         backgroundColor: '#FFDD63DD',
         color: Colors.dark,
-        type: "info",
+        type: 'info',
       });
     }
+  }
+
+  /**
+   * Remove all from owner
+   * @param {string} guid
+   */
+  async removeFromOwner(guid: string): Promise<void> {
+    this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
+    await feedsStorage.save(this);
   }
 
   /**
