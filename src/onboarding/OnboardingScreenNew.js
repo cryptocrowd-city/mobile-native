@@ -24,7 +24,6 @@ import Wizard from '../common/components/Wizard';
 
 import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
 import SuggestedGroupsStep from './steps/SuggestedGroupsStep';
-import ChannelSetupStep from './steps/ChannelSetupStep';
 import RewardsStep from './steps/RewardsStep';
 import WelcomeStepNew from './steps/WelcomeStepNew';
 import { CommonStyle as CS } from '../styles/Common';
@@ -32,6 +31,7 @@ import navigationService from '../navigation/NavigationService';
 import i18nService from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
+import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -74,19 +74,13 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'suggested_hashtags')) {
       steps.push({component: <HashtagsStepNew onNext={this.onNext}/>});
     }
+    steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext}/>});
     if (!completed_items.some(r => r == 'suggested_channels')) {
       steps.push({component: <SuggestedChannelsStep/>});
     }
     if (!completed_items.some(r => r == 'suggested_groups')) {
       // steps.push({component: <SuggestedGroupsStep/>});
     }
-
-    steps.push({
-      component: <ChannelSetupStep ref={r => this.channelSetup = r}/>,
-      onNext: async() => {
-        return await this.channelSetup.wrappedInstance.save();
-      }
-    });
 
     if (!completed_items.some(r => r == 'tokens_verification')) {
       steps.push({component: <RewardsStep onJoin={() => this.wizard.next()}/>});

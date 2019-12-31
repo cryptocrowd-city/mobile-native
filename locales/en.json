@@ -541,7 +541,12 @@
     "hashtagTitle":"Hashtags",
     "hashtagStep":"Step 1 of 4",
     "hashtagInterest":"Some hashtags that may be of interest to you.",
-    "skipStep":"Skip"
+    "skipStep":"Skip",
+    "infoTitle":"Info",
+    "infoStep":"Step 2 of 4",
+    "infoMobileNumber":"Mobile Phone Number",
+    "infoLocation":"Location",
+    "infoDateBirth":"Date of Birth"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
