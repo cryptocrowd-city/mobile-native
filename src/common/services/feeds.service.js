@@ -347,7 +347,10 @@ export default class FeedsService {
    * @param {string} guid
    */
   async removeFromOwner(guid: string): Promise<void> {
+    let count = this.feed.length;
     this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
+    count -= this.feed.length;
+    this.offset -= count;
     await feedsStorage.save(this);
   }
 

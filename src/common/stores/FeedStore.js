@@ -186,11 +186,15 @@ export default class FeedStore {
   @action
   removeFromOwner(guid) {
     this.entities = this.entities.filter(
-      e => {
-        return !e.ownerObj || e.ownerObj.guid !== guid
-      }
+      e => !e.ownerObj || e.ownerObj.guid !== guid,
     );
     this.feedsService.removeFromOwner(guid);
+
+    // after the filter we have less than a page of data?
+    if (this.feedsService.offset < this.feedsService.limit) {
+      // we load another page to prevent block the pagination
+      this.loadMore();
+    }
   }
 
   /**
