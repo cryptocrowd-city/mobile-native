@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import {TextInput, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {TextInput, Text, View, StyleSheet, TouchableOpacity, Modal, TouchableHighlight, Alert} from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
 import i18n from '../services/i18n.service';
 import { CommonStyle } from '../../styles/Common';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import PhoneInput from 'react-native-phone-input';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import InfoPopup from './InfoPopup';
 
 export default class Input extends Component {
 
@@ -14,17 +15,17 @@ export default class Input extends Component {
   };
 
   showDatePicker = () => {
-    this.setState({ datePickerVisible: true });
-  }
+    this.setState({datePickerVisible: true});
+  };
 
   dismissDatePicker = () => {
-    this.setState({ datePickerVisible: false });
-  }
+    this.setState({datePickerVisible: false});
+  };
 
-  confirmDatePicker = (date) => {
+  confirmDatePicker = date => {
     this.props.onChangeText(date.toLocaleDateString());
     this.dismissDatePicker();
-  }
+  };
 
   textInput = () => {
     return (
@@ -76,7 +77,7 @@ export default class Input extends Component {
       />
       </View>
     );
-  }
+  };
 
   renderInput = () => {
     const inputType = this.props.inputType;
@@ -91,18 +92,17 @@ export default class Input extends Component {
       }
     }
     return this.textInput();
-  }
+  };
 
   render() {
     const optional = (<Text style={[styles.optional, CommonStyle.marginBottom2x]}>{"Optional"}</Text>);
-    const info = (<IconMC name="information-variant" size={16} />);
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.marginTop2x]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.marginTop]}>
         <View style={styles.row}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
-            {this.props.info && info}
+            {this.props.info && <InfoPopup info={this.props.info} />}
           </View>
           {this.props.optional && optional}
         </View>

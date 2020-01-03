@@ -23,7 +23,6 @@ import {
 import Wizard from '../common/components/Wizard';
 
 import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
-import SuggestedGroupsStep from './steps/SuggestedGroupsStep';
 import RewardsStep from './steps/RewardsStep';
 import WelcomeStepNew from './steps/WelcomeStepNew';
 import { CommonStyle as CS } from '../styles/Common';
@@ -32,6 +31,7 @@ import i18nService from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
+import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -71,15 +71,19 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'creator_frequency')) {
       steps.push({component: <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish}/>, ready: () => false});
     }
+
     if (!completed_items.some(r => r == 'suggested_hashtags')) {
       steps.push({component: <HashtagsStepNew onNext={this.onNext}/>});
     }
+
     steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext}/>});
+    
+    if (!completed_items.some(r => r == 'suggested_groups')) {
+      steps.push({component: <SuggestedGroupsStepNew/>});
+    }
+
     if (!completed_items.some(r => r == 'suggested_channels')) {
       steps.push({component: <SuggestedChannelsStep/>});
-    }
-    if (!completed_items.some(r => r == 'suggested_groups')) {
-      // steps.push({component: <SuggestedGroupsStep/>});
     }
 
     if (!completed_items.some(r => r == 'tokens_verification')) {

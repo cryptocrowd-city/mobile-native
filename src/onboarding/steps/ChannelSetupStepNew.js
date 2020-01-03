@@ -42,7 +42,7 @@ export default class ChannelSetupStepNew extends Component {
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
           <Text style={CS.onboardingSubtitle}>{i18n.t('onboarding.infoTitle')}</Text>
           <Text style={CS.onboardingSteps}>{i18n.t('onboarding.infoStep')}</Text>
         </View>
@@ -88,15 +88,18 @@ export default class ChannelSetupStepNew extends Component {
 }
 
 const styles = StyleSheet.create({
-  containerButton: {
-    flex: 2,
-    flexDirection: 'row',
+  bottom: {
+    flex: 1,
     marginLeft: 10,
     marginRight: 20,
-    marginBottom: 20,
-    marginTop: 40,
-    justifyContent: 'flex-end',
+    marginBottom: 10,
+    marginTop: 10,
     width: '80%',
+    justifyContent: 'flex-end',
+  },
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   continue: {
     backgroundColor: "#5DBAC0",
@@ -122,13 +125,13 @@ const styles = StyleSheet.create({
     lineHeight: 21,
   },
   inputContainer: {
-    flex: 3,
+    flex: 5,
     marginLeft: 20,
     marginRight: 20,
     width: '90%',
   },
   textsContainer: {
-    flex: 3,
+    flex: 2,
     alignItems: 'center',
   }
 });

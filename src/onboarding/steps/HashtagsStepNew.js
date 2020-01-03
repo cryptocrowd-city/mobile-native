@@ -31,10 +31,10 @@ export default class HashtagsStepNew extends Component {
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
           <Text style={CS.onboardingSubtitle}>{i18n.t('onboarding.hashtagTitle')}</Text>
           <Text style={CS.onboardingSteps}>{i18n.t('onboarding.hashtagStep')}</Text>
-          <Text style={[CS.linkNew, CS.marginTop4x, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagInterest')}</Text>
+          <Text style={[CS.linkNew, CS.marginTop2x, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagInterest')}</Text>
         </View>
         <View style={styles.hashtagContainer}>
           <TagSelect
@@ -48,13 +48,15 @@ export default class HashtagsStepNew extends Component {
             disableSort={true}
           />
         </View>
-        <View style={[styles.containerButton]}>
-            <TouchableOpacity style={styles.skip} onPress={this.props.onNext}>
-              <Text style={styles.skipText}>{i18n.t('onboarding.skipStep')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity  style={styles.continue} onPress={this.props.onNext}>
-              <Text style={styles.continueText}>{i18n.t('continue')}</Text>
-            </TouchableOpacity>
+        <View style={styles.bottom}>
+          <View style={[styles.containerButton]}>
+              <TouchableOpacity style={styles.skip} onPress={this.props.onNext}>
+                <Text style={styles.skipText}>{i18n.t('onboarding.skipStep')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity  style={styles.continue} onPress={this.props.onNext}>
+                <Text style={styles.continueText}>{i18n.t('continue')}</Text>
+              </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -62,15 +64,18 @@ export default class HashtagsStepNew extends Component {
 }
 
 const styles = StyleSheet.create({
-  containerButton: {
-    flex: 2,
-    flexDirection: 'row',
+  bottom: {
+    flex: 1,
     marginLeft: 10,
     marginRight: 20,
-    marginBottom: 20,
-    marginTop: 40,
-    justifyContent: 'flex-end',
+    marginBottom: 10,
+    marginTop: 10,
     width: '80%',
+    justifyContent: 'flex-end',
+  },
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   continue: {
     backgroundColor: "#5DBAC0",
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
     lineHeight: 21,
   },
   hashtagContainer: {
-    flex: 3,
+    flex: 4,
     marginLeft: 20,
     marginRight: 20,
   },
