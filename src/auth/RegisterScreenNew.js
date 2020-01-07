@@ -35,33 +35,26 @@ export default class RegisterScreenNew extends Component {
    */
   static navigationOptions = {
     header: null
-  }
+  };
 
   render() {
     return (
-      <Rectangle>
-        <Animatable.View animation="bounceIn">
-          <Animated.View>
-            <RegisterFormNew
-              onRegister={this.onRegister}
-              onBack={this.onPressBack}
-            />
-          </Animated.View>
-        </Animatable.View>
-      </Rectangle>
+      <Animatable.View animation="bounceIn" style={[CommonStyle.flexContainer]}>
+        <Animated.View style={[CommonStyle.flexContainer]}>
+          <RegisterFormNew
+            onRegister={this.onRegister}
+            onBack={this.onPressBack}
+          />
+        </Animated.View>
+      </Animatable.View>
     );
   }
 
   onPressBack = () => {
     this.props.navigation.navigate('Login');
-  }
+  };
 
   onRegister = guid => {
     logService.info('[Register] new user registered '+guid);
-  }
+  };
 }
-
-
-const styles = StyleSheet.create({
-
-});

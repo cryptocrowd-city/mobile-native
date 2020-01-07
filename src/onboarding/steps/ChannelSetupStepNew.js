@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
-import TagSelect from '../../common/components/TagSelect';
-import TagInput from '../../common/components/TagInput';
 import i18n from '../../common/services/i18n.service';
-import { Button } from 'react-native-elements';
 import { ComponentsStyle } from '../../styles/Components';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Input from '../../common/components/Input';
 
-@inject('hashtag')
-@observer
-export default class ChannelSetupStepNew extends Component {
+import MindsLayout from '../../common/components/MindsLayout';
+import styled from 'styled-components';
+import { CommonStyled } from '../../styles/CommonStyled';
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
 
+export default class ChannelSetupStepNew extends Component {
   state = {
     phoneNumber: '+1',
     location: '',
@@ -31,22 +26,17 @@ export default class ChannelSetupStepNew extends Component {
   setLocation = location => this.setState({location});
   setBirthDate = birthDate => this.setState({birthDate});
 
-  componentDidMount() {
-    this.props.hashtag.setAll(true);
-    this.props.hashtag.loadSuggested().catch(err => {
-      logService.exception(err);
-    });
-  }
-
-  render() {
+  getBody = () => {
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={CS.onboardingSubtitle}>{i18n.t('onboarding.infoTitle')}</Text>
-          <Text style={CS.onboardingSteps}>{i18n.t('onboarding.infoStep')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
+          <TitleText>{i18n.t('onboarding.infoTitle')}</TitleText>
+          <Step>{i18n.t('onboarding.step',{step: 2, total: 4})}</Step>
+          <SubTitle>{i18n.t('onboarding.suggestedGroupsDescription')}</SubTitle>
         </View>
-        <View style={styles.inputContainer}>
+        <ScrollView style={styles.inputContainer}>
           <Input
             placeholder={i18n.t('onboarding.infoMobileNumber')}
             onChangeText={this.setPhoneNumber}
@@ -73,65 +63,55 @@ export default class ChannelSetupStepNew extends Component {
             info={"Tu hermana"}
             inputType={'dateInput'}
           />
-        </View>
-        <View style={[styles.containerButton]}>
-            <TouchableOpacity style={styles.skip} onPress={this.props.onNext}>
-              <Text style={styles.skipText}>{i18n.t('onboarding.skipStep')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity  style={styles.continue} onPress={this.props.onNext}>
-              <Text style={styles.continueText}>{i18n.t('continue')}</Text>
-            </TouchableOpacity>
-        </View>
+        </ScrollView>
+      </View>
+    );
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.props.onNext} />;
+  };
+
+  render() {
+    return (
+      <View style={CS.flexContainer}>
+        <MindsLayout
+          body={this.getBody()}
+          footer={this.getFooter()}
+        />
       </View>
     );
   }
 }
 
+const TitleText = styled.Text`
+  ${CommonStyled.textTitle} 
+  color: ${(props) => props.theme['primary_text']};
+`;
+
+const SubTitle = styled.Text`
+  ${CommonStyled.textSubTitle}
+  color: ${(props) => props.theme['primary_text']}
+  margin-bottom: 20px;
+  margin-top: 25;
+`;
+
+const Step = styled.Text`
+  ${CommonStyled.textSubTitle}
+  color: ${(props) => props.theme['secondary_text']}
+`;
+
 const styles = StyleSheet.create({
-  bottom: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 20,
-    marginBottom: 10,
-    marginTop: 10,
-    width: '80%',
-    justifyContent: 'flex-end',
-  },
   containerButton: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-  continue: {
-    backgroundColor: "#5DBAC0",
-    borderRadius: 2,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-  },
-  continueText: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: "500",
-  },
-  skip: {
-    backgroundColor: "transparent",
-    borderRadius: 2,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-  },
-  skipText: {
-    color: '#9B9B9B',
-    fontSize: 16,
-    lineHeight: 21,
-  },
   inputContainer: {
-    flex: 5,
-    marginLeft: 20,
-    marginRight: 20,
-    width: '90%',
+    flex: 6,
+    width: '100%',
   },
   textsContainer: {
-    flex: 2,
+    flex: 1.5,
     alignItems: 'center',
   }
 });

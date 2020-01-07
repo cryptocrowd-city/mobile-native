@@ -10,25 +10,28 @@ import {
   ScrollView,
   Linking,
   Alert,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
 import authService from '../auth/AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import { CommonStyled } from '../styles/CommonStyled';
+import styled from 'styled-components';
 
 import { observer, inject } from 'mobx-react/native';
 
-import {
-  CheckBox,
-  Button
-} from 'react-native-elements'
+import {CheckBox} from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
 import Input from '../common/components/Input';
+import MindsLayout from '../common/components/MindsLayout';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Button from '../common/components/Button';
 
 /**
  * Register Form
@@ -72,13 +75,16 @@ export default class RegisterFormNew extends Component {
   setPassword = password => this.setState({password});
   setConfirmPassword = confirmPassword => this.setState({confirmPassword});
 
-  render() {
+  getFormBody = () => {
     return (
-      <ScrollView>
-        <View>
-          <Text style={styles.joinText}>
-            {i18n.t('auth.join')}
-          </Text>
+      <ScrollView style={[CommonStyle.flexContainer]}>
+        <View style={CommonStyle.marginBottom3x}>
+          <TouchableOpacity onPress={this.props.onBack}>
+            <Icon size={34} name="keyboard-arrow-left" color='#777777'/>
+          </TouchableOpacity>
+        </View>
+        <View style={CommonStyle.marginBottom3x}>
+          <TitleText>{i18n.t('auth.join')}</TitleText>
         </View>
         <View>
           <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
@@ -122,21 +128,42 @@ export default class RegisterFormNew extends Component {
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
           disabled={this.state.inProgress}
         />
-        <View style={[styles.containerButton, CommonStyle.marginTop2x]}>
-            <Button
-              onPress={() => this.onPressRegister()}
-              title={i18n.t('auth.createChannel')}
-              backgroundColor="#5DBAC0"
-              borderRadius={2}
-              containerViewStyle={[styles.button, ComponentsStyle.loginButton]}
-              textStyle={ComponentsStyle.loginButtonText}
-              loading={this.state.inProgress}
-              loadingRight={true}
-              disabled={this.state.inProgress}
-              disabledStyle={CommonStyle.backgroundTransparent}
-            />
-        </View>
       </ScrollView>
+    );
+  };
+
+  getFormFooter = () => {
+    return (
+      <View style={[styles.containerButton]}>
+        <Button
+          onPress={() => this.onPressRegister()}
+          borderRadius={2}
+          containerStyle={ComponentsStyle.loginButtonNew}
+          loading={this.state.inProgress}
+          loadingRight={true}
+          disabled={this.state.inProgress}
+        >
+          <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.createChannel')}</Text>
+        </Button>
+        <SubTitle>
+          {i18n.to('auth.alreadyHaveAccount', null, {
+            login: (
+              <Text style={[ComponentsStyle.linkNew, CommonStyle.fontL]} onPress={this.onPressBack}>
+                {i18n.t('auth.login')}
+              </Text>
+            ),
+          })}
+        </SubTitle>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <MindsLayout 
+        body={this.getFormBody()}
+        footer={this.getFormFooter()}
+      />
     );
   }
 
@@ -204,10 +231,21 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     flex: 1,
-    marginLeft: 10,
-    marginRight: 20,
   },
   button: {
     alignSelf: 'stretch',
   },
 });
+
+const TitleText = styled.Text`
+  ${CommonStyled.textTitle} 
+  color: ${(props) => props.theme['primary_text']};
+  align-self: center;
+`;
+
+const SubTitle = styled.Text`
+  ${CommonStyled.textSubTitle}
+  color: ${(props) => props.theme['secondary_text']};
+  align-self: center;
+  margin-top: 20px;
+`;

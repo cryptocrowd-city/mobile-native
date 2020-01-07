@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TouchableHighlight,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
 import TagSelect from '../../common/components/TagSelect';
-import TagInput from '../../common/components/TagInput';
 import i18n from '../../common/services/i18n.service';
-import { Button } from 'react-native-elements';
 import { ComponentsStyle } from '../../styles/Components';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import MindsLayout from '../../common/components/MindsLayout';
+import styled from 'styled-components';
+import { CommonStyled } from '../../styles/CommonStyled';
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
 
 @inject('hashtag')
 @observer
@@ -27,20 +26,22 @@ export default class HashtagsStepNew extends Component {
     });
   }
 
-  render() {
+  getBody = () => {
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={CS.onboardingSubtitle}>{i18n.t('onboarding.hashtagTitle')}</Text>
-          <Text style={CS.onboardingSteps}>{i18n.t('onboarding.hashtagStep')}</Text>
-          <Text style={[CS.linkNew, CS.marginTop2x, CS.marginBottom3x]}>{i18n.t('onboarding.hashtagInterest')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
+          <TitleText>{i18n.t('onboarding.hashtagTitle')}</TitleText>
+          <Step>{i18n.t('onboarding.step',{step: 1, total: 4})}</Step>
+          <SubTitle>{i18n.t('onboarding.hashtagInterest')}</SubTitle>
         </View>
         <View style={styles.hashtagContainer}>
           <TagSelect
-            tagStyle={[CS.backgroundWhite]}
+            tagStyle={styles.hashtag}
+            tagSelectedStyle={{borderColor: '#5DBAC0'}}
             textSelectedStyle={{color: '#5DBAC0'}}
-            textStyle={[CS.fontL, CS.colorDarkGreyed]}
+            textStyle={styles.hashtagText}
             containerStyle={[CS.rowJustifyStart]}
             onTagDeleted={this.props.hashtag.deselect}
             onTagAdded={this.props.hashtag.select}
@@ -48,65 +49,58 @@ export default class HashtagsStepNew extends Component {
             disableSort={true}
           />
         </View>
-        <View style={styles.bottom}>
-          <View style={[styles.containerButton]}>
-              <TouchableOpacity style={styles.skip} onPress={this.props.onNext}>
-                <Text style={styles.skipText}>{i18n.t('onboarding.skipStep')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity  style={styles.continue} onPress={this.props.onNext}>
-                <Text style={styles.continueText}>{i18n.t('continue')}</Text>
-              </TouchableOpacity>
-          </View>
-        </View>
+      </View>
+    );
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.props.onNext} />;
+  };
+
+  render() {
+    return (
+      <View style={CS.flexContainer}>
+        <MindsLayout
+          body={this.getBody()}
+          footer={this.getFooter()}
+        />
       </View>
     );
   }
 }
 
+const TitleText = styled.Text`
+  ${CommonStyled.textTitle} 
+  color: ${(props) => props.theme['primary_text']};
+`;
+
+const SubTitle = styled.Text`
+  ${CommonStyled.textSubTitle}
+  color: ${(props) => props.theme['primary_text']}
+  margin-bottom: 20px;
+  margin-top: 25;
+`;
+
+const Step = styled.Text`
+  ${CommonStyled.textSubTitle}
+  color: ${(props) => props.theme['secondary_text']}
+`;
+
 const styles = StyleSheet.create({
-  bottom: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 20,
-    marginBottom: 10,
-    marginTop: 10,
-    width: '80%',
-    justifyContent: 'flex-end',
-  },
-  containerButton: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  continue: {
-    backgroundColor: "#5DBAC0",
-    borderRadius: 2,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-  },
-  continueText: {
-    color: '#FFFFFF',
-    fontSize: 20,
-    lineHeight: 26,
-    fontWeight: "500",
-  },
-  skip: {
-    backgroundColor: "transparent",
-    borderRadius: 2,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-  },
-  skipText: {
-    color: '#9B9B9B',
-    fontSize: 16,
-    lineHeight: 21,
-  },
   hashtagContainer: {
-    flex: 4,
-    marginLeft: 20,
-    marginRight: 20,
+    flex: 3,
   },
   textsContainer: {
-    flex: 3,
+    flex: 4,
     alignItems: 'center',
+  },
+  hashtag: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#979797',
+  },
+  hashtagText: {
+    color: '#AEB0B8',
+    fontSize: 17,
   }
 });

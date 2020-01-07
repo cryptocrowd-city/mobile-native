@@ -11,7 +11,7 @@ export default class InfoPopup extends Component {
         pointerColor={'#4A90E2'}
         popover={<Text style={styles.textTooltip}>{this.props.info}</Text>}
         containerStyle={styles.tooltip}>
-        <IconMC name="information-variant" size={16} onPress={this.showPopup} />
+        <IconMC name="information-variant" size={16} onPress={this.showPopup} color="#AEB0B8"/>
       </Tooltip>
     );
   }

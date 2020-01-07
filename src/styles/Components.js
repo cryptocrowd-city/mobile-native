@@ -14,6 +14,12 @@ export const ComponentsStyle = StyleSheet.create({
     right:8,
     top:22
   },
+  loginInputIconNew: {
+    position: 'absolute',
+    right:8,
+    top:37,
+    color: '#404A4E'
+  },
   passwordinput: {
     borderColor: '#ECECEC',
     borderWidth: 1,
@@ -43,18 +49,16 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 4,
   },
   loginInputNew: {
-    color: '#4A4A4A',
+    color: '#FFFFFF',
     fontSize: 16,
     padding: 10,
     fontFamily: 'Roboto',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     height: 40,
     borderRadius: 2,
-    borderColor: '#D8D8D8',
+    borderColor: '#404A4E',
     borderWidth: 1,
     lineHeight: 21,
-    marginLeft: 20,
-    marginRight: 20
   },
   loginButton: {
     marginRight: 0,
@@ -64,11 +68,26 @@ export const ComponentsStyle = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 30,
   },
+  loginButtonNew: {
+    marginRight: 0,
+    marginLeft: 0,
+    backgroundColor: '#5DBAC0',
+    borderColor: '#5DBAC0',
+    borderWidth: 1,
+    borderRadius: 2,
+    height: 60,
+  },
   loginButtonText: {
     // fontFamily: 'Roboto',
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 1.25,
+    color: 'white',
+  },
+  loginButtonTextNew: {
+    // fontFamily: 'Roboto',
+    fontSize: 20,
+    fontWeight: '500',
     color: 'white',
   },
   registerCheckboxText: {
@@ -154,10 +173,13 @@ export const ComponentsStyle = StyleSheet.create({
   },
   linkNew: {
     color: '#0091FF',
+    fontSize: 15,
+    textDecorationLine: 'underline',
   },
   termsNew: {
-    color: '#4A4A4A',
-    paddingLeft: 8
+    color: '#AEB0B8',
+    paddingLeft: 10,
+    fontSize: 16,
   },
   preview: {
     height: 200,

@@ -131,7 +131,9 @@ export default class Wizard extends PureComponent<Props, State>  {
     let component;
     if (featuresService.has('onboarding-december-2019')) {
       component = (
-        <Rectangle>{this.props.steps[this.state.current].component}</Rectangle>
+        <View style={[CS.flexContainer]}>
+          {this.props.steps[this.state.current].component}
+        </View>
       );
     } else {
       component = (

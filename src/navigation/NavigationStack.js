@@ -51,6 +51,7 @@ import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
+import LoginScreenNew from '../auth/LoginScreenNew';
 
 /**
  * Main stack navigator
@@ -226,7 +227,7 @@ const RootStack = createStackNavigator(
  */
 const AuthStack = createStackNavigator({
   Login: {
-    screen: withErrorBoundaryScreen(LoginScreen),
+    screen: withErrorBoundaryScreen(LoginScreenNew),
   },
   Forgot: {
     screen: withErrorBoundaryScreen(ForgotScreen),

@@ -61,6 +61,8 @@ export default class OnboardingScreenNew extends Component {
 
   onNext = () => this.wizard.next();
 
+  onBack = () => this.wizard.previous();
+
   render() {
     const steps = [];
     if (!this.props.onboarding.progress) {
@@ -73,17 +75,17 @@ export default class OnboardingScreenNew extends Component {
     }
 
     if (!completed_items.some(r => r == 'suggested_hashtags')) {
-      steps.push({component: <HashtagsStepNew onNext={this.onNext}/>});
+      steps.push({component: <HashtagsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
 
-    steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext}/>});
+    steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     
     if (!completed_items.some(r => r == 'suggested_groups')) {
-      steps.push({component: <SuggestedGroupsStepNew/>});
+      steps.push({component: <SuggestedGroupsStepNew onBack={this.onBack}/>});
     }
 
     if (!completed_items.some(r => r == 'suggested_channels')) {
-      steps.push({component: <SuggestedChannelsStep/>});
+      steps.push({component: <SuggestedChannelsStep onBack={this.onBack}/>});
     }
 
     if (!completed_items.some(r => r == 'tokens_verification')) {

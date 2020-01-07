@@ -597,7 +597,7 @@ export const CommonStyle = StyleSheet.create({
     borderRadius: 2
   },
   onboardingTitle: {
-    color: '#A2A2A2',
+    color: '#AEB0B8',
     fontSize: 13,
     lineHeight: 18,
     letterSpacing: 2,

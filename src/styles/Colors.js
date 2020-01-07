@@ -12,3 +12,23 @@ export default colors = {
   explicit    : '#f44336',
   action      : 'rgb(96, 125, 139)',
 }
+
+export const LIGHT_THEME = {
+  name: 'LIGHT',
+  primary_background: '#252E31',
+  secondary_background: '#2D3639',
+  primary_text: '#FFFFFF',
+  secondary_text: '#AEB0B8',
+  button_backgound: '#5DBAC0',
+  button_border: '#404A4E',
+};
+
+export const DARK_THEME = {
+  name: 'DARK',
+  primary_background: '#252E31',
+  secondary_background: '#2D3639',
+  primary_text: '#FFFFFF',
+  secondary_text: '#AEB0B8',
+  button_backgound: '#5DBAC0',
+  button_border: '#404A4E',
+};

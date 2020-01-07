@@ -46,6 +46,7 @@ export default class Input extends Component {
       <PhoneInput
         {...this.props}
         style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
+        textStyle={{color: '#FFFFFF'}}
         onChangePhoneNumber={this.props.onChangeText}
         ref="phoneInput"
         placeholder=''
@@ -95,11 +96,11 @@ export default class Input extends Component {
   };
 
   render() {
-    const optional = (<Text style={[styles.optional, CommonStyle.marginBottom2x]}>{"Optional"}</Text>);
+    const optional = (<Text style={[styles.optional]}>{"Optional"}</Text>);
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.marginTop]}>
-        <View style={styles.row}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.marginBottom2x]}>
+        <View style={[styles.row, CommonStyle.marginBottom]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
@@ -118,17 +119,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   label: {
-    color: '#9B9B9B',
+    color: '#AEB0B8',
     fontSize: 14,
     fontFamily: 'Roboto',
-    marginLeft: 20,
-    marginRight: 5,
   },
   optional: {
-    color: '#9B9B9B',
+    color: '#AEB0B8',
     fontSize: 14,
     fontFamily: 'Roboto-Italic',
-    marginRight: 20,
   },
   shadow: {
     shadowColor: "#000",
