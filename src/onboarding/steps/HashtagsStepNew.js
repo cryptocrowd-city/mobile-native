@@ -88,10 +88,8 @@ const Step = styled.Text`
 
 const styles = StyleSheet.create({
   hashtagContainer: {
-    flex: 3,
   },
   textsContainer: {
-    flex: 4,
     alignItems: 'center',
   },
   hashtag: {

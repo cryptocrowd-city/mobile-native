@@ -33,7 +33,7 @@ const Container = styled.View`
 `;
 
 const Body = styled.View`
-  flex: 9;
+  flex: 10;
   flex-direction: row;
 	justify-content: center;
   background-color: ${(props) => props.theme[props.backgroundColor] || props.theme['primary_background']};
@@ -41,7 +41,7 @@ const Body = styled.View`
 `;
 
 const Footer = styled.View`
-  flex: 3;
+  flex: 2;
   flex-direction: row;
   justify-content: center;
   background-color: ${(props) => props.theme[props.backgroundColor] || props.theme['primary_background']};

@@ -148,7 +148,7 @@ export default class RegisterFormNew extends Component {
         <SubTitle>
           {i18n.to('auth.alreadyHaveAccount', null, {
             login: (
-              <Text style={[ComponentsStyle.linkNew, CommonStyle.fontL]} onPress={this.onPressBack}>
+              <Text style={[ComponentsStyle.linkNew, CommonStyle.fontL]} onPress={this.props.onBack}>
                 {i18n.t('auth.login')}
               </Text>
             ),
@@ -165,13 +165,6 @@ export default class RegisterFormNew extends Component {
         footer={this.getFormFooter()}
       />
     );
-  }
-
-  /**
-   * On press back
-   */
-  onPressBack() {
-    this.props.onBack();
   }
 
   /**

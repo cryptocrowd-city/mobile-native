@@ -9,7 +9,7 @@ import {
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
-import GroupsListItem from '../../groups/GroupsListItem';
+import GroupsListItemNew from '../../groups/GroupsListItemNew';
 import i18n from '../../common/services/i18n.service';
 
 import MindsLayout from '../../common/components/MindsLayout';
@@ -18,21 +18,28 @@ import { CommonStyled } from '../../styles/CommonStyled';
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
 
-@inject('groups', 'hashtag')
+@inject('discovery')
 @observer
 export default class SuggestedGroupsStepNew extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.props.discovery.init();
+  }
+  
   componentDidMount() {
-    this.props.hashtag.setAll(true);
-    this.props.groups.reset();
-    this.props.groups.loadList('suggested');
+    this.props.discovery.filters.setType('groups');
+    this.props.discovery.filters.setPeriod('30d');
   }
 
   renderGroup = (group) => {
-    return  <GroupsListItem key={group.guid} group={group}/>
+    return  <GroupsListItemNew key={group.guid} group={group}/>
   }
 
   getBody = () => {
+    const discovery = this.props.discovery;
+
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
@@ -43,7 +50,7 @@ export default class SuggestedGroupsStepNew extends Component {
           <SubTitle>{i18n.t('onboarding.suggestedGroupsDescription')}</SubTitle>
         </View>
         <ScrollView style={styles.groupContainer}>
-          {this.props.groups.list.entities.map(group => this.renderGroup(group))}
+          {discovery.listStore.entities.slice().map(group => this.renderGroup(group))}
         </ScrollView>
       </View>
     );
@@ -84,11 +91,9 @@ const Step = styled.Text`
 
 const styles = StyleSheet.create({
   groupContainer: {
-    flex: 3.5,
     width: '100%',
   },
   textsContainer: {
-    flex: 1.5,
     alignItems: 'center',
   },
 });

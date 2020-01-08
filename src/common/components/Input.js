@@ -48,6 +48,7 @@ export default class Input extends Component {
         style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
         textStyle={{color: '#FFFFFF'}}
         onChangePhoneNumber={this.props.onChangeText}
+        onEndEditing={this.props.onEndEditing}
         ref="phoneInput"
         placeholder=''
       />

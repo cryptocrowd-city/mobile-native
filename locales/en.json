@@ -264,7 +264,7 @@
     "removeOwner":"Remove as Owner",
     "makeModerator":"Make Moderator",
     "removeModerator":"Remove as Moderator",
-    "listMembersCount":"Members {{count}}",
+    "listMembersCount":"{{count}} members",
     "disableConversations":"Disable conversations",
     "enableConversations":"Enable conversations"
   },
