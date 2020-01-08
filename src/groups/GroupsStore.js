@@ -28,7 +28,7 @@ class GroupsStore {
   /**
    * Load list
    */
-  async loadList(filter = this.filter) {
+  async loadList() {
     if (this.list.cantLoadMore()) {
       return;
     }
@@ -37,7 +37,7 @@ class GroupsStore {
     this.list.setErrorLoading(false);
 
     try {
-      const data = await groupsService.loadList(filter, this.list.offset);
+      const data = await groupsService.loadList(this.filter, this.list.offset);
       data.entities = GroupModel.createMany(data.entities);
       this.list.setList(data);
       this.assignRowKeys(data);

@@ -4,7 +4,6 @@ import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
 import featuresService from '../common/services/features.service';
 import entitiesService from '../common/services/entities.service';
-import FeedsService from '../common/services/feeds.service';
 
 /**
  * Groups Service
@@ -15,20 +14,17 @@ class GroupsService {
    * Load groups
    */
   async loadList(filter, offset) {
-    let entities = '';
-    
-    if (filter !=='suggested') {
-      let endpoint = 'api/v1/groups/' + filter;
 
-      // abort previous call
-      abort('groups:list');
+    let endpoint = (filter === 'suggested') ?
+      'api/v2/entities/suggested/groups' + (stores.hashtag.all ? '/all' : '' ) :
+      'api/v1/groups/' + filter;
 
-      const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list')
+    // abort previous call
+    abort('groups:list');
 
-      entities = data.groups;
-    } else {
-      entities = this.loadSuggestedGroups();
-    }
+    const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list')
+
+    let entities = (filter === 'suggested') ? data.entities : data.groups;
 
     if (offset && entities) {
       entities.shift();
@@ -38,30 +34,6 @@ class GroupsService {
       entities: entities || [],
       offset: data['load-next'] || '',
     };
-  }
-
-  async loadSuggestedGroups(offset) {
-    const hashtags = '',
-      period = '30d',
-      all = '',
-      query = '',
-      nsfw = [],
-      feedsService = new FeedsService();
-
-    feedsService
-      .setEndpoint(`api/v2/feeds/global/top/groups`)
-      .setLimit(12)
-      .setAsActivities(true)
-      .setParams({
-        hashtags,
-        period,
-        all,
-        query,
-        nsfw,
-      });
-
-    await feedsService.fetchRemoteOrLocal();
-    return await feedsService.getEntities();
   }
 
   /**
