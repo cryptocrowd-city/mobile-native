@@ -3,14 +3,16 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  TouchableHighlight,
+  ActivityIndicator,
+  I18nManager,
   StyleSheet,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
-import GroupsListItemNew from '../../groups/GroupsListItemNew';
+import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
 import i18n from '../../common/services/i18n.service';
 
 import MindsLayout from '../../common/components/MindsLayout';
@@ -21,21 +23,32 @@ import OnboardingBackButton from '../OnboardingBackButton';
 
 @inject('discovery')
 @observer
-export default class SuggestedGroupsStepNew extends Component {
+export default class SuggestedChannelsStepNew extends Component {
 
   constructor(props) {
     super(props);
 
     this.props.discovery.init();
-  }
-  
-  componentDidMount() {
-    this.props.discovery.filters.setType('groups');
+    this.props.discovery.filters.setType('channels');
     this.props.discovery.filters.setPeriod('30d');
   }
 
-  renderGroup = (group) => {
-    return  <GroupsListItemNew key={group.guid} group={group}/>
+  /**
+   * Component did mount
+   */
+  componentDidMount() {
+    
+  }
+
+  /**
+   * Render user
+   */
+  renderUser = (user, index) => {
+    return <DiscoveryUserNew
+      row={{item: user}}
+      key={user.guid}
+      testID={`suggestedUser${index}`}
+    />
   }
 
   getBody = () => {
@@ -46,22 +59,25 @@ export default class SuggestedGroupsStepNew extends Component {
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
           <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <TitleText>{i18n.t('onboarding.groupTitle')}</TitleText>
-          <Step>{i18n.t('onboarding.step',{step: 3, total: 4})}</Step>
-          <SubTitle>{i18n.t('onboarding.suggestedGroupsDescription')}</SubTitle>
+          <TitleText>{i18n.t('onboarding.suggestedChannels')}</TitleText>
+          <Step>{i18n.t('onboarding.step',{step: 4, total: 4})}</Step>
+          <SubTitle>{i18n.t('onboarding.suggestedChannelsDescription')}</SubTitle>
         </View>
-        <ScrollView style={styles.groupContainer}>
-          {!discovery.listStore.loaded && <ActivityIndicator />}
-          {discovery.listStore.entities.slice().map(group => this.renderGroup(group))}
+        <ScrollView style={styles.channelContainer}>
+        {!discovery.listStore.loaded && <ActivityIndicator />}
+        {discovery.listStore.entities.slice().map((user, i) => this.renderUser(user, i))}
         </ScrollView>
       </View>
     );
-  };
+  }
 
   getFooter = () => {
     return <OnboardingButtons onNext={this.props.onNext} />;
-  };
+  }
 
+  /**
+   * Render
+   */
   render() {
     return (
       <View style={CS.flexContainer}>
@@ -92,7 +108,7 @@ const Step = styled.Text`
 `;
 
 const styles = StyleSheet.create({
-  groupContainer: {
+  channelContainer: {
     width: '100%',
   },
   textsContainer: {

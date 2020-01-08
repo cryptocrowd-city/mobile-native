@@ -17,7 +17,7 @@ export const ComponentsStyle = StyleSheet.create({
   loginInputIconNew: {
     position: 'absolute',
     right:8,
-    top:37,
+    top:30,
     color: '#404A4E'
   },
   passwordinput: {

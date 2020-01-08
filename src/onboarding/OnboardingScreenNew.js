@@ -22,7 +22,7 @@ import {
 
 import Wizard from '../common/components/Wizard';
 
-import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
+import SuggestedChannelsStepNew from './steps/SuggestedChannelsStepNew';
 import RewardsStep from './steps/RewardsStep';
 import WelcomeStepNew from './steps/WelcomeStepNew';
 import { CommonStyle as CS } from '../styles/Common';
@@ -34,7 +34,7 @@ import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 
 @observer
-@inject('onboarding', 'hashtag')
+@inject('onboarding', 'hashtag', 'theme')
 export default class OnboardingScreenNew extends Component {
 
   /**
@@ -81,11 +81,11 @@ export default class OnboardingScreenNew extends Component {
     steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     
     if (!completed_items.some(r => r == 'suggested_groups')) {
-      steps.push({component: <SuggestedGroupsStepNew onBack={this.onBack}/>});
+      steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
 
     if (!completed_items.some(r => r == 'suggested_channels')) {
-      steps.push({component: <SuggestedChannelsStep onBack={this.onBack}/>});
+      steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
 
     if (!completed_items.some(r => r == 'tokens_verification')) {
@@ -93,7 +93,7 @@ export default class OnboardingScreenNew extends Component {
     }
 
     return (
-      <SafeAreaView style={[CS.flexContainer, CS.backgroundWhite]}>
+      <SafeAreaView style={[CS.flexContainer, {backgroundColor: this.props.theme.theme.primary_background}]}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
           <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
         </KeyboardAvoidingView>
