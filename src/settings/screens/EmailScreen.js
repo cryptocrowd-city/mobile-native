@@ -91,7 +91,8 @@ export default class EmailScreen extends Component {
     // validate
     const error = validator.emailMessage(email);
     const message = error ? <FormValidationMessage>{error}</FormValidationMessage> : null;
-    const confirmNote = showConfirmNote ? <FormValidationMessage>{i18n.t('validation.confirmNote')}</FormValidationMessage> : null;
+    const confirmNote = showConfirmNote ? <FormValidationMessage>{i18n.t('emailConfirm.confirmNote')}</FormValidationMessage> : null;
+
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
         <FormLabel labelStyle={CommonStyle.fieldLabel}>{i18n.t('settings.currentEmail')}</FormLabel>

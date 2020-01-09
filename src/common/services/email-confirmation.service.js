@@ -12,6 +12,7 @@ class EmailConfirmationService {
       return Boolean(response && response.sent);
     } catch (err) {
       logService.exception('[EmailConfirmationService] send', err);
+      return false;
     }
   }
 }

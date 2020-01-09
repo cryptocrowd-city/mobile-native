@@ -1,38 +1,61 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, View, Alert } from 'react-native';
 import i18n from '../common/services/i18n.service';
-import Touchable from '../common/components/Touchable';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { CommonStyle as CS } from '../styles/Common';
+import { observer, inject } from 'mobx-react/native';
 
-export default class EmailConfirmation extends Component {
-  send = () => {
-    const sended = emailConfirmationService.send();
+/**
+ * Email Confirmation Message
+ */
+export default
+@inject('user')
+@observer
+class EmailConfirmation extends Component {
+  /**
+   * Send confirmation email
+   */
+  send = async () => {
+    if (await emailConfirmationService.send()) {
+      Alert.alert(i18n.t('emailConfirm.sent'));
+    } else {
+      Alert.alert(i18n.t('pleaseTryAgain'));
+    }
   };
 
-  state = {
-    dismiss: false,
-  };
-
+  /**
+   * Dismiss message
+   */
   dismiss = () => {
-    this.setState({dismiss: true});
+    this.props.user.setDissmis(true);
   };
 
+  /**
+   * Render
+   */
   render() {
     const show =
-      !this.state.dismiss && this.props.user.me.email_confirmed === false;
+      !this.props.user.emailConfirmMessageDismiss &&
+      this.props.user.me.email_confirmed === false;
+
+    if (!show) {
+      return null;
+    }
+
     return (
-      show && <View style={styles.container}>
-        <Text style={[styles.text, styles.paddingRight]}>{i18n.t('validation.confirm')}</Text>
-        <Touchable style={styles.paddingRight} onPress={this.send}>
-          <Text style={styles.textBold}>{i18n.t('validation.sendAgain')}</Text>
-        </Touchable>
+      <View style={styles.container}>
+        <Text style={[CS.fontM, CS.colorWhite]}>
+          {i18n.t('emailConfirm.confirm')}
+        </Text>
+        <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
+          {i18n.t('emailConfirm.sendAgain')}
+        </Text>
         <IonIcon
-          style={styles.modalCloseIcon}
+          style={[styles.modalCloseIcon, CS.colorWhite]}
           size={28}
           name="ios-close"
           onPress={this.dismiss}
-          color={'#FFF'}
         />
       </View>
     );
@@ -47,19 +70,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
   },
-  text: {
-    color: '#fff',
-  },
-  textBold: {
-    color: '#fff',
-    fontWeight: '700'
-  },
   modalCloseIcon: {
     position: 'absolute',
     alignSelf: 'flex-end',
     paddingRight: 15,
   },
-  paddingRight: {
-    paddingRight: 15,
-  }
 });
