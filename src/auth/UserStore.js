@@ -18,9 +18,7 @@ class UserStore {
 
   @action
   setDissmis(value) {
-    console.log(this.emailConfirmMessageDismiss)
     this.emailConfirmMessageDismiss = value;
-    console.log(this.emailConfirmMessageDismiss)
   }
 
   @action

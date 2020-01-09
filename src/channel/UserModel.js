@@ -63,7 +63,6 @@ export default class UserModel extends BaseModel {
   confirmEmail = async params => {
     // call any api endpoint with the param
     try {
-      console.log( { urn: this.urn, ...params });
       await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
       this.setEmailConfirmed(true);
       return true;
