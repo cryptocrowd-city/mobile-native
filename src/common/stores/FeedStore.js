@@ -48,7 +48,7 @@ export default class FeedStore {
   /**
    * Viewed store
    */
-  viewed = new Viewed;
+  viewed = new Viewed();
 
   /**
    * Metadata service
@@ -58,7 +58,7 @@ export default class FeedStore {
   /**
    * @var {FeedsService}
    */
-  feedsService = new FeedsService;
+  feedsService = new FeedsService();
 
   /**
    * The offset of the list
@@ -66,12 +66,19 @@ export default class FeedStore {
   scrollOffset = 0;
 
   /**
+   * Getter fallback index
+   */
+  get fallbackIndex() {
+    return this.feedsService.fallbackIndex;
+  }
+
+  /**
    * Class constructor
    * @param {boolean} includeMetadata include a metadata service
    */
   constructor(includeMetadata = false) {
     if (includeMetadata) {
-      this.metadataService = new MetadataService;
+      this.metadataService = new MetadataService();
     }
   }
 
@@ -276,6 +283,15 @@ export default class FeedStore {
    */
   setAsActivities(asActivities): FeedStore {
     this.feedsService.setAsActivities(asActivities);
+    return this;
+  }
+
+  /**
+   * Set fallback index
+   * @param {number} value
+   */
+  setFallbackIndex(value: number): FeedStore {
+    this.feedsService.setFallbackIndex(value);
     return this;
   }
 
