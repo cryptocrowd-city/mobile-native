@@ -29,8 +29,11 @@ class FeaturesService {
     const features = settings.features;
 
     Object.assign(features, MINDS_FEATURES);
-
+    
     this.features = features;
+    this.features['homepage-december-2019'] = true;
+    this.features['register_pages-december-2019'] = true;
+    this.features['onboarding-december-2019'] = true;
     this.loaded = true;
   }
 
