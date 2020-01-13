@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import {TextInput, Text, View, StyleSheet, TouchableOpacity, Modal, TouchableHighlight, Alert} from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
 import i18n from '../services/i18n.service';
-import { CommonStyle } from '../../styles/Common';
+import { CommonStyle as CS } from '../../styles/Common';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import PhoneInput from 'react-native-phone-input';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
+import PhoneValidationComponent from './PhoneValidationComponent';
 
 export default class Input extends Component {
 
@@ -43,14 +44,9 @@ export default class Input extends Component {
   
   phoneInput = () => {
     return (
-      <PhoneInput
-        {...this.props}
+      <PhoneValidationComponent 
         style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
         textStyle={{color: '#FFFFFF'}}
-        onChangePhoneNumber={this.props.onChangeText}
-        onEndEditing={this.props.onEndEditing}
-        ref="phoneInput"
-        placeholder=''
       />
     );
   }
@@ -68,7 +64,7 @@ export default class Input extends Component {
         placeholder=''
         onPress={this.showDatePicker}
       >
-        <Text>{this.props.value}</Text>
+        <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
       </TouchableOpacity>
       <DateTimePicker
         isVisible={this.state.datePickerVisible}
@@ -100,8 +96,8 @@ export default class Input extends Component {
     const optional = (<Text style={[styles.optional]}>{"Optional"}</Text>);
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.marginBottom2x]}>
-        <View style={[styles.row, CommonStyle.marginBottom]}>
+      <View style={[CS.flexContainer, CS.marginBottom2x]}>
+        <View style={[styles.row, CS.marginBottom]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}

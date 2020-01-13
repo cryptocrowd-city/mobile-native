@@ -24,7 +24,6 @@ import withdraw from './src/wallet/tokens/WithdrawStore';
 import hashtag from './src/common/stores/HashtagStore';
 import onboarding from './src/onboarding/OnboardingStore';
 import groupsBar from './src/groups/GroupsBarStore';
-import theme from './src/common/stores/ThemeStore';
 
 import sessionService from './src/common/services/session.service';
 import logService from './src/common/services/log.service';
@@ -61,7 +60,6 @@ const stores = {
   hashtag: new hashtag(),
   onboarding: new onboarding(),
   groupsBar: new groupsBar(),
-  theme: new theme(),
 };
 
 /**

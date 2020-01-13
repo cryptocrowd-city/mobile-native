@@ -15,9 +15,6 @@ import { CommonStyle as CS } from '../../styles/Common';
 import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
 import i18n from '../../common/services/i18n.service';
 
-import MindsLayout from '../../common/components/MindsLayout';
-import styled from 'styled-components';
-import { CommonStyled } from '../../styles/CommonStyled';
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
 
@@ -59,9 +56,14 @@ export default class SuggestedChannelsStepNew extends Component {
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
           <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <TitleText>{i18n.t('onboarding.suggestedChannels')}</TitleText>
-          <Step>{i18n.t('onboarding.step',{step: 4, total: 4})}</Step>
-          <SubTitle>{i18n.t('onboarding.suggestedChannelsDescription')}</SubTitle>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.suggestedChannels')}</Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 4, total: 4})}</Text>
+          <Text style={[
+            CS.subTitleText,
+            CS.colorPrimaryText,
+            CS.marginBottom4x,
+            CS.marginTop4x
+          ]}>{i18n.t('onboarding.suggestedChannelsDescription')}</Text>
         </View>
         <ScrollView style={styles.channelContainer}>
         {!discovery.listStore.loaded && <ActivityIndicator />}
@@ -80,32 +82,17 @@ export default class SuggestedChannelsStepNew extends Component {
    */
   render() {
     return (
-      <View style={CS.flexContainer}>
-        <MindsLayout
-          body={this.getBody()}
-          footer={this.getFooter()}
-        />
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+          {this.getBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemePrimary]}>
+          {this.getFooter()}
+        </View>
       </View>
     );
   }
 }
-
-const TitleText = styled.Text`
-  ${CommonStyled.textTitle} 
-  color: ${(props) => props.theme['primary_text']};
-`;
-
-const SubTitle = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['primary_text']}
-  margin-bottom: 20px;
-  margin-top: 25;
-`;
-
-const Step = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['secondary_text']}
-`;
 
 const styles = StyleSheet.create({
   channelContainer: {

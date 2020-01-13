@@ -2,12 +2,14 @@ import 'react-native';
 import React from 'react';
 import { Alert } from "react-native";
 import { shallow } from 'enzyme';
+import { Button, CheckBox } from 'react-native-elements';
 
 import RegisterFormNew from '../../src/auth/RegisterFormNew';
 import authService from '../../src/auth/AuthService';
 
 jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
+
 
 Alert.alert = jest.fn();
 
@@ -24,7 +26,7 @@ describe('RegisterFormNew component', () => {
   it('should renders correctly', () => {
     const userStore = new UserStore();
     const registerForm = renderer.create(
-      <RegisterFormNew user={userStore}/>
+      <RegisterFormNew user={userStore} />
     ).toJSON();
     expect(registerForm).toMatchSnapshot();
   });
@@ -36,7 +38,7 @@ describe('RegisterFormNew component', () => {
     const userStore = new UserStore();
 
     const wrapper = shallow(
-      <RegisterFormNew user={userStore}/>
+      <RegisterFormNew user={userStore} />
     );
 
     const render = wrapper.dive();
@@ -44,16 +46,13 @@ describe('RegisterFormNew component', () => {
     // find the text inputs
     let inputs = render.find('Input');
 
-    // should have 4 inputs
+    // should have 3 inputs
     expect(inputs.length).toBe(3);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
     inputs.at(1).simulate('changeText', 'my@mail.com');
     inputs.at(2).simulate('changeText', 'somepassword');
-
-    // simulate press checkbox
-    await render.find('CheckBox').at(0).simulate('press');
 
     // update component (password confirmation is shown after the password field is set)
     await wrapper.update();
@@ -63,6 +62,9 @@ describe('RegisterFormNew component', () => {
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
+
+    // simulate press checkbox
+    await render.find(CheckBox).at(0).simulate('press');
 
     // simulate press register
     await render.find('Button').at(0).simulate('press');
@@ -75,7 +77,7 @@ describe('RegisterFormNew component', () => {
     const userStore = new UserStore();
 
     const wrapper = shallow(
-      <RegisterFormNew user={userStore}/>
+      <RegisterFormNew user={userStore} />
     );
 
     const render = wrapper.dive();

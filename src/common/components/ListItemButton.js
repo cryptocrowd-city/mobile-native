@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 
 import {StyleSheet, TouchableOpacity} from 'react-native';
+import { CommonStyle as CS } from '../../styles/Common';
 
 export default class ListItemButton extends Component {
   render() {
     return (
         <TouchableOpacity
-          onPress={this.props.onPress}
+          {...this.props}
           borderRadius={2}
-          style={styles.container}>
+          style={[styles.container, CS.borderButton, CS.centered]}>
             {this.props.children}
         </TouchableOpacity>
     );
@@ -17,9 +18,7 @@ export default class ListItemButton extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
     borderRadius: 4,
-    borderColor: '#404A4E',
     borderWidth: 1,
     padding:4,
   }

@@ -11,7 +11,7 @@ import type UserModel from '../UserModel';
 
 import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';
-import { CommonStyle } from '../../styles/Common';
+import { CommonStyle as CS } from '../../styles/Common';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ListItemButton from '../../common/components/ListItemButton';
@@ -64,27 +64,27 @@ class SubscriptionButtonNew extends Component<PropsType> {
     if (channel.isOpen()) {
       if (channel.subscribed) {
         name = 'check';
-        color = '#4C92A4'
+        color = CS.colorDone;
       } else {
         name = 'add';
-        color = '#A5A5A5'
+        color = CS.colorActionNew;
       }
     } else {
       if (channel.subscribed) {
         name = 'check';
-        color = '#4C92A4'
+        color = CS.colorDone;
       } else if (channel.pending_subscribe) {
         name = 'close';
-        color = '#E02020'
+        color = CS.colorActionNew;
       } else {
         name = 'add';
-        color = '#A5A5A5'
+        color = CS.colorActionNew;
       }
     }
 
     return (
-      <ListItemButton onPress={this.onPress}>
-        <Icon name={name} size={26} color={color} />
+      <ListItemButton onPress={this.onPress} {...this.props}>
+        <Icon name={name} size={26} style={color} />
       </ListItemButton>
     )
   }

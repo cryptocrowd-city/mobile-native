@@ -15,7 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import authService from './AuthService';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
 
@@ -28,8 +28,6 @@ import TextInput from '../common/components/TextInput';
 
 import Input from '../common/components/Input';
 
-import styled from 'styled-components';
-import { CommonStyled } from '../styles/CommonStyled';
 import Button from '../common/components/Button';
 
 /**
@@ -63,15 +61,17 @@ export default class LoginForm extends Component {
    */
   render() {
     const msg = this.state.msg ? (
-      <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+      <Animatable.Text animation="bounceInLeft" style={[CS.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
     ) : null;
 
     return (
       <View 
-        style={[CommonStyle.flexContainer]}>
-        <ScrollView style={[CommonStyle.flexContainer]}>
+        style={[CS.flexContainer]}>
+        <ScrollView style={[CS.flexContainer]}>
           <View style={{flex:6}}>
-            <TitleText>{i18n.t('auth.login')}</TitleText>
+            <Text style={[CS.titleText, CS.colorPrimaryText]}>
+              {i18n.t('auth.login')}
+            </Text>
             {msg}
             <Input
               placeholder={i18n.t('auth.username')}
@@ -105,11 +105,11 @@ export default class LoginForm extends Component {
               loading={this.state.inProgress}
               loadingRight={true}
               disabled={this.state.inProgress}
-              disabledStyle={CommonStyle.backgroundTransparent}
+              disabledStyle={CS.backgroundTransparent}
               testID="loginButton">
               <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.login')}</Text>
             </Button>
-            <View style={CommonStyle.marginTop4x}>
+            <View style={CS.marginTop4x}>
               <Text style={[ComponentsStyle.linkNew]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
             </View>
           </View>
@@ -218,8 +218,3 @@ export default class LoginForm extends Component {
     }
   }
 }
-
-const TitleText = styled.Text`
-  ${CommonStyled.textTitle} 
-  color: ${(props) => props.theme['primary_text']}
-`;

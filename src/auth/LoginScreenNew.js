@@ -23,15 +23,12 @@ import * as Animatable from 'react-native-animatable';
 
 import LoginFormNew from './LoginFormNew';
 import VideoBackground from '../common/components/VideoBackground';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
-import MindsLayout from '../common/components/MindsLayout';
 import i18nService from '../common/services/i18n.service';
 
-import styled from 'styled-components';
-import { CommonStyled } from '../styles/CommonStyled';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -80,7 +77,7 @@ export default class LoginScreen extends Component {
 
   getLoginBody = () => {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.paddingTop2x]}>
+      <View style={[CS.flexContainer, CS.paddingTop2x]}>
         <Image
           source={require('./../assets/logos/bulb.png')}
           style={styles.bulb}
@@ -95,11 +92,11 @@ export default class LoginScreen extends Component {
 
   getLoginFooter = () => {
     return (
-      <TouchableOpacity onPress={this.onPressRegister}>
-        <FooterContainer>
-          <SubTitle>{i18nService.t('auth.haveAccount')}</SubTitle>
-          <TitleText>{i18nService.t('auth.createChannel')}</TitleText>
-        </FooterContainer>
+      <TouchableOpacity onPress={this.onPressRegister} testID="registerButton">
+        <View style={CS.flexColumnCentered}>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18nService.t('auth.haveAccount')}</Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18nService.t('auth.createChannel')}</Text>
+        </View>
       </TouchableOpacity>
     );
   };
@@ -110,16 +107,14 @@ export default class LoginScreen extends Component {
   render() {
     const resizeMode = 'center';
 
-    const body = this.getLoginBody();
-    const footer = this.getLoginFooter();
-
     return (
-      <View style={CommonStyle.flexContainer}>
-        <MindsLayout
-          body={body}
-          footer={footer}
-          footerBackground={'secondary_background'}
-        />
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+          {this.getLoginBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemeSecondary]}>
+          {this.getLoginFooter()}
+        </View>
       </View>
     );
   }
@@ -164,15 +159,3 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
 });
-
-const FooterContainer = styled.View`${CommonStyled.flexColumnCentered}`;
-
-const TitleText = styled.Text`
-  ${CommonStyled.textTitle} 
-  color: ${(props) => props.theme['primary_text']}
-`;
-
-const SubTitle = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['secondary_text']}
-`;

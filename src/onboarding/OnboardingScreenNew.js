@@ -34,7 +34,7 @@ import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 
 @observer
-@inject('onboarding', 'hashtag', 'theme')
+@inject('onboarding', 'hashtag')
 export default class OnboardingScreenNew extends Component {
 
   /**
@@ -68,7 +68,7 @@ export default class OnboardingScreenNew extends Component {
     if (!this.props.onboarding.progress) {
       return <CenteredLoading/>
     }
-    const completed_items = [];//this.props.onboarding.progress.completed_items;
+    const completed_items = this.props.onboarding.progress.completed_items;
 
     if (!completed_items.some(r => r == 'creator_frequency')) {
       steps.push({component: <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish}/>, ready: () => false});
@@ -78,7 +78,9 @@ export default class OnboardingScreenNew extends Component {
       steps.push({component: <HashtagsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
 
-    steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
+    if (!completed_items.some(r => r == 'tokens_verification')) {
+      steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
+    }
     
     if (!completed_items.some(r => r == 'suggested_groups')) {
       steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
@@ -88,12 +90,8 @@ export default class OnboardingScreenNew extends Component {
       steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
 
-    if (!completed_items.some(r => r == 'tokens_verification')) {
-      steps.push({component: <RewardsStep onJoin={() => this.wizard.next()}/>});
-    }
-
     return (
-      <SafeAreaView style={[CS.flexContainer, {backgroundColor: this.props.theme.theme.primary_background}]}>
+      <SafeAreaView style={[CS.flexContainer, CS.backgroundDarkThemePrimary]}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
           <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
         </KeyboardAvoidingView>

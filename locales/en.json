@@ -548,7 +548,8 @@
     "infoMobileNumber":"Mobile Phone Number",
     "infoLocation":"Location",
     "infoDateBirth":"Date of Birth",
-    "groupTitle":"Groups"
+    "groupTitle":"Groups",
+    "numberConfirmed":"Your number has beed validated"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
@@ -781,5 +782,6 @@
   "actions":"Actions",
   "requests":"Requests",
   "notAllowed":"You are not allowed",
-  "undo":"Undo"
+  "undo":"Undo",
+  "validate":"VALIDATE"
 }

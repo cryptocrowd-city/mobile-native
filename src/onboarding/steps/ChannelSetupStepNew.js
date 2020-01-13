@@ -9,9 +9,6 @@ import { ComponentsStyle } from '../../styles/Components';
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../common/components/Input';
 
-import MindsLayout from '../../common/components/MindsLayout';
-import styled from 'styled-components';
-import { CommonStyled } from '../../styles/CommonStyled';
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
 
@@ -122,16 +119,16 @@ export default class ChannelSetupStepNew extends Component {
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={[styles.textsContainer]}>
           <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <TitleText>{i18n.t('onboarding.infoTitle')}</TitleText>
-          <Step>{i18n.t('onboarding.step',{step: 2, total: 4})}</Step>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.infoTitle')}</Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 2, total: 4})}</Text>
         </View>
         <ScrollView style={styles.inputContainer}>
           <View style={[CS.padding4x, CS.flexContainer, CS.rowJustifyStart, CS.alignCenter, CS.marginBottom2x, CS.marginTop2x]}>
-            <Text style={[CS.fontXXL, {color: '#AEB0B8'}, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
+            <Text style={[CS.fontXXL, CS.colorSecondaryText, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
             <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
               <TouchableCustom
                 onPress={this.changeAvatarAction}
-                style={[styles.avatar, CS.marginLeft3x, CS.border, {borderColor: '#404A4E'} ]}
+                style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderButton ]}
                 disabled={this.saving}
                 testID="selectAvatar"
               >
@@ -139,7 +136,7 @@ export default class ChannelSetupStepNew extends Component {
 
                 <View style={[styles.tapOverlayView, hasAvatar ? null : CS.backgroundTransparent]}/>
                 <View style={[styles.overlay, CS.centered]}>
-                  <Icon name="md-cloud-upload" size={40} color={hasAvatar ? '#FFF': '#404A4E'} />
+                  <Icon name="md-cloud-upload" size={40} style={hasAvatar ? CS.colorWhite: CS.colorButton} />
                 </View>
                 {(this.store.isUploading && this.store.avatarProgress) ? <View style={[styles.tapOverlayView, styles.progress]}>
                   <Progress.Pie progress={this.store.avatarProgress} size={36} />
@@ -154,7 +151,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.phoneNumber}
             editable={true}
             optional={true}
-            info={"Tu hermana"}
+            info={"Info"}
             inputType={'phoneInput'}
           />
           <Input
@@ -163,7 +160,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.location}
             editable={true}
             optional={true}
-            info={"Tu hermana"}
+            info={"No Info"}
           />
           <Input
             placeholder={i18n.t('onboarding.infoDateBirth')}
@@ -171,7 +168,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.birthDate}
             editable={true}
             optional={true}
-            info={"Tu hermana"}
+            info={"No Info"}
             inputType={'dateInput'}
           />
         </ScrollView>
@@ -185,32 +182,17 @@ export default class ChannelSetupStepNew extends Component {
 
   render() {
     return (
-      <View style={CS.flexContainer}>
-        <MindsLayout
-          body={this.getBody()}
-          footer={this.getFooter()}
-        />
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+          {this.getBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemePrimary]}>
+          {this.getFooter()}
+        </View>
       </View>
     );
   }
 }
-
-const TitleText = styled.Text`
-  ${CommonStyled.textTitle} 
-  color: ${(props) => props.theme['primary_text']};
-`;
-
-const SubTitle = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['primary_text']}
-  margin-bottom: 20px;
-  margin-top: 25;
-`;
-
-const Step = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['secondary_text']}
-`;
 
 const styles = StyleSheet.create({
   containerButton: {

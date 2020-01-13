@@ -19,7 +19,7 @@ import {
   MINDS_CDN_URI
 } from '../config/Config';
 
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 
@@ -92,9 +92,9 @@ class DiscoveryUser extends Component {
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToChannel} {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
-        <View style={[CommonStyle.flexContainerCenter]}>
-          <Text style={[styles.body, styles.title]}>{row.item.name}</Text>
-          <Text style={[styles.body, styles.subtitle]}>@{row.item.username}</Text>
+        <View style={[CS.flexContainerCenter]}>
+          <Text style={[styles.body, styles.title, CS.colorPrimaryText]}>{row.item.name}</Text>
+          <Text style={[styles.body, styles.subtitle, CS.colorSecondaryText]}>@{row.item.username}</Text>
         </View>
         {this.renderRightButton()}
       </TouchableOpacity>
@@ -118,19 +118,15 @@ const styles = {
     // flex: 1,
   },
   title: {
-    color: '#FFF',
     fontSize: 17,
     fontWeight: '500'
   },
   subtitle: {
-    color: '#AEB0B8',
     fontSize: 14,
   },
   avatar: {
     height: 58,
     width: 58,
     borderRadius: 29,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
   }
 }

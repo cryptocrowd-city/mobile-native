@@ -15,10 +15,8 @@ import {
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS} from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
-import { CommonStyled } from '../styles/CommonStyled';
-import styled from 'styled-components';
 
 import { observer, inject } from 'mobx-react/native';
 
@@ -29,9 +27,9 @@ import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
 import Input from '../common/components/Input';
-import MindsLayout from '../common/components/MindsLayout';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '../common/components/Button';
+import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
 
 /**
  * Register Form
@@ -77,14 +75,16 @@ export default class RegisterFormNew extends Component {
 
   getFormBody = () => {
     return (
-      <ScrollView style={[CommonStyle.flexContainer]}>
-        <View style={CommonStyle.marginBottom3x}>
+      <ScrollView style={[CS.flexContainer, CS.marginTop2x]}>
+        <View style={CS.marginBottom3x}>
           <TouchableOpacity onPress={this.props.onBack}>
-            <Icon size={34} name="keyboard-arrow-left" color='#777777'/>
+            <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
           </TouchableOpacity>
         </View>
-        <View style={CommonStyle.marginBottom3x}>
-          <TitleText>{i18n.t('auth.join')}</TitleText>
+        <View style={[CS.marginBottom3x, CS.centered]}>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('auth.join')}
+          </Text>
         </View>
         <View>
           <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
@@ -96,27 +96,31 @@ export default class RegisterFormNew extends Component {
           onChangeText={this.setUsername}
           value={this.state.username}
           editable={!this.state.inProgress}
+          testID="registerUsernameInput"
         />
         <Input
           placeholder={i18n.t('auth.email')}
           onChangeText={this.setEmail}
           value={this.state.email}
           editable={!this.state.inProgress}
+          testID="registerEmailInput"
         />
         <Input
           placeholder={i18n.t('auth.password')}
-          secureTextEntry={true}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
           onChangeText={this.setPassword}
           value={this.state.password}
           editable={!this.state.inProgress}
+          testID="registerPasswordInput"
         />
         { this.state.password ?
           <Input
             placeholder={i18n.t('auth.confirmpassword')}
-            secureTextEntry={true}
+            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
             onChangeText={this.setConfirmPassword}
             value={this.state.confirmPassword}
             editable={!this.state.inProgress}
+            testID="registerPasswordConfirmInput"
           /> : null }
         <CheckBox
           right
@@ -127,6 +131,7 @@ export default class RegisterFormNew extends Component {
           textStyle={ComponentsStyle.registerCheckboxTextNew}
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
           disabled={this.state.inProgress}
+          testID="checkbox"
         />
       </ScrollView>
     );
@@ -134,7 +139,7 @@ export default class RegisterFormNew extends Component {
 
   getFormFooter = () => {
     return (
-      <View style={[styles.containerButton]}>
+      <View style={CS.flexContainer}>
         <Button
           onPress={() => this.onPressRegister()}
           borderRadius={2}
@@ -142,28 +147,34 @@ export default class RegisterFormNew extends Component {
           loading={this.state.inProgress}
           loadingRight={true}
           disabled={this.state.inProgress}
+          text={''}
+          testID="registerCreateButton"
         >
           <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.createChannel')}</Text>
         </Button>
-        <SubTitle>
+        <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.centered, CS.marginTop2x]}>
           {i18n.to('auth.alreadyHaveAccount', null, {
             login: (
-              <Text style={[ComponentsStyle.linkNew, CommonStyle.fontL]} onPress={this.props.onBack}>
+              <Text style={[ComponentsStyle.linkNew, CS.fontL]} onPress={this.props.onBack}>
                 {i18n.t('auth.login')}
               </Text>
             ),
           })}
-        </SubTitle>
+        </Text>
       </View>
     );
   };
 
   render() {
     return (
-      <MindsLayout 
-        body={this.getFormBody()}
-        footer={this.getFormFooter()}
-      />
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+          {this.getFormBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemePrimary]}>
+          {this.getFormFooter()}
+        </View>
+      </View>
     );
   }
 
@@ -211,34 +222,3 @@ export default class RegisterFormNew extends Component {
     this.setState({ inProgress: false });
   }
 }
-
-const styles = StyleSheet.create({
-  joinText: {
-    color: '#4A4A4A',
-    fontFamily: 'Roboto',
-    fontSize: 36,
-    fontWeight: 'bold',
-    lineHeight: 37,
-    textAlign: 'center',
-    paddingTop: 25,
-  },
-  containerButton: {
-    flex: 1,
-  },
-  button: {
-    alignSelf: 'stretch',
-  },
-});
-
-const TitleText = styled.Text`
-  ${CommonStyled.textTitle} 
-  color: ${(props) => props.theme['primary_text']};
-  align-self: center;
-`;
-
-const SubTitle = styled.Text`
-  ${CommonStyled.textSubTitle}
-  color: ${(props) => props.theme['secondary_text']};
-  align-self: center;
-  margin-top: 20px;
-`;

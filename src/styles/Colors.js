@@ -21,6 +21,8 @@ export const LIGHT_THEME = {
   secondary_text: '#AEB0B8',
   button_backgound: '#5DBAC0',
   button_border: '#404A4E',
+  done: '#4C92A4',
+  action: '#A5A5A5',
 };
 
 export const DARK_THEME = {
@@ -31,4 +33,6 @@ export const DARK_THEME = {
   secondary_text: '#AEB0B8',
   button_backgound: '#5DBAC0',
   button_border: '#404A4E',
+  done: '#4C92A4',
+  action: '#A5A5A5',
 };

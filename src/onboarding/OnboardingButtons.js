@@ -12,7 +12,8 @@ export default class OnboardingButtons extends Component {
         <Button
           onPress={this.props.onNext}
           borderRadius={2}
-          containerStyle={ComponentsStyle.loginButtonNew}>
+          containerStyle={ComponentsStyle.loginButtonNew}
+          testID="wizardNext">
           <Text style={ComponentsStyle.loginButtonTextNew}>
             {i18n.t('continue')}
           </Text>

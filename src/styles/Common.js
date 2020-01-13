@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import colors from './Colors';
+import colors, {DARK_THEME} from './Colors';
 
 /**
  * Styles
@@ -59,6 +59,10 @@ export const CommonStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
+  rowStretch: {
+    alignItems: 'stretch',
+    flexDirection: 'row',
+  },
   // align
   alignCenter: {
     alignItems: 'center'
@@ -113,6 +117,21 @@ export const CommonStyle = StyleSheet.create({
   colorLightGreyed: {
     color: colors.lightGreyed
   },
+  colorPrimaryText: {
+    color: DARK_THEME.primary_text
+  },
+  colorSecondaryText: {
+    color: DARK_THEME.secondary_text
+  },
+  colorButton: {
+    color: DARK_THEME.button_border
+  },
+  colorDone: {
+    color: DARK_THEME.done
+  },
+  colorActionNew: {
+    color: DARK_THEME.action
+  },
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'
@@ -153,6 +172,12 @@ export const CommonStyle = StyleSheet.create({
   backgroundTertiary: {
     backgroundColor: colors.tertiary
   },
+  backgroundDarkThemePrimary: {
+    backgroundColor: DARK_THEME.primary_background,
+  },
+  backgroundDarkThemeSecondary: {
+    backgroundColor: DARK_THEME.secondary_background,
+  },
   // borders
   borderWhite: {
     borderColor: 'white'
@@ -189,6 +214,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderTransparent: {
     borderColor: 'transparent'
+  },
+  borderButton: {
+    borderColor: DARK_THEME.button_border
   },
   // margin
   margin4x: {
@@ -237,6 +265,9 @@ export const CommonStyle = StyleSheet.create({
     marginLeft: 5
   },
   // margin bottom
+  marginBottom4x: {
+    marginBottom: 20
+  },
   marginBottom3x: {
     marginBottom: 15
   },
@@ -617,5 +648,33 @@ export const CommonStyle = StyleSheet.create({
     color: '#9B9B9B',
     fontSize: 13,
     lineHeight: 20
+  },
+  mindsLayoutBody: {
+    flex: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  mindsLayoutFooter: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  titleText: {
+    fontFamily: 'Roboto',
+    fontSize: 28,
+    fontWeight: 'bold',
+    lineHeight: 44,
+  },
+  subTitleText: {
+    fontFamily: 'Roboto',
+    fontSize: 17,
+    fontWeight: '500',
+    lineHeight: 23,
   }
 });

@@ -36,7 +36,7 @@ class GroupsListItemNew extends Component {
       <ListItem
         containerStyle={styles.container}
         title={this.props.group.name}
-        titleStyle={styles.title}
+        titleStyle={[styles.title, CS.colorPrimaryText]}
         keyExtractor={item => item.rowKey}
         avatar={
           <FastImage
@@ -50,7 +50,7 @@ class GroupsListItemNew extends Component {
           />
         }
         subtitle={i18n.t('groups.listMembersCount', {count: abbrev(this.props.group['members:count'])})}
-        subtitleStyle={styles.subtitle}
+        subtitleStyle={[styles.subtitle, CS.colorSecondaryText]}
         hideChevron={!button}
         rightIcon={button}
       />
@@ -79,8 +79,8 @@ class GroupsListItemNew extends Component {
 
   getJoinButton = () => {
     return (
-      <ListItemButton onPress={this.join}>
-        <Icon name="add" size={26} color={'#A5A5A5'} />
+      <ListItemButton onPress={this.join} testID={`suggestedGroup${this.props.index}`}>
+        <Icon name="add" size={26} style={CS.colorActionNew} />
       </ListItemButton>
     );
   };
@@ -88,7 +88,7 @@ class GroupsListItemNew extends Component {
   getLeaveButton = () => {
     return (
       <ListItemButton onPress={this.leave}>
-        <Icon name="check" size={26} color={'#4C92A4'} />
+        <Icon name="check" size={26} style={CS.colorDone} />
       </ListItemButton>
     );
   }
@@ -115,12 +115,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   title: {
-    color: '#FFF',
     fontSize: 17,
     fontWeight: '500'
   },
   subtitle: {
-    color: '#AEB0B8',
     fontSize: 14,
   }
 });

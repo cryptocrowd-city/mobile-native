@@ -22,10 +22,7 @@ import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
-import TriangleCornerYellow from '../common/components/shapes/TriangleCornerYellow';
 import RegisterFormNew from './RegisterFormNew';
-import TriangleCorner from '../common/components/shapes/TriangleCorner';
-import Rectangle from '../common/components/shapes/Rectangle';
 
 export default class RegisterScreenNew extends Component {
 
