@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import colors, {DARK_THEME} from './Colors';
+import colors, {DARK_THEME, LIGHT_THEME} from './Colors';
 
 /**
  * Styles
@@ -118,19 +118,19 @@ export const CommonStyle = StyleSheet.create({
     color: colors.lightGreyed
   },
   colorPrimaryText: {
-    color: DARK_THEME.primary_text
+    color: LIGHT_THEME.primary_text
   },
   colorSecondaryText: {
-    color: DARK_THEME.secondary_text
+    color: LIGHT_THEME.secondary_text
   },
   colorButton: {
-    color: DARK_THEME.button_border
+    color: LIGHT_THEME.button_border
   },
   colorDone: {
-    color: DARK_THEME.done
+    color: LIGHT_THEME.done
   },
   colorActionNew: {
-    color: DARK_THEME.action
+    color: LIGHT_THEME.action
   },
   // backgrounds
   backgroundWhite: {
@@ -173,10 +173,10 @@ export const CommonStyle = StyleSheet.create({
     backgroundColor: colors.tertiary
   },
   backgroundDarkThemePrimary: {
-    backgroundColor: DARK_THEME.primary_background,
+    backgroundColor: LIGHT_THEME.primary_background,
   },
   backgroundDarkThemeSecondary: {
-    backgroundColor: DARK_THEME.secondary_background,
+    backgroundColor: LIGHT_THEME.secondary_background,
   },
   // borders
   borderWhite: {
@@ -216,7 +216,7 @@ export const CommonStyle = StyleSheet.create({
     borderColor: 'transparent'
   },
   borderButton: {
-    borderColor: DARK_THEME.button_border
+    borderColor: LIGHT_THEME.button_border
   },
   // margin
   margin4x: {

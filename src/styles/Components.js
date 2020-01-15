@@ -3,7 +3,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import colors from './Colors';
+import colors, {DARK_THEME, LIGHT_THEME} from './Colors';
 
 /**
  * Styles
@@ -49,7 +49,7 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 4,
   },
   loginInputNew: {
-    color: '#FFFFFF',
+    color: LIGHT_THEME.primary_text,
     fontSize: 16,
     padding: 10,
     fontFamily: 'Roboto',
