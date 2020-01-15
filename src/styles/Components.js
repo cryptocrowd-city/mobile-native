@@ -56,7 +56,7 @@ export const ComponentsStyle = StyleSheet.create({
     backgroundColor: 'transparent',
     height: 40,
     borderRadius: 2,
-    borderColor: '#404A4E',
+    borderColor: LIGHT_THEME.button_border,
     borderWidth: 1,
     lineHeight: 21,
   },
