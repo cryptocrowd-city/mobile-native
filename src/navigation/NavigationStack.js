@@ -52,6 +52,7 @@ import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import LoginScreenNew from '../auth/LoginScreenNew';
+import featuresService from '../common/services/features.service';
 
 /**
  * Main stack navigator
@@ -227,7 +228,9 @@ const RootStack = createStackNavigator(
  */
 const AuthStack = createStackNavigator({
   Login: {
-    screen: withErrorBoundaryScreen(LoginScreenNew),
+    screen: withErrorBoundaryScreen(
+      featuresService.has('homepage-december-2019') ? LoginScreenNew : LoginScreen
+    ),
   },
   Forgot: {
     screen: withErrorBoundaryScreen(ForgotScreen),

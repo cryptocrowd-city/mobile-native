@@ -21,103 +21,86 @@ describe('Register Flow', () => {
 
   it('should register correctly', async () => {
 
-    try {
-      console.log('registering', username);
+    console.log('registering', username);
 
-      // login shoulf be visible
-      await waitFor(element(by.id('usernameInput')))
-        .toBeVisible()
-        .withTimeout(10000);
+    // login shoulf be visible
+    await waitFor(element(by.id('usernameInput')))
+      .toBeVisible()
+      .withTimeout(10000);
 
-      await element(by.id('registerButton')).tap();
+    await element(by.id('registerButton')).tap();
 
-      // email filed should be visible
-      await waitFor(element(by.id('checkbox')))
-        .toBeVisible()
-        .withTimeout(10000);
+    // email filed should be visible
+    await waitFor(element(by.id('registerEmailInput')))
+      .toBeVisible()
+      .withTimeout(2000);
 
-      // disable sync to prevent long waits for animations
-      await device.disableSynchronization();
+    // disable sync to prevent long waits for animations
+    await device.disableSynchronization();
 
-      // fill the form
-      await element(by.id('registerUsernameInput')).typeText(username);
-      await element(by.id('registerEmailInput')).typeText('mye2e@minds.com');
-      await element(by.id('registerPasswordInput')).typeText(password);
-      await element(by.id('registerPasswordConfirmInput')).typeText(password);
+    // accept terms
+    await element(by.id('checkbox')).atIndex(0).tapAtPoint({x:30, y:30});
 
-      // accept terms
-      const checkbox = await element(by.id('checkbox')).atIndex(0);
-      await checkbox.tap();
-      await checkbox.tap();
+    // fill the form
+    await element(by.id('registerUsernameInput')).typeText(username);
+    await element(by.id('registerEmailInput')).typeText('mye2e@minds.com');
+    await element(by.id('registerPasswordInput')).typeText(password);
+    await element(by.id('registerPasswordConfirmInput')).typeText(password);
 
-      // press register
-      const registerButton = await element(by.id('registerCreateButton'));
-      await registerButton.tap();
-      //await registerButton.tap();
+    // press register
+    const registerButton = await element(by.id('registerCreateButton'));
+    await registerButton.tap();
+    await registerButton.tap();
 
-      await device.enableSynchronization();
+    await device.enableSynchronization();
 
-      // is the onboarding visible? (in new onboarding this is welcome step)
-      await waitFor(element(by.id('artTestID')))
-        .toBeVisible()
-        .withTimeout(5000);
+    // is the onboarding visible?
+    await waitFor(element(by.id('artTestID')))
+      .toBeVisible()
+      .withTimeout(5000);
 
-      // move from welcome to hashtag
-      await element(by.id('wizardNext')).tap();
+    // select art hashtag
+    await element(by.id('artTestID')).tap();
 
-      // select art hashtag
-      await element(by.id('artTestID')).tap();
+    // move to next step
+    await element(by.id('wizardNext')).tap();
 
-      // move to next step
-      await element(by.id('wizardNext')).tap();
+    // wait for the suggested users list
+    await waitFor(element(by.id('suggestedUser0SubscriptionButton')))
+      .toBeVisible()
+      .withTimeout(10000);
 
-      // wait for the channel setup
-      await waitFor(element(by.id('selectAvatar')))
-        .toBeVisible()
-        .withTimeout(10000);
+    // subscribe to the first user of the list
+    await element(by.id('suggestedUser0SubscriptionButton')).tap();
 
-      await waitFor(element(by.id('RewardsOnboarding')))
-        .toBeVisible()
-        .withTimeout(10000);
+    // move to next step
+    await element(by.id('wizardNext')).tap();
 
-      // tap the select avatar button
-      //await element(by.id('selectAvatar')).tap();
+    // wait for the channel setup
+    await waitFor(element(by.id('selectAvatar')))
+      .toBeVisible()
+      .withTimeout(10000);
 
-      //await sleep(3000);
+    // tap the select avatar button
+    await element(by.id('selectAvatar')).tap();
 
-      // move to next step
-      await element(by.id('wizardNext')).tap();
+    await sleep(3000);
 
-      // wait for the suggested groups list
-      await waitFor(element(by.id('suggestedGroup0')))
-        .toBeVisible()
-        .withTimeout(10000);
+    // move to next step
+    await element(by.id('wizardNext')).tap();
 
-      // subscribe to the first user of the list
-      await element(by.id('suggestedGroup0')).tap();
+     // wait for the channel setup
+    await waitFor(element(by.id('RewardsOnboarding')))
+      .toBeVisible()
+      .withTimeout(10000);
 
-      // move to next step
-      await element(by.id('wizardNext')).tap();
+    // move to next step
+    await element(by.id('wizardNext')).tap();
 
-      // wait for the suggested users list
-      await waitFor(element(by.id('suggestedUser0SubscriptionButton')))
-        .toBeVisible()
-        .withTimeout(10000);
-
-      // subscribe to the first user of the list
-      await element(by.id('suggestedUser0SubscriptionButton')).tap();
-
-      // move to next step
-      await element(by.id('wizardNext')).tap();
-
-      // newsfeed should be visible
-      await waitFor(element(by.id('NewsfeedScreen')))
-        .toBeVisible()
-        .withTimeout(10000);
-    } catch(err) {
-      await deleteUser(username, password);
-      throw(err);
-    }
+    // newsfeed should be visible
+    await waitFor(element(by.id('NewsfeedScreen')))
+      .toBeVisible()
+      .withTimeout(10000);
   });
 
 });
