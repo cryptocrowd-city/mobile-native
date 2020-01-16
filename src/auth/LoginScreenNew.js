@@ -109,10 +109,10 @@ export default class LoginScreen extends Component {
 
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
           {this.getLoginBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemeSecondary]}>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundThemeSecondary]}>
           {this.getLoginFooter()}
         </View>
       </View>

@@ -91,7 +91,7 @@ export default class OnboardingScreenNew extends Component {
     }
 
     return (
-      <SafeAreaView style={[CS.flexContainer, CS.backgroundDarkThemePrimary]}>
+      <SafeAreaView style={[CS.flexContainer, CS.backgroundThemePrimary]}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
           <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
         </KeyboardAvoidingView>

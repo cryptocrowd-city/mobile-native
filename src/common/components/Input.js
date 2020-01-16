@@ -32,7 +32,7 @@ export default class Input extends Component {
     return (
       <TextInput
         {...this.props}
-        style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
+        style={[ComponentsStyle.loginInputNew, this.props.style]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
@@ -45,7 +45,7 @@ export default class Input extends Component {
   phoneInput = () => {
     return (
       <PhoneValidationComponent 
-        style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
+        style={[ComponentsStyle.loginInputNew, this.props.style]}
         textStyle={{color: '#FFFFFF'}}
       />
     );
@@ -56,7 +56,7 @@ export default class Input extends Component {
       <View>
       <TouchableOpacity
         {...this.props}
-        style={[ComponentsStyle.loginInputNew, styles.shadow, this.props.style]}
+        style={[ComponentsStyle.loginInputNew, this.props.style]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}

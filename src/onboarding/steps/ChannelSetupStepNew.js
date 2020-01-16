@@ -183,10 +183,10 @@ export default class ChannelSetupStepNew extends Component {
   render() {
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
           {this.getBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemePrimary]}>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
           {this.getFooter()}
         </View>
       </View>

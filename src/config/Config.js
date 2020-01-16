@@ -39,9 +39,6 @@ export const CODE_PUSH_TOKEN = '';
  */
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
-  'homepage-december-2019': true,
-  'register_pages-december-2019': true,
-  'onboarding-december-2019': true,
 };
 
 /**

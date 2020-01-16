@@ -23,7 +23,7 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
           "paddingTop": 20,
         },
         Object {
-          "backgroundColor": "#252E31",
+          "backgroundColor": "#F5F5F5",
         },
       ]
     }
@@ -74,7 +74,7 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
                     "fontSize": 34,
                   },
                   Object {
-                    "color": "#AEB0B8",
+                    "color": "#939397",
                   },
                   Object {
                     "fontFamily": "Material Icons",
@@ -114,7 +114,7 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
                   "lineHeight": 44,
                 },
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "#4F4F50",
                 },
               ]
             }
@@ -195,25 +195,15 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "borderColor": "#404A4E",
+                  "borderColor": "#D8D8D8",
                   "borderRadius": 2,
                   "borderWidth": 1,
-                  "color": "#FFFFFF",
+                  "color": "#4F4F50",
                   "fontFamily": "Roboto",
                   "fontSize": 16,
                   "height": 40,
                   "lineHeight": 21,
                   "padding": 10,
-                },
-                Object {
-                  "elevation": 1,
-                  "shadowColor": "#000",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.1,
-                  "shadowRadius": 1,
                 },
                 undefined,
               ]
@@ -284,25 +274,15 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "borderColor": "#404A4E",
+                  "borderColor": "#D8D8D8",
                   "borderRadius": 2,
                   "borderWidth": 1,
-                  "color": "#FFFFFF",
+                  "color": "#4F4F50",
                   "fontFamily": "Roboto",
                   "fontSize": 16,
                   "height": 40,
                   "lineHeight": 21,
                   "padding": 10,
-                },
-                Object {
-                  "elevation": 1,
-                  "shadowColor": "#000",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.1,
-                  "shadowRadius": 1,
                 },
                 undefined,
               ]
@@ -374,25 +354,15 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "borderColor": "#404A4E",
+                  "borderColor": "#D8D8D8",
                   "borderRadius": 2,
                   "borderWidth": 1,
-                  "color": "#FFFFFF",
+                  "color": "#4F4F50",
                   "fontFamily": "Roboto",
                   "fontSize": 16,
                   "height": 40,
                   "lineHeight": 21,
                   "padding": 10,
-                },
-                Object {
-                  "elevation": 1,
-                  "shadowColor": "#000",
-                  "shadowOffset": Object {
-                    "height": 1,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.1,
-                  "shadowRadius": 1,
                 },
                 undefined,
               ]
@@ -497,12 +467,12 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
           "flex": 2,
           "flexDirection": "row",
           "justifyContent": "center",
-          "paddingBottom": 10,
+          "paddingBottom": 20,
           "paddingHorizontal": 20,
           "paddingTop": 20,
         },
         Object {
-          "backgroundColor": "#252E31",
+          "backgroundColor": "#F5F5F5",
         },
       ]
     }
@@ -580,7 +550,7 @@ exports[`RegisterFormNew component should renders correctly 1`] = `
               "lineHeight": 23,
             },
             Object {
-              "color": "#AEB0B8",
+              "color": "#939397",
             },
             Object {
               "alignContent": "center",

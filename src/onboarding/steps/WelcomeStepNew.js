@@ -67,10 +67,10 @@ export default class WelcomeStep extends Component {
   render() {
     return (
       <View style={[CS.flexContainerCenter]} testID="artTestID">
-        <View style={[CS.mindsLayoutBody, CS.backgroundDarkThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
           {this.getBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundDarkThemePrimary]}>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
           {this.getFooter()}
         </View>
       </View>

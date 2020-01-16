@@ -172,10 +172,10 @@ export const CommonStyle = StyleSheet.create({
   backgroundTertiary: {
     backgroundColor: colors.tertiary
   },
-  backgroundDarkThemePrimary: {
+  backgroundThemePrimary: {
     backgroundColor: LIGHT_THEME.primary_background,
   },
-  backgroundDarkThemeSecondary: {
+  backgroundThemeSecondary: {
     backgroundColor: LIGHT_THEME.secondary_background,
   },
   // borders
@@ -663,7 +663,7 @@ export const CommonStyle = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   titleText: {
     fontFamily: 'Roboto',
