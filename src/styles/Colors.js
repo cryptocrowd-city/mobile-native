@@ -16,7 +16,7 @@ export default colors = {
 export const LIGHT_THEME = {
   name: 'LIGHT',
   primary_background: '#F5F5F5',
-  secondary_background: '#EDEDED',
+  secondary_background: '#EFEFEF',
   primary_text: '#4F4F50',
   secondary_text: '#939397',
   button_backgound: '#5DBAC0',

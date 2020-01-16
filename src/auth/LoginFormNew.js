@@ -61,7 +61,7 @@ export default class LoginForm extends Component {
    */
   render() {
     const msg = this.state.msg ? (
-      <Animatable.Text animation="bounceInLeft" style={[CS.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+      <Animatable.Text animation="bounceInLeft" style={[CS.subTitleText, CS.colorSecondaryText, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
     ) : null;
 
     return (
