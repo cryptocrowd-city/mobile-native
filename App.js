@@ -324,7 +324,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user} key="tosModal"/>
+      <TosModal user={stores.user} key="tosModal" mindsServiceStore={stores.mindsServiceStore}/>
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];
