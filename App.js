@@ -153,6 +153,7 @@ sessionService.onLogout(() => {
   stores.notifications.clearLocal();
   stores.groupsBar.clearLocal();
   translationService.purgeLanguagesCache();
+  stores.mindsServiceStore.clear()
 });
 
 // disable yellow boxes

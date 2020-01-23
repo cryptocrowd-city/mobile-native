@@ -2,20 +2,16 @@ import mindsService from "../services/minds.service";
 
 
 export default class MindsServiceStore {
-  loading = false;
   promise;
 
   async getSettings() {
-    if (this.loading) {
-      const result = await this.promise;
-      this.loading = false;
-      return result;
+    if (!this.promise) {
+      this.promise = mindsService.getSettings();
     }
+    return this.promise;
+  }
 
-    this.loading = true;
-
-    this.promise = mindsService.getSettings();
-
-    return await this.promise;
+  clear() {
+    this.promise = null;
   }
 }
