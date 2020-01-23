@@ -78,7 +78,7 @@ apiService.clearCookies();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
-
+  stores.mindsServiceStore.clear();
   const user = sessionService.getUser();
 
   Sentry.configureScope(scope => {
