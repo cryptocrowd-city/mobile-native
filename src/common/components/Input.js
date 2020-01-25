@@ -66,6 +66,8 @@ export default class Input extends Component {
       <PhoneValidationComponent
         style={[ComponentsStyle.loginInputNew, this.props.style]}
         textStyle={CS.colorWhite}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
       />
     );
   };
