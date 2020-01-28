@@ -87,7 +87,6 @@ export default class Input extends Component {
           underlineColorAndroid="transparent"
           placeholder=""
           onPress={this.showDatePicker}>
-        >
           <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
         </TouchableOpacity>
         <DateTimePicker
