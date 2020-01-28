@@ -124,7 +124,7 @@ export default class Input extends Component {
     const optional = (<Text style={[styles.optional]}>{"Optional"}</Text>);
 
     return (
-      <View style={[CS.flexContainer, CS.marginBottom2x]}>
+      <View style={[CS.marginBottom2x]}>
         <View style={[styles.row, CS.marginBottom]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
