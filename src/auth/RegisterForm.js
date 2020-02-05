@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { CommonStyle as CS} from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
 import { observer, inject } from 'mobx-react/native';
@@ -30,13 +29,15 @@ import Input from '../common/components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '../common/components/Button';
 import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Register Form
  */
+export default
 @inject('user')
 @observer
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
   state = {
     error: {},
     password: '',
@@ -74,6 +75,7 @@ export default class RegisterForm extends Component {
   setConfirmPassword = confirmPassword => this.setState({confirmPassword});
 
   getFormBody = () => {
+    const CS = ThemedStyles.style;
     return (
       <ScrollView style={[CS.flexContainer, CS.marginTop2x]}>
         <View style={CS.marginBottom3x}>
@@ -138,6 +140,7 @@ export default class RegisterForm extends Component {
   };
 
   getFormFooter = () => {
+    const CS = ThemedStyles.style;
     return (
       <View style={CS.flexContainer}>
         <Button
@@ -166,6 +169,7 @@ export default class RegisterForm extends Component {
   };
 
   render() {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainerCenter]}>
         <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>

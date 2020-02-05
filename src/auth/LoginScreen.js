@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 
 import LoginForm from './LoginForm';
-import { CommonStyle as CS } from '../styles/Common';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
 import i18nService from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
+
+import ThemedStyles from '../styles/ThemedStyles';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -67,8 +68,9 @@ export default class LoginScreen extends Component {
   };
 
   getLoginBody = () => {
+    const CS = ThemedStyles.style;
     return (
-      <View style={[CS.flexContainer, CS.paddingTop2x]}>
+      <View style={[CS.flexContainer, CS.paddingTop6x]}>
         <Image
           source={require('./../assets/logos/bulb.png')}
           style={styles.bulb}
@@ -82,6 +84,7 @@ export default class LoginScreen extends Component {
   };
 
   getLoginFooter = () => {
+    const CS = ThemedStyles.style;
     return (
       <TouchableOpacity onPress={this.onPressRegister} testID="registerButton">
         <View style={CS.flexColumnCentered}>
@@ -97,10 +100,11 @@ export default class LoginScreen extends Component {
    */
   render() {
     const resizeMode = 'center';
+    const CS = ThemedStyles.style;
 
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary, CS.padding6x]}>
           {this.getLoginBody()}
         </View>
         <View style={[CS.mindsLayoutFooter, CS.backgroundThemeSecondary]}>
