@@ -155,7 +155,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#AEB0B8',
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom:5 ,
     fontFamily: 'Roboto',
   },
   optional: {

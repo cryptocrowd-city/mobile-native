@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 import { observable, action } from 'mobx';
 
-import colors, { DARK_THEME, LIGHT_THEME } from './Colors';
+import { DARK_THEME, LIGHT_THEME } from './Colors';
 
-const repetitions = 7;
+const repetitions = 8;
 const step = 5;
 
 const dynamicStyles = {};
@@ -36,7 +36,7 @@ class ThemedStylesStore {
    * Theme observable
    * @property {Observable<numeric>}
    */
-  @observable theme = 1;
+  @observable theme = 0;
 
   /**
    * Style
@@ -87,6 +87,22 @@ class ThemedStylesStore {
         justifyContent: 'center',
         alignContent: 'center',
       },
+      rowJustifyEnd: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+      },
+      rowJustifyCenter: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+      },
+      rowJustifySpaceEvenly: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+      },
+      rowJustifyStart: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+      },
       centered: {
         alignContent: 'center',
         alignItems: 'center',
@@ -104,6 +120,9 @@ class ThemedStylesStore {
       },
       colorSecondaryText: {
         color: theme.secondary_text
+      },
+      colorLink: {
+        color: theme.link
       },
       colorButton: {
         color: theme.button_border
@@ -260,6 +279,38 @@ class ThemedStylesStore {
         borderColor: theme.button_border,
         borderWidth: 1,
         lineHeight: 21,
+      },
+      link: {
+        color: theme.link,
+        textDecorationLine: 'underline',
+      },
+      inputIcon: {
+        position: 'absolute',
+        right:8,
+        top: Platform.OS === 'ios' ? 41 : 45,
+        color: theme.primary_text,
+      },
+      button: {
+        marginRight: 0,
+        marginLeft: 0,
+        backgroundColor: '#5DBAC0',
+        borderColor: '#5DBAC0',
+        borderWidth: 1,
+        borderRadius: 2,
+        height: 60,
+      },
+      buttonText: {
+        // fontFamily: 'Roboto',
+        fontSize: 20,
+        fontWeight: '500',
+        color: 'white',
+      },
+      checkbox: {
+        backgroundColor: 'transparent',
+        marginLeft: 0,
+        paddingLeft: 0,
+        borderWidth: 0,
+        marginTop: 15,
       },
     });
   }

@@ -8,15 +8,16 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 
 import LoginForm from './LoginForm';
 import logService from '../common/services/log.service';
-import featuresService from '../common/services/features.service';
 import i18nService from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 
 import ThemedStyles from '../styles/ThemedStyles';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -70,7 +71,7 @@ export default class LoginScreen extends Component {
   getLoginBody = () => {
     const CS = ThemedStyles.style;
     return (
-      <View style={[CS.flexContainer, CS.paddingTop6x]}>
+      <View style={[CS.flexContainer, CS.paddingVertical6x]}>
         <Image
           source={require('./../assets/logos/bulb.png')}
           style={styles.bulb}
@@ -99,13 +100,16 @@ export default class LoginScreen extends Component {
    * Render
    */
   render() {
-    const resizeMode = 'center';
     const CS = ThemedStyles.style;
 
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary, CS.padding6x]}>
-          {this.getLoginBody()}
+        <View style={[ CS.backgroundThemePrimary, styles.flex10]}>
+          <SafeAreaView style={CS.flexContainer}>
+            <ScrollView style={[CS.flexContainer, CS.paddingHorizontal4x]}>
+              {this.getLoginBody()}
+            </ScrollView>
+          </SafeAreaView>
         </View>
         <View style={[CS.mindsLayoutFooter, CS.backgroundThemeSecondary]}>
           {this.getLoginFooter()}
@@ -137,15 +141,12 @@ export default class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  logo: {
-    width: 200,
-    height: 84,
-    marginBottom: 30,
-    alignSelf: 'center',
+  flex10: {
+    flex: 10,
   },
   bulb: {
-    width: 34.72,
-    height: 59.51,
+    width: 47,
+    height: 80,
     alignSelf: 'center',
     marginTop: 10
   },

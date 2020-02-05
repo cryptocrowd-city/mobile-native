@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { ComponentsStyle } from '../styles/Components';
 
 import { observer, inject } from 'mobx-react/native';
 
@@ -88,6 +87,7 @@ class RegisterForm extends Component {
           {this.state.error.termsAcceptedError}
         </Text>
         <Input
+          style={CS.marginBottom2x}
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
           value={this.state.username}
@@ -95,6 +95,7 @@ class RegisterForm extends Component {
           testID="registerUsernameInput"
         />
         <Input
+          style={CS.marginBottom2x}
           placeholder={i18n.t('auth.email')}
           onChangeText={this.setEmail}
           value={this.state.email}
@@ -102,6 +103,7 @@ class RegisterForm extends Component {
           testID="registerEmailInput"
         />
         <Input
+          style={CS.marginBottom2x}
           placeholder={i18n.t('auth.password')}
           secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
           onChangeText={this.setPassword}
@@ -119,10 +121,9 @@ class RegisterForm extends Component {
             testID="registerPasswordConfirmInput"
           /> : null }
         <CheckBox
-          containerStyle={ComponentsStyle.registerCheckboxNew}
-          title={<Text style={ComponentsStyle.termsNew}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.linkNew} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
+          containerStyle={CS.checkbox}
+          title={<Text style={[CS.colorSecondaryText, CS.fontXL]}>{i18n.t('auth.accept')} <Text style={CS.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
           checked={this.state.termsAccepted}
-          // textStyle={ComponentsStyle.registerCheckboxTextNew}
           onPress={this.check}
           disabled={this.state.inProgress}
           testID="checkbox"
@@ -142,19 +143,18 @@ class RegisterForm extends Component {
         <Button
           onPress={() => this.onPressRegister()}
           borderRadius={2}
-          containerStyle={ComponentsStyle.loginButtonNew}
+          containerStyle={CS.button}
+          textStyle={CS.buttonText}
           loading={this.state.inProgress}
           loadingRight={true}
           disabled={this.state.inProgress}
-          text={''}
+          text={i18n.t('auth.createChannel')}
           testID="registerCreateButton"
-        >
-          <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.createChannel')}</Text>
-        </Button>
+        />
         <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.centered, CS.marginTop2x]}>
           {i18n.to('auth.alreadyHaveAccount', null, {
             login: (
-              <Text style={[ComponentsStyle.linkNew, CS.fontL]} onPress={this.props.onBack}>
+              <Text style={[CS.link, CS.fontL]} onPress={this.props.onBack}>
                 {i18n.t('auth.login')}
               </Text>
             ),

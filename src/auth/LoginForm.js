@@ -7,7 +7,6 @@ import * as Animatable from 'react-native-animatable';
 import {
   View,
   Text,
-  ScrollView,
   LayoutAnimation,
   // TextInput,
 } from 'react-native';
@@ -15,7 +14,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import authService from './AuthService';
-import { ComponentsStyle } from '../styles/Components';
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
@@ -66,7 +64,7 @@ export default class LoginForm extends Component {
     ) : null;
 
     return (
-      <ScrollView style={[CS.flexContainer, CS.marginTop6x]}>
+      <View style={[CS.flexContainer, CS.marginTop6x]}>
         <View style={CS.flexContainer}>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
             {i18n.t('auth.login')}
@@ -92,7 +90,7 @@ export default class LoginForm extends Component {
               name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
               size={25}
               onPress={this.toggleHidePassword}
-              style={ComponentsStyle.loginInputIconNew}
+              style={CS.inputIcon}
             />
           </View>
         </View>
@@ -100,8 +98,8 @@ export default class LoginForm extends Component {
           <Button
             onPress={() => this.onLoginPress()}
             text={i18n.t('auth.login')}
-            containerStyle={ComponentsStyle.loginButtonNew}
-            textStyle={ComponentsStyle.loginButtonTextNew}
+            containerStyle={CS.button}
+            textStyle={CS.buttonText}
             key={1}
             loading={this.state.inProgress}
             loadingRight={true}
@@ -110,10 +108,10 @@ export default class LoginForm extends Component {
             testID="loginButton"
           />
           <View style={CS.marginTop4x}>
-            <Text style={ComponentsStyle.linkNew} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
+            <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
           </View>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 
