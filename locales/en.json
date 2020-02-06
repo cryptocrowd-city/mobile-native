@@ -17,7 +17,8 @@
     "error":"SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain":"PLEASE TRY AGAIN LATER",
     "remindBlocked":"This remind is not available because you blocked",
-    "scheduled":"This activity is scheduled to be shown on"
+    "scheduled":"This activity is scheduled to be shown on",
+    "pendingModeration":"This post is awaiting moderation"
   },
   "permissions": {
     "externalStorage":"Minds needs access to your external storage so you can upload awesome pictures.",
@@ -652,7 +653,8 @@
     "code":"Code",
     "terms":"Terms",
     "privacy":"Privacy",
-    "exit":"Exit"
+    "exit":"Exit",
+    "wallet":"Wallet"
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -679,6 +681,12 @@
   },
   "update": {
     "title":"Update to v{{version}}"
+  },
+  "searchBar": {
+    "searchHistory":"Search History",
+    "emptySearchHistory":"You don't have search history yet",
+    "emptySuggested":"We couldn't find what you look for",
+    "clear": "Clear"
   },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
@@ -794,5 +802,8 @@
   "requests":"Requests",
   "notAllowed":"You are not allowed",
   "undo":"Undo",
-  "validate":"VALIDATE"
+  "validate":"VALIDATE",
+  "tabTitleNewsfeed":"Newsfeed",
+  "tabTitleNotifications":"Notifications",
+  "tabTitleDiscovery":"Discovery"
 }
