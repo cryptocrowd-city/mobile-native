@@ -67,7 +67,7 @@ export default class ForgotPassword extends PureComponent {
           />
           {!this.state.sent && <Button
             onPress={() => this.onContinuePress()}
-            text={i18n.t('continue').toUpperCase()}
+            text={i18n.t('continue')}
             loading={this.state.sending}
             loadingRight={true}
             disable={this.state.sending || this.state.sent}

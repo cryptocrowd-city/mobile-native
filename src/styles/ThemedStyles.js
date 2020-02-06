@@ -80,6 +80,16 @@ class ThemedStylesStore {
         flex: 1,
         justifyContent: 'center',
       },
+      flexColumn: {
+        flex: 1,
+        flexDirection: 'column',
+      },
+      flexColumnStretch: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'stretch'
+      },
       flexColumnCentered: {
         flex: 1,
         flexDirection: 'column',
@@ -287,7 +297,7 @@ class ThemedStylesStore {
       inputIcon: {
         position: 'absolute',
         right:8,
-        top: Platform.OS === 'ios' ? 41 : 45,
+        top: Platform.OS === 'ios' ? 36 : 40,
         color: theme.primary_text,
       },
       button: {

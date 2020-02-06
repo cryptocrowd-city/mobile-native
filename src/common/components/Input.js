@@ -135,7 +135,7 @@ export default class Input extends Component {
 
     return (
       <View style={CS.marginBottom2x}>
-        <View style={[styles.row, CS.marginBottom]}>
+        <View style={[styles.row]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}

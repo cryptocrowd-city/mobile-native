@@ -65,7 +65,6 @@ export default class LoginForm extends Component {
 
     return (
       <View style={[CS.flexContainer, CS.marginTop6x]}>
-        <View style={CS.flexContainer}>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
             {i18n.t('auth.login')}
           </Text>
@@ -93,8 +92,6 @@ export default class LoginForm extends Component {
               style={CS.inputIcon}
             />
           </View>
-        </View>
-        <View style={[CS.flexContainer, CS.marginTop6x]}>
           <Button
             onPress={() => this.onLoginPress()}
             text={i18n.t('auth.login')}
@@ -110,7 +107,6 @@ export default class LoginForm extends Component {
           <View style={CS.marginTop4x}>
             <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
           </View>
-        </View>
       </View>
     );
   }
