@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 
 import { DARK_THEME, LIGHT_THEME } from './Colors';
 
@@ -34,9 +34,12 @@ for (let index = 0; index < repetitions; index++) {
 class ThemedStylesStore {
   /**
    * Theme observable
+   * 1 Dark
+   * 0 Light
+   * -1 Not loaded
    * @property {Observable<numeric>}
    */
-  @observable theme = 0;
+  @observable theme = -1;
 
   /**
    * Style
@@ -61,6 +64,12 @@ class ThemedStylesStore {
   setLight() {
     this.theme = 0;
     this.generateStyle();
+  }
+
+  onThemeChange(fn) {
+    return reaction(() => [this.theme], async args => await fn(...args), {
+      fireImmediately: false,
+    });
   }
 
   /**

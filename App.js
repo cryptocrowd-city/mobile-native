@@ -305,6 +305,11 @@ class App extends Component<Props, State> {
    * Render
    */
   render() {
+    // App not shown until the theme is loaded
+    if (ThemedStyles.theme === -1) {
+      return null;
+    }
+
     const app = (
       <Provider key="app" {...stores}>
         <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
