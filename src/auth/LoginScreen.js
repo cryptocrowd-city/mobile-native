@@ -83,7 +83,7 @@ export default class LoginScreen extends Component {
     const CS = ThemedStyles.style;
 
     return (
-      <KeyboardAvoidingView style={[CS.flexColumnStretch, CS.backgroundThemePrimary]} behavior={Platform.OS == 'ios' ? 'padding' : null} >
+      <KeyboardAvoidingView style={[CS.flexColumnStretch, CS.backgroundPrimary]} behavior={Platform.OS == 'ios' ? 'padding' : null} >
         <SafeAreaView style={[styles.flex10]}>
           <ScrollView style={CS.flexContainer}>
             <View style={[CS.paddingHorizontal4x, CS.flexColumnStretch]}>
@@ -99,7 +99,7 @@ export default class LoginScreen extends Component {
             </View>
           </ScrollView>
         </SafeAreaView>
-        <View style={[CS.paddingVertical2x, CS.backgroundThemeSecondary, CS.mindsLayoutFooter]}>
+        <View style={[CS.paddingVertical2x, CS.backgroundSecondary, CS.mindsLayoutFooter]}>
           <TouchableOpacity onPress={this.onPressRegister} testID="registerButton">
             <View style={CS.flexColumnCentered}>
               <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18nService.t('auth.haveAccount')}</Text>

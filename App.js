@@ -209,7 +209,7 @@ class App extends Component<Props, State> {
   async componentDidMount() {
     try {
       // load app setting before start
-      const results = await Promise.all([settingsStore.init(), Linking.getInitialURL(), ThemedStyles.init()]);
+      const results = await Promise.all([settingsStore.init(), Linking.getInitialURL()]);
 
       deepLinkUrl = results[1];
 

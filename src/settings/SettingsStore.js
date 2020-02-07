@@ -38,6 +38,7 @@ class SettingsStore {
 
     if (!data) {
       ThemedStyles.theme = 0;
+      ThemedStyles.init();
       return;
     }
     this.leftHanded = data[0][1];
@@ -51,6 +52,7 @@ class SettingsStore {
 
     // theme
     ThemedStyles.theme = data[5][1] || 0;
+    ThemedStyles.init();
 
     return this;
   }

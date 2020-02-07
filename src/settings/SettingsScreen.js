@@ -207,7 +207,7 @@ class SettingsScreen extends Component {
     }
 
     return (
-        <ScrollView style={[styles.scrollView, CS.backgroundThemePrimary]}>
+        <ScrollView style={[styles.scrollView, CS.backgroundPrimary]}>
           <ModalPicker
             onSelect={this.languageSelected}
             onCancel={this.cancel}

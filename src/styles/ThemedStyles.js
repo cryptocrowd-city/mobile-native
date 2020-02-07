@@ -159,10 +159,10 @@ class ThemedStylesStore {
       backgroundBlack: {
         backgroundColor: 'black'
       },
-      backgroundThemePrimary: {
+      backgroundPrimary: {
         backgroundColor: theme.primary_background,
       },
-      backgroundThemeSecondary: {
+      backgroundSecondary: {
         backgroundColor: theme.secondary_background,
       },
       // fonts

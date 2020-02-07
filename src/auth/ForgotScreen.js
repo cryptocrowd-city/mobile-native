@@ -27,7 +27,7 @@ export default class ForgotScreen extends Component {
     const CS = ThemedStyles.style;
 
     return (
-      <KeyboardAvoidingView style={[CS.flexContainer, CS.backgroundThemePrimary]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
+      <KeyboardAvoidingView style={[CS.flexContainer, CS.backgroundPrimary]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
         <View style={[CS.flexContainer, CS.padding2x]}>
           {code ? <ResetPassword
             onBack={this.onForgotBack}
