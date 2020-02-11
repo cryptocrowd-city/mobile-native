@@ -795,5 +795,6 @@
   "requests":"Requests",
   "notAllowed":"You are not allowed",
   "undo":"Undo",
-  "validate":"VALIDATE"
+  "validate":"VALIDATE",
+  "linkCopied":"Link copied to clipboard"
 }
