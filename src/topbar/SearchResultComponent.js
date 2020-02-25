@@ -65,7 +65,8 @@ class SearchResultComponent extends Component {
   }
 
   searchDiscovery = () => {
-    this.props.discovery.setQuery(this.search)
+    this.props.discovery.setQuery(this.search);
+    this.props.discovery.filters.search(this.search);
     this.props.navigation.navigate('Discovery');
     this.searchBarItemTap(this.search);
   }

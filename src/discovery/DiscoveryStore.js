@@ -142,7 +142,6 @@ class DiscoveryStore {
   @action
   setQuery(value) {
     this.query = value;
-    this.filters.search(this.query);
   }
 }
 
