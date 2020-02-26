@@ -91,7 +91,11 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="NotificationsSettings" component={NotificationsSettingsScreen} />
       <AppStackNav.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
       <AppStackNav.Screen name="Capture" component={CapturePoster} options={{title:''}}/>
-      <AppStackNav.Screen name="Activity" component={ActivityScreen}/>
+      <AppStackNav.Screen 
+        name="Activity" 
+        component={ActivityScreen}
+        options={({ route }) => ({ title: route.params.entity ? route.params.entity.ownerObj.name : '' })}
+      />
       <AppStackNav.Screen name="Conversation" component={ConversationScreen}/>
       <AppStackNav.Screen
         name="DiscoveryFeed"
