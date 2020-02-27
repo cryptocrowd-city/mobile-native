@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Alert, Platform } from 'react-native';
 import i18n from '../common/services/i18n.service';
-import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
 import apiService from '../common/services/api.service';
+import featuresService from '../common/services/features.service';
 
 /**
  * Email Confirmation Message
@@ -14,24 +14,12 @@ import apiService from '../common/services/api.service';
 export default
 @inject('user')
 @observer
-class EmailConfirmation extends Component {
-  /**
-   * Send confirmation email
-   */
-  send = async () => {
-    if (await emailConfirmationService.send()) {
-      Alert.alert(i18n.t('emailConfirm.sent'));
-    } else {
-      Alert.alert(i18n.t('pleaseTryAgain'));
-    }
-  };
-
+class BannerInfo extends Component {
   /**
    * Dismiss message
    */
-  dismiss = () => {
-    this.props.user.setDissmis(true);
-    apiService.setMustVerify(false);
+  dismissForLogged = () => {
+    this.props.user.setDissmisBanner(true);
   };
 
   /**
@@ -39,10 +27,10 @@ class EmailConfirmation extends Component {
    */
   render() {
     const show =
-      (!this.props.user.emailConfirmMessageDismiss &&
-      this.props.user.me.email_confirmed === false) ||
-      apiService.mustVerify;
+      !this.props.user.bannerInfoDismiss &&
+      (!this.props.logged || featuresService.has('radiocity'));
 
+    console.log("bannerinfo", show);
     if (!show) {
       return null;
     }
@@ -50,15 +38,15 @@ class EmailConfirmation extends Component {
     return (
       <View style={styles.container}>
 
-        <View style={styles.body}>
+
           <Text style={[CS.fontM, CS.colorWhite]}>
-            {i18n.t('emailConfirm.confirm')}
+            {"BREAKING: TICKETS ON SALE FOR \"MINDS: FESTIVAL OF IDEAS\""}
           </Text>
-          <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
-            {i18n.t('emailConfirm.sendAgain')}
+          <Text style={[CS.bold, CS.colorWhite]}>
+            {"@ RADIO CITY ON 6/13/2020. HELP US SELL OUT FAST!"}
           </Text>
-        </View>
-        <Text style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismiss}>[Close]</Text>
+
+        <Text style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismissForLogged}>[Close]</Text>
       </View>
     );
   }
@@ -70,11 +58,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4690df',
     height: 70,
-    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    flexDirection: 'column',
   },
+
   body: {
     flexDirection: 'column',
     alignItems: 'center',
