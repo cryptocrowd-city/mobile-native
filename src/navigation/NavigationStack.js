@@ -15,7 +15,7 @@ import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import CapturePoster from '../capture/CapturePoster';
 import RegisterScreen from '../auth/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
-import SettingsScreen from '../settings/SettingsScreen';
+import SettingsScreenNew from '../settings/SettingsScreenNew';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
@@ -131,7 +131,7 @@ const AppStack = function(props) {
         options={discoveryOptions}
       />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
-      <AppStackNav.Screen name="Settings" component={SettingsScreen} />
+      <AppStackNav.Screen name="Settings" component={SettingsScreenNew} options={hideHeader} />
       <AppStackNav.Screen
         name="SettingsBlockedChannels"
         component={BlockedChannelsScreen}
