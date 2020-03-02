@@ -62,6 +62,7 @@ class MoreScreenNew extends Component {
     const CS = ThemedStyles.style;
 
     let list = [
+      /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('moreScreen.helpSupport'),
         icon: (<Icon name='help-outline' size={ICON_SIZE} style={ CS.colorIcon }/>),
@@ -76,6 +77,7 @@ class MoreScreenNew extends Component {
           shareService.invite(this.props.user.me.guid);
         }
       },
+      */
       {
         name: i18n.t('discovery.groups'),
         icon: (<IconFa name='users' size={ICON_SIZE} style={ CS.colorIcon }/>),
