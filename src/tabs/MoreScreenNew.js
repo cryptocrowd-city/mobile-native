@@ -91,17 +91,17 @@ class MoreScreenNew extends Component {
       list = [
         ...list,
         {
-          name: i18n.t('boost'),
+          name: i18n.t('moreScreen.wallet'),
           icon: (<CIcon name="bank" size={ICON_SIZE} style={ CS.colorIcon }/>),
           onPress: () => {
-            this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation });
+            this.props.navigation.navigate('Wallet', {});
           }
         },
         {
-          name: i18n.t('moreScreen.wallet'),
+          name: i18n.t('boost'),
           icon: (<Icon name='trending-up' size={ICON_SIZE} style={ CS.colorIcon }/>),
           onPress: () => {
-            this.props.navigation.navigate('Wallet', {});
+            this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation });
           }
         },
       ];
