@@ -175,12 +175,14 @@ class SettingsScreen extends Component {
         switch: {value: !settingsStore.appLog, onValueChange: this.appLogActivate},
         hideChevron: true,
       },
+      /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('settings.leftHandedMode'),
         icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         switch: {value: settingsStore.leftHanded, onValueChange: this.leftHandedActivate},
         hideChevron: true,
       },
+      */
     ];
 
     if (featuresService.has('dark-mode')) {
