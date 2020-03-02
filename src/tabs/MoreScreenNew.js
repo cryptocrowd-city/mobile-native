@@ -116,14 +116,6 @@ class MoreScreenNew extends Component {
           this.props.navigation.navigate('Settings');
         }
       },
-      {
-        name: i18n.t('settings.logout'),
-        hideChevron: true,
-        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ CS.colorIcon } />),
-        onPress: () => {
-          authService.logout();
-        }
-      }
     ];
 
     return list;
