@@ -135,8 +135,6 @@ class MoreScreenNew extends Component {
         icon: (<CIcon name='theme-light-dark' size={ICON_SIZE} style={ colorIcon } />),
         onPress: this.setDarkMode,
         textColor: colorText,
-        //switch: {value: !!ThemedStyles.theme, onValueChange: this.setDarkMode},
-        //hideChevron: true,
       });
     }
 

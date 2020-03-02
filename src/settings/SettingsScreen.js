@@ -52,14 +52,6 @@ class SettingsScreen extends Component {
     settingsStore.setLeftHanded(!settingsStore.leftHanded);
   };
 
-  setDarkMode = () => {
-    if (ThemedStyles.theme) {
-      ThemedStyles.setLight();
-    } else {
-      ThemedStyles.setDark();
-    }
-  };
-
   wipeEthereumKeychainAction = () => {
     const _confirm3 = async (confirmation) => {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
@@ -184,15 +176,6 @@ class SettingsScreen extends Component {
       },
       */
     ];
-
-    if (featuresService.has('dark-mode')) {
-      list.push({
-        name: i18n.t('settings.darkMode'),
-        icon: (<MaterialCommunityIcons name='theme-light-dark' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
-        switch: {value: !!ThemedStyles.theme, onValueChange: this.setDarkMode},
-        hideChevron: true,
-      });
-    }
 
     return (
         <ScrollView style={[styles.scrollView, CS.backgroundPrimary]}>
