@@ -44,7 +44,7 @@ export default
 @inject('user')
 class MoreScreenNew extends Component {
 
-  navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })
+  navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid });
 
   /**
    * Get Channel Avatar
@@ -52,6 +52,8 @@ class MoreScreenNew extends Component {
   getAvatar() {
     return this.props.user.me.getAvatarSource('medium');
   }
+
+  navToSubscribers = () => this.props.navigation.push('Subscribers', { guid : this.props.user.me.guid });
 
   /**
    * Return Options List ready to be rendered
@@ -149,7 +151,7 @@ class MoreScreenNew extends Component {
           </TouchableOpacity>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]} onPress={this.navToSubscribers}>
             {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
           </Text>
         </View>
