@@ -147,28 +147,30 @@ class MoreScreenNew extends Component {
           <TouchableOpacity onPress={this.navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar}/>
           </TouchableOpacity>
-          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}>{channel.name}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
             {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
           </Text>
         </View>
-        {
-          this.getOptionsList().map((l, i) => (
-            <ListItem
-              key={i}
-              title={l.name}
-              titleStyle={[CS.titleText, CS.colorPrimaryText, CS.padding, CS.fontXXL]}
-              containerStyle={[styles.listItem, CS.backgroundPrimary]}
-              switchButton={l.switchButton}
-              hideChevron ={l.hideChevron}
-              leftIcon={l.icon}
-              onPress= {l.onPress}
-              noBorder
-              {...testID(l.name)}
-            />
-          ))
-        }
+        <View style={styles.body}>
+          {
+            this.getOptionsList().map((l, i) => (
+              <ListItem
+                key={i}
+                title={l.name}
+                titleStyle={[styles.menuText, CS.colorSecondaryText]}
+                containerStyle={[styles.listItem, CS.backgroundPrimary]}
+                switchButton={l.switchButton}
+                hideChevron ={l.hideChevron}
+                leftIcon={l.icon}
+                onPress= {l.onPress}
+                noBorder
+                {...testID(l.name)}
+              />
+            ))
+          }
+        </View>
       </ScrollView>
 
       </SafeAreaView>
@@ -180,27 +182,36 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    paddingTop: 30,
+    paddingTop: 23,
     paddingLeft: 40,
     paddingBottom: 25,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#CCC',
+  },
+  menuText: {
+    fontSize: 24,
+    fontWeight: '700',
+    paddingLeft: 10
   },
   wrappedAvatar: {
     height: 55,
     width: 55,
     borderRadius: 55
   },
+  body: {
+    paddingLeft: 24,
+    paddingTop: 52,
+  },
   container: {
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    paddingLeft: 25,
+    paddingLeft: 30,
   },
   listItem: {
     borderBottomWidth: 0,
     borderBottomColor: '#ddd',
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 0,
+    paddingBottom: 37,
     //height:20
   },
 });
