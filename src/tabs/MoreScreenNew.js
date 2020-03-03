@@ -149,7 +149,7 @@ class MoreScreenNew extends Component {
           </TouchableOpacity>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}>{channel.name}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
+          <Text style={[CS.subTitleText, CS.colorTertiaryText, CS.fontNormal, CS.marginTop3x]}>
             {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
           </Text>
         </View>

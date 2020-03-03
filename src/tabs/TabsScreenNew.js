@@ -43,14 +43,14 @@ const Tabs = observer(function({ navigation }) {
         showLabel: false,
         showIcon: true,
         activeTintColor: ThemedStyles.getColor('link'),
-        inactiveTintColor: ThemedStyles.getColor('icon'),
+        inactiveTintColor: ThemedStyles.getColor('text_secondary'),
         style: {
           borderTopWidth: 0,
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
           paddingTop: isIOS && isIphoneX ? 30 : 2,
-          marginLeft: 25,
-          marginRight: 25,
+          paddingLeft: 25,
+          paddingRight: 25,
         },
         tabStyle: {
           height,
