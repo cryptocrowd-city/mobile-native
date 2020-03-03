@@ -101,7 +101,7 @@ class MoreScreenNew extends Component {
         ...list,
         {
           name: i18n.t('moreScreen.wallet'),
-          icon: (<CIcon name="bank" size={ICON_SIZE} style={ CS.colorIcon }/>),
+          icon: (<IconFa name="coins" size={ICON_SIZE} style={ CS.colorIcon }/>),
           onPress: () => {
             this.props.navigation.navigate('Wallet', {});
           }
