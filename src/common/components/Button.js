@@ -54,7 +54,7 @@ export default class Button extends Component {
 
 
     let background = ThemedStyles.getColor('primary_button');
-    let mainColor = color || ThemedStyles.getColor('primary_text');
+    let mainColor = color || '#FFFFFF';
 
     if (inverted !== undefined) {
       background = mainColor;
