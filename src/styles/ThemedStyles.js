@@ -139,7 +139,11 @@ class ThemedStylesStore {
       },
       contentStyle: {
         backgroundColor: theme.secondary_background,
-      }
+      },
+      stackAnimation: Platform.select({
+        ios: 'default',
+        android: 'fade',
+      }),
     };
 
     this.style = StyleSheet.create({
@@ -285,6 +289,10 @@ class ThemedStylesStore {
       borderIconActive: {
         borderColor: theme.icon_active,
       },
+      borderIcon: {
+        borderColor: theme.icon,
+      },
+
       // fonts
       fontXS: {
         fontSize: 10,
