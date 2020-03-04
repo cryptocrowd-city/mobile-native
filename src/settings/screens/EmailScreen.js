@@ -76,6 +76,8 @@ class EmailScreen extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
+
     if (this.state.saving || !this.state.loaded) {
       return <CenteredLoading />;
     }
@@ -86,24 +88,24 @@ class EmailScreen extends Component {
     // validate
     const error = validator.emailMessage(email);
     const confirmNote = showConfirmNote ? (
-      <Text>
+      <Text style={[CS.colorSecondaryText, CS.fontM, CS.paddingHorizontal2x, CS.centered, CS.marginTop3x]}>
         {i18n.t('emailConfirm.confirmNote')}
       </Text>
     ) : null;
 
-    const CS = ThemedStyles.style;
-
     return (
-      <View style={[CommonStyle.flexContainer]}>
-        <Input
-          style={[CS.marginBottom2x, CS.border0x]}
-          labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-          placeholder={i18n.t('settings.currentEmail')}
-          onChangeText={this.setEmail}
-          value={email}
-          editable={!this.state.inProgress}
-          testID="registerUsernameInput"
-        />
+      <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
+        <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
+          <Input
+            style={[CS.border0x, {height: 40}]}
+            labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
+            placeholder={i18n.t('settings.currentEmail')}
+            onChangeText={this.setEmail}
+            value={email}
+            editable={!this.state.inProgress}
+            testID="registerUsernameInput"
+          />
+        </View>
         {confirmNote}
         <Button
           text={i18n.t('save').toUpperCase()}
