@@ -483,7 +483,26 @@
     "pushNotification":"Push Notifications",
     "regenerateKey":"Regenerate messenger keys",
     "deleteBlockchain":"Delete blockchain keychain",
-    "darkMode":"Dark mode"
+    "darkMode":"Dark mode",
+    "other":"Other",
+    "account":"Account",
+    "security":"Security",
+    "billing":"Billing",
+    "accountOptions": {
+      "1":"Email Address",
+      "2":"Display Language",
+      "3":"Password",
+      "4":"Notifications",
+      "5":"NSFW Content"
+    },
+    "securityOptions": {
+      "1":"Two-factor authentication (2FA)",
+      "2":"Your Devices"
+    },
+    "billingOptions": {
+      "1":"Payment Methods",
+      "2":"Recurring Payments"
+    }
   },
   "comingSoon":{
     "try":"Try the canary app at",

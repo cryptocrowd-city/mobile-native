@@ -17,11 +17,11 @@ export default function() {
 
   const list = [
     {
-      title: i18n.t('settings.billingOptions.1'),
+      title: i18n.t('settings.securityOptions.1'),
       onPress: navToOther,
     },
     {
-      title: i18n.t('settings.billingOptions.2'),
+      title: i18n.t('settings.securityOptions.2'),
       onPress: navToOther,
     },
   ]

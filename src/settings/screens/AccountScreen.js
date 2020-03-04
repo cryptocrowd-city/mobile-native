@@ -13,15 +13,31 @@ export default function() {
     navigation,
   ]);
 
+  const navToEmailScreen = useCallback(() => navigation.push('SettingsEmail'), [
+    navigation,
+  ]);
+
   const keyExtractor = useCallback((item, index) => index.toString());
 
   const list = [
     {
-      title: i18n.t('settings.billingOptions.1'),
+      title: i18n.t('settings.accountOptions.1'),
+      onPress: navToEmailScreen,
+    },
+    {
+      title: i18n.t('settings.accountOptions.2'),
       onPress: navToOther,
     },
     {
-      title: i18n.t('settings.billingOptions.2'),
+      title: i18n.t('settings.accountOptions.3'),
+      onPress: navToOther,
+    },
+    {
+      title:i18n.t('settings.accountOptions.4'),
+      onPress: navToOther,
+    },
+    {
+      title:i18n.t('settings.accountOptions.5'),
       onPress: navToOther,
     },
   ]

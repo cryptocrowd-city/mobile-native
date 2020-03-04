@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { View, ScrollView, Text, Alert } from 'react-native';
 
-import { Input } from 'react-native-elements';
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
@@ -11,6 +10,8 @@ import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
+import Input from '../../common/components/Input';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Email settings screen
@@ -90,14 +91,18 @@ class EmailScreen extends Component {
       </Text>
     ) : null;
 
+    const CS = ThemedStyles.style;
+
     return (
       <View style={[CommonStyle.flexContainer]}>
         <Input
+          style={[CS.marginBottom2x, CS.border0x]}
+          labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
+          placeholder={i18n.t('settings.currentEmail')}
           onChangeText={this.setEmail}
           value={email}
-          inputStyle={CommonStyle.fieldTextInput}
-          label={i18n.t('settings.currentEmail')}
-          errorMessage={error}
+          editable={!this.state.inProgress}
+          testID="registerUsernameInput"
         />
         {confirmNote}
         <Button

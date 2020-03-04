@@ -19,7 +19,7 @@ import SettingsScreenNew from '../settings/SettingsScreenNew';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
-import BillingScreen from '../settings/screens/BillingScreen';
+import BillingScreenOld from '../settings/screens/BillingScreenOld';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
@@ -59,6 +59,10 @@ import ThemedStyles from '../styles/ThemedStyles';
 import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
 import i18n from '../common/services/i18n.service';
+import OtherScreen from '../settings/screens/OtherScreen';
+import AccountScreen from '../settings/screens/AccountScreen';
+import SecurityScreen from '../settings/screens/SecurityScreen';
+import BillingScreen from '../settings/screens/BillingScreen';
 
 const hideHeader = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -71,6 +75,49 @@ const activityOptions = ({ route }) => ({
 const AppStackNav = createNativeStackNavigator();
 const AuthStackNav = createNativeStackNavigator();
 const RootStackNav = createNativeStackNavigator();
+const SettingsStackNav = createNativeStackNavigator();
+
+const SettingsStack = function(props) {
+  return (
+    <SettingsStackNav.Navigator
+      screenOptions={{
+        title: '',
+        ...ThemedStyles.defaultScreenOptions,
+      }}>
+      <SettingsStackNav.Screen
+        name="Main"
+        component={SettingsScreenNew}
+        options={{ title: i18n.t('moreScreen.settings') }}
+      />
+      <SettingsStackNav.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{ title: i18n.t('settings.account') }}
+      />
+      <SettingsStackNav.Screen
+        name="Security"
+        component={SecurityScreen}
+        options={{ title: i18n.t('settings.security') }}
+      />
+      <SettingsStackNav.Screen
+        name="Billing"
+        component={BillingScreen}
+        options={{ title: i18n.t('settings.billing') }}
+      />
+      <SettingsStackNav.Screen
+        name="Other"
+        component={OtherScreen}
+        options={{ title: i18n.t('settings.other') }}
+      />
+      <SettingsStackNav.Screen 
+        name="SettingsEmail"
+        component={EmailScreen}
+        options={{ title: i18n.t('settings.accountOptions.1') }}
+      />
+    </SettingsStackNav.Navigator>
+  );
+};
+
 
 const AppStack = function(props) {
   return (
@@ -132,7 +179,7 @@ const AppStack = function(props) {
         options={discoveryOptions}
       />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
-      <AppStackNav.Screen name="Settings" component={SettingsScreenNew} options={hideHeader} />
+      <AppStackNav.Screen name="Settings" component={SettingsStack}  options={hideHeader}/>
       <AppStackNav.Screen
         name="SettingsBlockedChannels"
         component={BlockedChannelsScreen}
@@ -140,7 +187,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="SettingsEmail" component={EmailScreen} />
       <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen} />
       <AppStackNav.Screen name="SettingsRekey" component={RekeyScreen} />
-      <AppStackNav.Screen name="SettingsBilling" component={BillingScreen} />
+      <AppStackNav.Screen name="SettingsBilling" component={BillingScreenOld} />
       <AppStackNav.Screen
         name="GroupsList"
         component={GroupsListScreen}
