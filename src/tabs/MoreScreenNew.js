@@ -209,13 +209,14 @@ class MoreScreenNew extends Component {
           <View style={styles.body}>
             {this.getOptionsList().map((l, i) => (
               <ListItem
+                Component={TouchableOpacity}
                 key={i}
                 title={l.name}
                 titleStyle={[
                   styles.menuText,
                   l.textColor || CS.colorSecondaryText,
                 ]}
-                containerStyle={[styles.listItem, CS.backgroundPrimary]}
+                containerStyle={styles.listItem}
                 switchButton={l.switchButton}
                 pad={5}
                 hideChevron={l.hideChevron}
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 0,
-    borderBottomColor: '#ddd',
+    backgroundColor: 'transparent',
     paddingTop: 0,
     paddingBottom: 37,
     //height:20
