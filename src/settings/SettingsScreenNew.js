@@ -3,6 +3,7 @@ import { View, FlatList } from 'react-native';
 import SettingsItem from './SettingsItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
+import TopbarNew from '../topbar/TopbarNew';
 
 export default function({ navigation }) {
   const CS = ThemedStyles.style;
@@ -46,13 +47,16 @@ export default function({ navigation }) {
   ]
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderHair, CS.borderPrimary]}>
-      <FlatList
-        data={list}
-        renderItem={SettingsItem}
-        style={[CS.backgroundPrimary]}
-        keyExtractor={keyExtractor}
-      />
+    <View style={[CS.flexContainer, CS.backgroundPrimary]}>
+      <TopbarNew title={i18n.t('moreScreen.settings')} navigation={navigation} renderBack background={CS.backgroundPrimary} />
+      <View style={[CS.borderHair, CS.borderPrimary, CS.paddingTop4x]}>
+        <FlatList
+          data={list}
+          renderItem={SettingsItem}
+          style={[CS.backgroundPrimary]}
+          keyExtractor={keyExtractor}
+        />
+      </View>
     </View>
   )
 }

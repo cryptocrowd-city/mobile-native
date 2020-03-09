@@ -17,6 +17,10 @@ export default function() {
     navigation,
   ]);
 
+  const navToPasswordScreen = useCallback(() => navigation.push('SettingsPassword'), [
+    navigation,
+  ]);
+
   const keyExtractor = useCallback((item, index) => index.toString());
 
   const list = [
@@ -30,7 +34,7 @@ export default function() {
     },
     {
       title: i18n.t('settings.accountOptions.3'),
-      onPress: navToOther,
+      onPress: navToPasswordScreen,
     },
     {
       title:i18n.t('settings.accountOptions.4'),

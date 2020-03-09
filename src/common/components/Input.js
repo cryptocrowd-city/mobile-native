@@ -17,7 +17,12 @@ export default class Input extends Component {
    */
   state = {
     datePickerVisible: false,
+    error: false,
   };
+
+  showError = () => {
+    this.setState({error: true});
+  }
 
   /**
    * Show date picker
@@ -143,6 +148,7 @@ export default class Input extends Component {
           <View style={styles.row}>
             <Text style={[styles.label, this.props.labelStyle]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
+            {this.props.onError && this.state.error && <View style={styles.errorContainer}><Text style={[CS.colorAlert, CS.fontL, CS.textRight]}>{this.props.onError}</Text></View>}
           </View>
           {optional}
         </View>
@@ -163,6 +169,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom:5 ,
     fontFamily: 'Roboto',
+  },
+  errorContainer: {
+    alignContent:'flex-end',
+    width:'65%',
   },
   optional: {
     color: '#AEB0B8',

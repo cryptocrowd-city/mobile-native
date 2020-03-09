@@ -488,6 +488,9 @@
     "account":"Account",
     "security":"Security",
     "billing":"Billing",
+    "invalidPassword":"Incorrect password",
+    "passwordsNotMatch":"Passwords should match",
+    "passwordFormat":"Min 8 characters, alpha-numeric, mixed-case, etc.",
     "accountOptions": {
       "1":"Email Address",
       "2":"Display Language",
@@ -826,5 +829,6 @@
   "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
-  "linkCopied":"Link copied to clipboard"
+  "linkCopied":"Link copied to clipboard",
+  "close":"Close"
 }

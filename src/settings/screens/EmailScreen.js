@@ -36,6 +36,23 @@ class EmailScreen extends Component {
     settingsService.getSettings().then(({ channel }) => {
       this.setState({ email: channel.email, loaded: true });
     });
+
+    
+  }
+
+  componentDidMount() {
+    const { setOptions } = this.props.navigation;
+    const CS = ThemedStyles.style;
+
+    setOptions({ 
+      headerRight: () => (
+        <Text onPress={this.confirmPassword} style={[
+          CS.colorLink,
+          CS.fontL,
+          CS.bold,
+        ]}>{i18n.t('save')}</Text>
+      )
+    });
   }
 
   /**
@@ -72,6 +89,10 @@ class EmailScreen extends Component {
     this.setState({ isVisible: true });
   };
 
+  dismissModal = () => {
+    this.setState({ isVisible: false });
+  };
+
   /**
    * Render
    */
@@ -97,31 +118,29 @@ class EmailScreen extends Component {
       <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
         <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
           <Input
-            style={[CS.border0x, {height: 40}]}
+            style={[CS.border0x, styles.inputHeight]}
             labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
             placeholder={i18n.t('settings.currentEmail')}
             onChangeText={this.setEmail}
             value={email}
             editable={!this.state.inProgress}
-            testID="registerUsernameInput"
+            testID="emailScreenInput"
+            selectTextOnFocus={true}
           />
         </View>
         {confirmNote}
-        <Button
-          text={i18n.t('save').toUpperCase()}
-          loading={this.state.saving}
-          containerStyle={[
-            CommonStyle.marginTop3x,
-            CommonStyle.padding2x,
-            { alignSelf: 'center' },
-          ]}
-          onPress={this.confirmPassword}
-        />
         <ModalConfirmPassword
           isVisible={this.state.isVisible}
           onSuccess={this.save}
+          close={this.dismissModal}
         />
       </View>
     );
   }
 }
+
+const styles = {
+  inputHeight: {
+    height: 40,
+  },
+};
