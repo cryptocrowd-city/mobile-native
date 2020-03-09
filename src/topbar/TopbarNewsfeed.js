@@ -26,14 +26,13 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 import EmailConfirmation from './EmailConfirmation';
-import BannerInfo from './BannerInfo';
 
 const forceInset = isIphoneX ? {top: 10} : null
 
 @inject('user')
 @inject('wallet')
 @observer
-export default class TopbarNew extends Component {
+export default class TopbarNewsfeed extends Component {
 
   componentDidMount() {
     this.props.wallet.refresh();
@@ -50,10 +49,13 @@ export default class TopbarNew extends Component {
       <SafeAreaConsumer>
         {insets => (
           <View>
-            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top + 10}]}>
+            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
               <View style={styles.topbar}>
                 <View style={[styles.topbarLeft, CS.marginLeft4x]}>
-                  <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+                  <Image
+                    source={require('./../assets/logos/bulb.png')}
+                    style={styles.bulb}
+                  />
                 </View>
                 <View style={styles.topbarRight}>
                   <MessengerTabIcon navigation={navigation}/>
@@ -63,7 +65,6 @@ export default class TopbarNew extends Component {
             </View>
             <View>
               <EmailConfirmation user={this.props.user} />
-              <BannerInfo user={this.props.user} logged={true} />
             </View>
           </View>
         )}
@@ -90,15 +91,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: 8,
   },
+  bulb: {
+    width: 18,
+    height: 30,
+    alignSelf: 'center',
+  },
   topbar: {
     flex: 1,
     alignItems: 'flex-end',
     flexDirection: 'row',
   },
   topbarLeft: {
+    flex: 1,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   topbarRight: {
     flex: 1,
