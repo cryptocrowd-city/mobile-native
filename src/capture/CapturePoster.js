@@ -428,7 +428,7 @@ class CapturePoster extends Component {
       newPost.tags = this.props.capture.allTags;
     }
 
-    remoteAction(async () => {
+    return await remoteAction(async () => {
       let response = await this.props.capture.post(newPost);
 
       if (this.props.reset) {

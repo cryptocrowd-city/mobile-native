@@ -117,7 +117,7 @@ class ChannelHeader extends Component {
 
       this.setState({saving: true});
 
-      remoteAction(async () => {
+      await remoteAction(async () => {
         let response;
 
         try {

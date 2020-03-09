@@ -14,7 +14,7 @@ import { isUserError } from './UserError';
  */
 async function remoteAction(action, actionName = '', retries = 1) {
   try {
-    await action();
+    return await action();
   } catch (error) {
     let message;
 
