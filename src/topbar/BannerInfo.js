@@ -30,23 +30,19 @@ class BannerInfo extends Component {
       !this.props.user.bannerInfoDismiss &&
       (!this.props.logged || featuresService.has('radiocity'));
 
-    console.log("bannerinfo", show);
     if (!show) {
       return null;
     }
 
     return (
       <View style={styles.container}>
-
-
-          <Text style={[CS.fontM, CS.colorWhite]}>
+          <Text style={[CS.fontS, CS.colorWhite, CS.textCenter]}>
             {"BREAKING: TICKETS ON SALE FOR \"MINDS: FESTIVAL OF IDEAS\""}
           </Text>
-          <Text style={[CS.bold, CS.colorWhite]}>
+          <Text style={[CS.fontS, CS.bold, CS.colorWhite, CS.paddingTop2x, CS.textCenter]}>
             {"@ RADIO CITY ON 6/13/2020. HELP US SELL OUT FAST!"}
           </Text>
-
-        <Text style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismissForLogged}>[Close]</Text>
+        <Text style={[CS.fontS, styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismissForLogged}>[Close]</Text>
       </View>
     );
   }
@@ -61,6 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    padding: 10,
   },
 
   body: {
