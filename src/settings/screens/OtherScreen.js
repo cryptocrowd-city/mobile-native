@@ -80,7 +80,7 @@ export default function({ navigation }) {
 
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderHair, CS.borderPrimary]}>
+    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary]}>
 
       <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.a')}</Text>
       {contentAdmin.map((item, i) => (<SettingsItem item={item} i={i} />))}

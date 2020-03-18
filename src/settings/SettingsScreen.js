@@ -49,7 +49,7 @@ export default function({ navigation }) {
   return (
     <View style={[CS.flexContainer, CS.backgroundPrimary]}>
       <TopbarNew title={i18n.t('moreScreen.settings')} navigation={navigation} renderBack background={CS.backgroundPrimary} />
-      <View style={[CS.borderHair, CS.borderPrimary, CS.paddingTop4x]}>
+      <View style={[CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary, CS.paddingTop4x]}>
         <FlatList
           data={list}
           renderItem={SettingsItem}

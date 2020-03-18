@@ -12,7 +12,7 @@ export default function({ item, i }) {
       key={i}
       title={item.title}
       onPress={item.onPress}
-      containerStyle={[CS.backgroundSecondary, CS.borderHair, CS.borderPrimary, styles.containerPadding]}
+      containerStyle={[CS.backgroundSecondary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary, styles.containerPadding]}
       titleStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
       chevron={{...CS.colorIcon, size: 24}}
     />

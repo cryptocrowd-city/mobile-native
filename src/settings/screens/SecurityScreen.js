@@ -31,7 +31,7 @@ export default function() {
   ]
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderHair, CS.borderPrimary]}>
+    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary]}>
       <FlatList
         data={list}
         renderItem={SettingsItem}
