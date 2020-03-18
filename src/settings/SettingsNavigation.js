@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import ThemedStyles from '../styles/ThemedStyles';
 import MoreScreenNew from '../tabs/MoreScreenNew';
-import SettingsScreenNew from './SettingsScreenNew';
+import SettingsScreen from './SettingsScreen';
 import AccountScreen from './screens/AccountScreen';
 import SecurityScreen from './screens/SecurityScreen';
 import BillingScreenNew from './screens/BillingScreenNew';
@@ -53,7 +53,7 @@ const MenuStack = function({ navigation }) {
       />
       <MenuStackNav.Screen
         name="Settings"
-        component={SettingsScreenNew}
+        component={SettingsScreen}
         options={hideHeader}
       />
       <MenuStackNav.Screen
