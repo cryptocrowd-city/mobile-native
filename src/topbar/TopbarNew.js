@@ -26,13 +26,13 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 import EmailConfirmation from './EmailConfirmation';
+import BannerInfo from './BannerInfo';
 
-const forceInset = isIphoneX ? {top: 10} : null
-
+export default
 @inject('user')
 @inject('wallet')
 @observer
-export default class TopbarNew extends Component {
+class TopbarNew extends Component {
 
   componentDidMount() {
     this.props.wallet.refresh();
@@ -41,10 +41,8 @@ export default class TopbarNew extends Component {
   listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
 
   render() {
-
     const CS = ThemedStyles.style;
 
-    const user = this.props.user;
     return (
       <SafeAreaConsumer>
         {insets => (
@@ -60,7 +58,10 @@ export default class TopbarNew extends Component {
                 </View>
               </View>
             </View>
+
             <EmailConfirmation user={this.props.user} />
+            <BannerInfo user={this.props.user} />
+
           </View>
         )}
       </SafeAreaConsumer>
@@ -70,9 +71,8 @@ export default class TopbarNew extends Component {
 }
 
 let topbarHeight = 50;
-let topMargin = 0;
 
-if (Platform.OS == 'ios') {
+if (Platform.OS === 'ios') {
   topbarHeight = 90;
 }
 

@@ -57,13 +57,15 @@ class EmailConfirmation extends Component {
             {i18n.t('emailConfirm.sendAgain')}
           </Text>
         </View>
-        <Text style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismiss}>[Close]</Text>
+        <Text
+          style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]}
+          onPress={this.dismiss}>
+          [Close]
+        </Text>
       </View>
     );
   }
 }
-
-const topPosition = Platform.OS === 'ios' ? (isIphoneX ? 38 : 30) : 0;
 
 const styles = StyleSheet.create({
   container: {
@@ -71,13 +73,8 @@ const styles = StyleSheet.create({
     height: 95,
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 4,
-    position: 'absolute',
-    overflow: 'visible',
+    justifyContent: 'center',
     width: '100%',
-    left: 0,
-    top: topPosition,
-    zIndex: 999,
   },
   body: {
     flexDirection: 'column',
