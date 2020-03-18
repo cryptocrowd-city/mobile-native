@@ -9,7 +9,11 @@ export default function() {
   const CS = ThemedStyles.style;
   const navigation = useNavigation();
 
-  const navToOther = useCallback(() => navigation.push('Other'), [
+  const navToTFA = useCallback(() => navigation.push('TFAScreen'), [
+    navigation,
+  ]);
+
+  const navToDevices = useCallback(() => navigation.push('DevicesScreen'), [
     navigation,
   ]);
 
@@ -18,11 +22,11 @@ export default function() {
   const list = [
     {
       title: i18n.t('settings.securityOptions.1'),
-      onPress: navToOther,
+      onPress: navToTFA,
     },
     {
       title: i18n.t('settings.securityOptions.2'),
-      onPress: navToOther,
+      onPress: navToDevices,
     },
   ]
 

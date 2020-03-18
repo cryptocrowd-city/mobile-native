@@ -16,83 +16,12 @@ import { MINDS_CDN_URI } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
-
-import OtherScreen from '../settings/screens/OtherScreen';
-import AccountScreen from '../settings/screens/AccountScreen';
-import SecurityScreen from '../settings/screens/SecurityScreen';
-import BillingScreen from '../settings/screens/BillingScreen';
-import SettingsScreenNew from '../settings/SettingsScreenNew';
-import EmailScreen from '../settings/screens/EmailScreen';
-import i18n from '../common/services/i18n.service';
-import PasswordScreenNew from '../settings/screens/PasswordScreenNew';
+import MenuStack from '../settings/SettingsNavigation';
 
 const Tab = createBottomTabNavigator();
-const MenuStackNav = createNativeStackNavigator();
 
 const hideHeader = { headerShown: false };
 
-const MenuStack = function({ navigation }) {
-
-  /**
-   * Add tabPress event to navigate to main when user tap in menu tab
-   */
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', () => {
-      navigation.navigate('Main');
-    });
-    return unsubscribe;
-  }, [navigation]);
-
-  return (
-    <MenuStackNav.Navigator
-      screenOptions={{
-        title: '',
-        ...ThemedStyles.defaultScreenOptions,
-      }}>
-      <MenuStackNav.Screen
-        name="Main"
-        component={MoreScreenNew}
-        options={hideHeader}
-      />
-      <MenuStackNav.Screen
-        name="Settings"
-        component={SettingsScreenNew}
-        options={hideHeader}
-      />
-      <MenuStackNav.Screen
-        name="Account"
-        component={AccountScreen}
-        options={{ title: i18n.t('settings.account') }}
-      />
-      <MenuStackNav.Screen
-        name="Security"
-        component={SecurityScreen}
-        options={{ title: i18n.t('settings.security') }}
-      />
-      <MenuStackNav.Screen
-        name="Billing"
-        component={BillingScreen}
-        options={{ title: i18n.t('settings.billing') }}
-      />
-      <MenuStackNav.Screen
-        name="Other"
-        component={OtherScreen}
-        options={{ title: i18n.t('settings.other') }}
-      />
-      <MenuStackNav.Screen 
-        name="SettingsEmail"
-        component={EmailScreen}
-        options={{ title: i18n.t('settings.accountOptions.1') }}
-      />
-      <MenuStackNav.Screen 
-        name="SettingsPassword"
-        component={PasswordScreenNew}
-        options={{ title: i18n.t('settings.accountOptions.3') }}
-      />
-    </MenuStackNav.Navigator>
-  );
-};
 
 /**
  * Main tabs

@@ -78,6 +78,8 @@ export default class Input extends Component {
         textStyle={CS.colorPrimaryText}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
+        TFA={this.props.TFA}
+        TFAConfirmed={this.props.TFAConfirmed}
       />
     );
   };

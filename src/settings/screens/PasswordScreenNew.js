@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, Alert } from 'react-native-animatable';
+import { View, Text } from 'react-native-animatable';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -8,8 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import validatePassword from '../../common/helpers/validatePassword';
 import authService from '../../auth/AuthService';
 import settingsService from '../SettingsService';
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import isIphoneX from '../../common/helpers/isIphoneX';
 
 export default function() {
   const CS = ThemedStyles.style;
@@ -30,7 +31,6 @@ export default function() {
 
   const confirmPassword = useCallback(async () => {
     // missing data
-    console.log('missing data', !currentPassword || !newPassword || !confirmationPassword);
     if (!currentPassword || !newPassword || !confirmationPassword) {
       return;
     }
@@ -69,7 +69,7 @@ export default function() {
       Alert.alert('Error', err.message);
     }
 
-  }, []);
+  }, [currentPassword, newPassword, confirmationPassword]);
 
   /**
    * Set save button on header right
@@ -85,8 +85,8 @@ export default function() {
   });
 
   return (
-    <ScrollView style={[CS.flexContainer]}>
-    <KeyboardAvoidingView style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]} behavior="position">
+    <ScrollView style={[CS.flexContainer, CS.backgroundPrimary]}>
+    <KeyboardAvoidingView style={[CS.flexContainer, CS.paddingTop3x]} behavior="position" keyboardVerticalOffset={isIphoneX ? 100 : 64}>
       <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
         <Input
           style={[CS.border0x, styles.inputHeight]}

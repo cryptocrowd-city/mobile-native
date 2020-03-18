@@ -18,7 +18,7 @@ import ConversationScreen from '../messenger/ConversationScreen';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
-import BillingScreenOld from '../settings/screens/BillingScreenOld';
+import BillingScreen from '../settings/screens/BillingScreen';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
@@ -140,7 +140,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="SettingsEmail" component={EmailScreen} />
       <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen} />
       <AppStackNav.Screen name="SettingsRekey" component={RekeyScreen} />
-      <AppStackNav.Screen name="SettingsBilling" component={BillingScreenOld} />
+      <AppStackNav.Screen name="SettingsBilling" component={BillingScreen} />
       <AppStackNav.Screen
         name="GroupsList"
         component={GroupsListScreen}

@@ -21,6 +21,18 @@ export default function() {
     navigation,
   ]);
 
+  const navToNotificationsScreen = useCallback(() => navigation.push('SettingsNotifications'), [
+    navigation,
+  ]);
+
+  const navToLanguageScreen = useCallback(() => navigation.push('LanguageScreen'), [
+    navigation,
+  ]);
+
+  const navToNSFWScreen = useCallback(() => navigation.push('NSFWScreen'), [
+    navigation,
+  ]);
+
   const keyExtractor = useCallback((item, index) => index.toString());
 
   const list = [
@@ -30,7 +42,7 @@ export default function() {
     },
     {
       title: i18n.t('settings.accountOptions.2'),
-      onPress: navToOther,
+      onPress: navToLanguageScreen,
     },
     {
       title: i18n.t('settings.accountOptions.3'),
@@ -38,11 +50,11 @@ export default function() {
     },
     {
       title:i18n.t('settings.accountOptions.4'),
-      onPress: navToOther,
+      onPress: navToNotificationsScreen,
     },
     {
       title:i18n.t('settings.accountOptions.5'),
-      onPress: navToOther,
+      onPress: navToNSFWScreen,
     },
   ]
 

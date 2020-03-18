@@ -1,39 +1,43 @@
-import React, { useCallback } from 'react';
-import { View, FlatList } from 'react-native';
-import SettingsItem from '../SettingsItem';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { useNavigation } from '@react-navigation/native';
+import React, {
+  Component
+} from 'react';
+
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Picker,
+  Alert,
+} from 'react-native';
+
+import { List, ListItem } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import i18n from '../../common/services/i18n.service';
+import StripeCardCarousel from '../../wire/methods/StripeCardCarousel';
+import StripeCardSelector from '../../wire/methods/StripeCardSelector';
+import ThemedStyles from '../../styles/ThemedStyles';
 
-export default function() {
-  const CS = ThemedStyles.style;
-  const navigation = useNavigation();
+export default class BillingScreen extends Component {
 
-  const navToOther = useCallback(() => navigation.push('Other'), [
-    navigation,
-  ]);
+  onSelectCard = (card) => {
+    return;
+  }
 
-  const keyExtractor = useCallback((item, index) => index.toString());
-
-  const list = [
-    {
-      title: i18n.t('settings.billingOptions.1'),
-      onPress: navToOther,
-    },
-    {
-      title: i18n.t('settings.billingOptions.2'),
-      onPress: navToOther,
-    },
-  ]
-
-  return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderHair, CS.borderPrimary]}>
-      <FlatList
-        data={list}
-        renderItem={SettingsItem}
-        style={[CS.backgroundPrimary]}
-        keyExtractor={keyExtractor}
-      />
+  render() {
+    const CS = ThemedStyles.style;
+    return (
+      <View style={CS.columnAlignCenter}>
+        <Text style={[CS.marginTop2x, CS.fontHairline, CS.fontXL, CS.marginBottom2x]}>{i18n.t('wire.selectCredit')}</Text>
+        <StripeCardSelector onCardSelected={this.onSelectCard}/>
     </View>
-  )
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FFF',
+    flex: 1,
+  },
+});
