@@ -176,7 +176,7 @@ export default class GroupHeader extends Component {
         this.props.store.refresh(group.guid);
         this.props.groupsBar.markAsRead(group, 'activity');
       case 'desc':
-        this.props.store.list.clearList(false);
+        this.props.store.list && this.props.store.list.clearList(false);
         break;
       case 'members':
         this.props.store.loadMembers();
