@@ -45,6 +45,7 @@ class TopbarNewsfeed extends Component {
                     source={logo}
                     style={styles.bulb}
                     resizeMode="contain"
+                    onPress={this.props.refreshFeed ?? (() => false)}
                   />
                 </View>
                 <View style={styles.topbarRight}>
