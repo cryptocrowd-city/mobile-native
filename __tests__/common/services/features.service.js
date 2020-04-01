@@ -9,6 +9,6 @@ describe('Feature service', () => {
   it('should return features', async () => {
     let features = { crypto: true,  'onboarding-december-2019': true };
     expect(service.features).toEqual(features);
-    expect(service.has('crypto')).toEqual(false);
+    expect(service.has('crypto')).toEqual(true);
   });
 });
