@@ -75,14 +75,11 @@ const AppStackNav = createNativeStackNavigator();
 const AuthStackNav = createNativeStackNavigator();
 const RootStackNav = createNativeStackNavigator();
 
-
-
-const AppStack = function(props) {
-
+const AppStack = function (props) {
   let CurrentComposeScreen;
 
   // if (featuresService.has('compose')) {
-    CurrentComposeScreen = ComposeScreen;
+  CurrentComposeScreen = ComposeScreen;
   // } else {
   //   CurrentComposeScreen = CapturePoster;
   //   captureOptions.headerShown = true;
@@ -199,7 +196,15 @@ const AppStack = function(props) {
         name="WalletHistory"
         component={WalletHistoryScreen}
       />
-      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+      <AppStackNav.Screen
+        name="ViewImage"
+        component={ViewImageScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#000',
+          },
+        }}
+      />
       <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
@@ -263,7 +268,7 @@ const AppStack = function(props) {
   );
 };
 
-const AuthStack = function(props) {
+const AuthStack = function (props) {
   return (
     <AuthStackNav.Navigator>
       <AuthStackNav.Screen
@@ -285,7 +290,7 @@ const AuthStack = function(props) {
   );
 };
 
-const RootStack = function(props) {
+const RootStack = function (props) {
   const initial = props.isLoggedIn ? 'App' : 'Auth';
 
   return (

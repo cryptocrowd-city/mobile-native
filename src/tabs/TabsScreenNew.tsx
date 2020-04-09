@@ -23,12 +23,11 @@ const Tab = createBottomTabNavigator();
 
 const hideHeader = { headerShown: false };
 
-
 /**
  * Main tabs
  * @param {Object} props
  */
-const Tabs = observer(function({ navigation }) {
+const Tabs = observer(function ({ navigation }) {
   const isIOS = Platform.OS === 'ios';
 
   const navToCapture = useCallback(() => navigation.push('Capture'), [
@@ -50,12 +49,13 @@ const Tabs = observer(function({ navigation }) {
         activeTintColor: ThemedStyles.getColor('link'),
         inactiveTintColor: ThemedStyles.getColor('text_secondary'),
         style: {
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: ThemedStyles.getColor('primary_border'),
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
           paddingTop: isIOS && isIphoneX ? 30 : 2,
-          paddingLeft: 25,
-          paddingRight: 25,
+          paddingLeft: isIphoneX ? 20 : 0,
+          paddingRight: isIphoneX ? 20 : 0,
         },
         tabStyle: {
           height,
@@ -95,6 +95,7 @@ const Tabs = observer(function({ navigation }) {
               break;
             case 'Discovery':
               iconName = 'hashtag';
+              iconsize = 24;
               break;
             case 'Notifications':
               return <NotificationIcon tintColor={color} size={iconsize} />;
@@ -105,7 +106,7 @@ const Tabs = observer(function({ navigation }) {
           }
 
           if (Platform.isPad) {
-            iconsize = Math.round(iconsize * 1.2)
+            iconsize = Math.round(iconsize * 1.2);
           }
 
           // You can return any component that you like here!
@@ -127,7 +128,7 @@ const Tabs = observer(function({ navigation }) {
         component={View}
         options={{
           tabBarTestID: 'Capture tab button',
-          tabBarButton: props => (
+          tabBarButton: (props) => (
             <TouchableOpacity {...props} onPress={navToCapture} />
           ),
         }}
