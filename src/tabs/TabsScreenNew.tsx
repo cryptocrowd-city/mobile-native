@@ -8,7 +8,6 @@ import { Avatar } from 'react-native-elements';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import MoreScreenNew from './MoreScreenNew';
 import ThemedStyles from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
@@ -21,8 +20,6 @@ import MenuStack from '../settings/SettingsNavigation';
 
 const Tab = createBottomTabNavigator();
 
-const hideHeader = { headerShown: false };
-
 /**
  * Main tabs
  * @param {Object} props
@@ -33,6 +30,11 @@ const Tabs = observer(function ({ navigation }) {
   const navToCapture = useCallback(() => navigation.push('Capture'), [
     navigation,
   ]);
+
+  const navToVideoCapture = useCallback(
+    () => navigation.push('Capture', { mode: 'video', start: true }),
+    [navigation],
+  );
 
   if (gatheringService.inGatheringScreen) {
     return null;
@@ -129,7 +131,11 @@ const Tabs = observer(function ({ navigation }) {
         options={{
           tabBarTestID: 'Capture tab button',
           tabBarButton: (props) => (
-            <TouchableOpacity {...props} onPress={navToCapture} />
+            <TouchableOpacity
+              {...props}
+              onPress={navToCapture}
+              onLongPress={navToVideoCapture}
+            />
           ),
         }}
       />

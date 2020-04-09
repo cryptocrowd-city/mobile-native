@@ -22,7 +22,7 @@
     "@react-native-community/async-storage": "^1.8.0",
     "@react-native-community/cameraroll": "1.4.0",
     "@react-native-community/datetimepicker": "^2.2.2",
-    "@react-native-community/hooks": "^2.4.3",
+    "@react-native-community/hooks": "^2.4.8",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-native-community/netinfo": "^4.7.0",
     "@react-navigation/bottom-tabs": "^5.1.0",
@@ -94,6 +94,7 @@
     "reanimated-bottom-sheet": "^1.0.0-alpha.19",
     "rn-apk": "^0.2.9",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
+    "rxjs": "^6.5.5",
     "socket.io-client": "^2.3.0",
     "tipsi-stripe": "8.0.0-beta.8",
     "web3": "^1.2.2"

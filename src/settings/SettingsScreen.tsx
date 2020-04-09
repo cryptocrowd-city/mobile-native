@@ -4,7 +4,7 @@ import { View, FlatList } from 'react-native';
 import SettingsItem from './SettingsItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
-import TopbarNew from '../topbar/TopbarNew';
+import Topbar from '../topbar/Topbar';
 
 export default function ({ navigation }) {
   const CS = ThemedStyles.style;
@@ -46,7 +46,7 @@ export default function ({ navigation }) {
 
   return (
     <View style={[CS.flexContainer, CS.backgroundPrimary]}>
-      <TopbarNew
+      <Topbar
         title={i18n.t('moreScreen.settings')}
         navigation={navigation}
         renderBack
@@ -57,7 +57,6 @@ export default function ({ navigation }) {
           CS.borderTopHair,
           CS.borderBottomHair,
           CS.borderPrimary,
-
           { flex: 1 },
         ]}>
         <FlatList

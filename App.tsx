@@ -101,7 +101,7 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate('App', { screen: sessionService.initialScreen});
+  // NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
   getStores().onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
@@ -358,9 +358,9 @@ class App extends Component<Props, State>{
     return [app, keychainModal, blockchainTransactionModal, tosModal];
   }
 
-  renderNotification = () => {
+  renderNotification = (message) => {
     if (!stores.notifications.last) {
-      return null;
+      return message.renderCustomContent ? message.renderCustomContent() : null;
     }
     return (
       <Notification

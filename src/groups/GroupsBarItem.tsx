@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import { observer, inject } from 'mobx-react';
-
+import { showMessage, hideMessage } from 'react-native-flash-message';
 import {
   Platform,
   StyleSheet,
@@ -21,6 +21,7 @@ import PulseAnimAvatar from '../common/components/PulseAnimAvatar';
 import excerpt from '../common/helpers/excerpt';
 import navigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
+import i18n from '../common/services/i18n.service';
 
 @inject('groupsBar')
 @observer
@@ -33,7 +34,37 @@ export default class GroupsBarItem extends Component {
   }
 
   navToGroup = () => {
+    hideMessage();
     navigationService.navigate('GroupView', { group: this.props.group });
+  };
+
+  navToGathering = () => {
+    hideMessage();
+    navigationService.navigate('Gathering', { entity: this.props.group });
+  };
+
+  askGatheringOrNav = () => {
+    const theme = ThemedStyles.style;
+
+    showMessage({
+      position: 'top',
+      message: i18n.t('groups.ongoingGathering'),
+      floating: true,
+      duration: 4000,
+      renderCustomContent: () => (
+        <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
+          <Text style={theme.fontXL} onPress={this.navToGathering}>
+            {i18n.t('groups.joinGathering')}
+          </Text>
+          <Text style={theme.fontXL} onPress={this.navToGroup}>
+            {i18n.t('groups.gotoGroup')}
+          </Text>
+        </View>
+      ),
+      titleStyle: ThemedStyles.style.fontXL,
+      backgroundColor: ThemedStyles.getColor('tertiary_background'),
+      type: 'default',
+    });
   };
 
   render() {
@@ -55,7 +86,7 @@ export default class GroupsBarItem extends Component {
               borderColor={colors.danger}
               backgroundColor={colors.danger}
               interval={1000}
-              onPress={this.navToGroup}
+              onPress={this.askGatheringOrNav}
             />
             {group.marker_activity ? <View style={styles.acitivity} /> : null}
           </View>
@@ -84,11 +115,7 @@ export default class GroupsBarItem extends Component {
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={0.5}>
           <FastImage
             source={{ uri: this.getAvatar(group) }}
-            style={[
-              styles.avatar,
-              ThemedStyles.style.borderPrimary,
-              ThemedStyles.style.borderHair,
-            ]}
+            style={[styles.avatar]}
           />
           {group.marker_activity ? <View style={[styles.acitivity]} /> : null}
         </TouchableOpacity>

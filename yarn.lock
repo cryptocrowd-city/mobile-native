@@ -1343,10 +1343,10 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
-"@react-native-community/hooks@^2.4.3":
-  version "2.4.7"
-  resolved "https://registry.yarnpkg.com/@react-native-community/hooks/-/hooks-2.4.7.tgz#1378290f566a38788940c172b4ca69b5f89f6178"
-  integrity sha512-KFEP4dKlRk2peFoX2pCkInH3FGNJABXG+zQQFLjqVncwCT3lKI1EpVaK4mgQQgf0s6wcehK83XJ3liHmAnaNcQ==
+"@react-native-community/hooks@^2.4.8":
+  version "2.4.8"
+  resolved "https://registry.yarnpkg.com/@react-native-community/hooks/-/hooks-2.4.8.tgz#3fa0b561c4b7a1138565a26ed9848197bf4fa808"
+  integrity sha512-QTyXYKqpffsQ7QB/hl+ziMDHla6yCDsNfi3+cMPiFqerazRW9mTiEdWQEFLlCL6UN6+mNrSkX9d71sTL93bUHA==
 
 "@react-native-community/masked-view@^0.1.7":
   version "0.1.7"
@@ -9395,6 +9395,13 @@ rxjs@^6.4.0, rxjs@^6.5.3:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz#e0777fe0d184cec7872df147f303572d414e211c"
   integrity sha512-naMQXcgEo3csAEGvw/NydRA0fuS2nDZJiw1YUWFKU7aPPAPGZEsD4Iimit96qwCieH6y614MCLYwdkrWx7z/7Q==
+  dependencies:
+    tslib "^1.9.0"
+
+rxjs@^6.5.5:
+  version "6.5.5"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.5.tgz#c5c884e3094c8cfee31bf27eb87e54ccfc87f9ec"
+  integrity sha512-WfQI+1gohdf0Dai/Bbmk5L5ItH5tYqm3ki2c5GdWhKjalzjg93N3avFjVStyZZz+A2Em+ZxKH5bNghw9UeylGQ==
   dependencies:
     tslib "^1.9.0"
 
