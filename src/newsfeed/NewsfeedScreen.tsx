@@ -12,11 +12,11 @@ import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import i18n from '../common/services/i18n.service';
 import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
-import { RootStackParamList } from 'src/navigation/NavigationTypes';
-import MessengerListStore from 'src/messenger/MessengerListStore';
-import DiscoveryStore from 'src/discovery/DiscoveryStore';
-import UserStore from 'src/auth/UserStore';
-import NewsfeedStore from './NewsfeedStore';
+import type { RootStackParamList } from 'src/navigation/NavigationTypes';
+import type MessengerListStore from 'src/messenger/MessengerListStore';
+import type DiscoveryStore from 'src/discovery/DiscoveryStore';
+import type UserStore from 'src/auth/UserStore';
+import type NewsfeedStore from './NewsfeedStore';
 
 type NewsfeedScreenRouteProp = RouteProp<RootStackParamList, 'Newsfeed'>;
 type NewsfeedcreenNavigationProp = StackNavigationProp<
