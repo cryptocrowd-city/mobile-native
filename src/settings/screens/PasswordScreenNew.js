@@ -46,18 +46,20 @@ export default observer(function () {
       store.setNewPassword('');
       store.setConfirmationPassword('');
     },
+    currentPasswordFocus() {
+      store.setCurrentPassword('');
+    },
+    newPasswordBlurred(){
+      store.setPasswordFocused(false);
+    },
+    confirmationPasswordFocus() {
+      store.setConfirmationPassword('');
+    },
+    newPasswordFocus() {
+      store.setNewPassword('');
+      store.setPasswordFocused(true);
+    },
   }));
-
-  const currentPasswordFocus = () => store.setCurrentPassword('');
-
-  const newPasswordFocus = () => {
-    store.setNewPassword('');
-    store.setPasswordFocused(true);
-  }
-
-  const newPasswordBlurred = () => store.setPasswordFocused(false);
-
-  const confirmationPasswordFocus = () => store.setConfirmationPassword('');
 
   let currentPasswordInput = '';
   let newPasswordInput = '';
@@ -172,7 +174,7 @@ export default observer(function () {
             onChangeText: store.setCurrentPassword,
             value: store.currentPassword,
             testID: 'currentPasswordInput',
-            onFocus: currentPasswordFocus,
+            onFocus: store.currentPasswordFocus,
             onError: i18n.t('settings.invalidPassword'),
             ref: (input) => (currentPasswordInput = input),
           })
@@ -182,8 +184,8 @@ export default observer(function () {
           onChangeText: store.setNewPassword,
           value: store.newPassword,
           testID: 'newPasswordInput',
-          onFocus: newPasswordFocus,
-          onBlur: newPasswordBlurred,
+          onFocus: store.newPasswordFocus,
+          onBlur: store.newPasswordBlurred,
           onError: i18n.t('settings.passwordsNotMatch'),
           ref: (input) => (newPasswordInput = input)
         })}
@@ -192,8 +194,8 @@ export default observer(function () {
           onChangeText: store.setConfirmationPassword,
           value: store.confirmationPassword,
           testID: 'confirmationPasswordPasswordInput',
-          onFocus: confirmationPasswordFocus,
-          onBlur: newPasswordBlurred,
+          onFocus: store.confirmationPasswordFocus,
+          onBlur: store.newPasswordBlurred,
         })}
       </KeyboardAvoidingView>
     </ScrollView>
