@@ -184,6 +184,13 @@ class MoreScreenNew extends Component {
 
     const theme = ThemedStyles.style;
 
+    const subscribersStyle = [
+      theme.subTitleText,
+      theme.colorTertiaryText,
+      theme.fontNormal,
+      theme.marginTop3x,
+    ]
+
     return (
       <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
         <ScrollView
@@ -210,20 +217,14 @@ class MoreScreenNew extends Component {
               ]}>
               @{channel.username}
             </Text>
-            <Text
-              style={[
-                theme.subTitleText,
-                theme.colorTertiaryText,
-                theme.fontNormal,
-                theme.marginTop3x,
-              ]}>
-              <Text onPress={this.navToSubscribers}>
+            <Text style={subscribersStyle}>
+              <Text onPress={this.navToSubscribers} style={subscribersStyle}>
                 {`${abbrev(channel.subscribers_count, 0)} ${i18n.t(
                   'subscribers',
                 )}`}
               </Text>
               {'   ·   '}
-              <Text onPress={this.navToSubscriptions}>
+              <Text onPress={this.navToSubscriptions} style={subscribersStyle}>
                 {`${abbrev(channel.subscriptions_count, 0)} ${i18n.t(
                   'subscriptions',
                 )}`}
