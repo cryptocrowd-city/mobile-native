@@ -1,5 +1,6 @@
 //@ts-nocheck
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
+import { observer, useLocalStore } from 'mobx-react';
 import { View, Text } from 'react-native-animatable';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -14,68 +15,94 @@ import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../common/helpers/isIphoneX';
 import PasswordValidator from '../../common/components/PasswordValidator';
 
-export default function () {
+export default observer(function () {
   const theme = ThemedStyles.style;
 
   const navigation = useNavigation();
 
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmationPassword, setConfirmationPassword] = useState('');
-  const [passwordFocused, setPasswordFocused] = useState(false);
-  const [error, setError] = useState(false);
+  const store = useLocalStore(() => ({
+    currentPassword: '',
+    newPassword: '',
+    confirmationPassword: '',
+    passwordFocused: false,
+    error: false,
+    setCurrentPassword(password) {
+      store.currentPassword = password;
+    },
+    setNewPassword(password) {
+      store.newPassword = password;
+    },
+    setConfirmationPassword(password) {
+      store.confirmationPassword = password;
+    },
+    setPasswordFocused(value) {
+      store.passwordFocused = value;
+    },
+    setError(password) {
+      store.currentPassword = password;
+    },
+  }));
 
-  const currentPasswordFocus = useCallback(() => setCurrentPassword(''), []);
+  const currentPasswordFocus = useCallback(() => store.setCurrentPassword(''), [
+    store,
+  ]);
 
   const newPasswordFocus = useCallback(() => {
-    setNewPassword('');
-    setPasswordFocused(true);
-  }, []);
+    store.setNewPassword('');
+    store.setPasswordFocused(true);
+  }, [store]);
 
-  const newPasswordBlurred = useCallback(() => setPasswordFocused(false), []);
+  const newPasswordBlurred = useCallback(
+    () => store.setPasswordFocused(false),
+    [store],
+  );
 
   const confirmationPasswordFocus = useCallback(
-    () => setConfirmationPassword(''),
-    [],
+    () => store.setConfirmationPassword(''),
+    [store],
   );
 
   const clearInputs = useCallback(() => {
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmationPassword('');
-  }, [setCurrentPassword, setNewPassword, setConfirmationPassword]);
+    store.setCurrentPassword('');
+    store.setNewPassword('');
+    store.setConfirmationPassword('');
+  }, [store]);
 
   let currentPasswordInput = '';
   let newPasswordInput = '';
 
   const confirmPassword = useCallback(async () => {
     // missing data
-    if (!currentPassword || !newPassword || !confirmationPassword) {
+    if (
+      !store.currentPassword ||
+      !store.newPassword ||
+      !store.confirmationPassword
+    ) {
       return;
     }
 
     // current password doesn't match
     try {
-      await authService.validatePassword(currentPassword);
+      await authService.validatePassword(store.currentPassword);
     } catch (err) {
       currentPasswordInput.showError();
       return;
     }
 
     // password format is invalid
-    if (!validatePassword(newPassword).all) {
-      setError(true);
+    if (!validatePassword(store.newPassword).all) {
+      store.setError(true);
       return;
     }
 
     // passwords not matching
-    if (newPassword !== confirmationPassword) {
+    if (store.newPassword !== store.confirmationPassword) {
       newPasswordInput.showError();
     }
 
     const params = {
-      password: currentPassword,
-      new_password: newPassword,
+      password: store.currentPassword,
+      new_password: store.newPassword,
     }
 
     try {
@@ -85,14 +112,7 @@ export default function () {
     } catch (err) {
       Alert.alert('Error', err.message);
     }
-  }, [
-    currentPassword,
-    newPassword,
-    confirmationPassword,
-    currentPasswordInput,
-    newPasswordInput,
-    clearInputs,
-  ]);
+  }, [store, currentPasswordInput, newPasswordInput, clearInputs]);
 
   /**
    * Set save button on header right
@@ -142,7 +162,7 @@ export default function () {
         </View>
       );
     },
-    [theme]
+    [theme],
   );
 
   return (
@@ -151,15 +171,15 @@ export default function () {
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"
         keyboardVerticalOffset={isIphoneX ? 100 : 64}>
-        {passwordFocused ? (
+        {store.passwordFocused ? (
           <View style={[theme.paddingLeft3x]}>
-            <PasswordValidator password={newPassword} />
+            <PasswordValidator password={store.newPassword} />
           </View>
         ) : (
           getInput({
             placeholder: i18n.t('settings.currentPassword'),
-            onChangeText: setCurrentPassword,
-            value: currentPassword,
+            onChangeText: store.setCurrentPassword,
+            value: store.currentPassword,
             testID: 'currentPasswordInput',
             onFocus: currentPasswordFocus,
             onError: i18n.t('settings.invalidPassword'),
@@ -168,8 +188,8 @@ export default function () {
         )}
         {getInput({
           placeholder: i18n.t('settings.newPassword'),
-          onChangeText: setNewPassword,
-          value: newPassword,
+          onChangeText: store.setNewPassword,
+          value: store.newPassword,
           testID: 'newPasswordInput',
           onFocus: newPasswordFocus,
           onBlur: newPasswordBlurred,
@@ -178,8 +198,8 @@ export default function () {
         })}
         {getInput({
           placeholder: i18n.t('settings.confirmNewPassword'),
-          onChangeText: setConfirmationPassword,
-          value: confirmationPassword,
+          onChangeText: store.setConfirmationPassword,
+          value: store.confirmationPassword,
           testID: 'confirmationPasswordPasswordInput',
           onFocus: confirmationPasswordFocus,
           onBlur: newPasswordBlurred,
@@ -187,7 +207,7 @@ export default function () {
       </KeyboardAvoidingView>
     </ScrollView>
   );
-}
+});
 
 const styles = {
   inputHeight: {
