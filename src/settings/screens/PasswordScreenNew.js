@@ -15,7 +15,7 @@ import isIphoneX from '../../common/helpers/isIphoneX';
 import PasswordValidator from '../../common/components/PasswordValidator';
 
 export default function () {
-  const CS = ThemedStyles.style;
+  const theme = ThemedStyles.style;
 
   const navigation = useNavigation();
 
@@ -26,15 +26,19 @@ export default function () {
   const [error, setError] = useState(false);
 
   const currentPasswordFocus = useCallback(() => setCurrentPassword(''), []);
+
   const newPasswordFocus = useCallback(() => {
     setNewPassword('');
     setPasswordFocused(true);
   }, []);
+
   const newPasswordBlurred = useCallback(() => setPasswordFocused(false), []);
+
   const confirmationPasswordFocus = useCallback(
     () => setConfirmationPassword(''),
     [],
   );
+
   const clearInputs = useCallback(() => {
     setCurrentPassword('');
     setNewPassword('');
@@ -95,94 +99,91 @@ export default function () {
    */
   navigation.setOptions({
     headerRight: () => (
-      <Text onPress={confirmPassword} style={[CS.colorLink, CS.fontL, CS.bold]}>
+      <Text
+        onPress={confirmPassword}
+        style={[theme.colorLink, theme.fontL, theme.bold]}>
         {i18n.t('save')}
       </Text>
     ),
   });
 
+  const getInput = useCallback(
+    (props) => {
+      const wrapperStyle = [
+        theme.paddingLeft3x,
+        theme.paddingTop3x,
+        theme.backgroundSecondary,
+        theme.border,
+        theme.borderPrimary,
+      ];
+
+      const labelStyle = [
+        theme.colorSecondaryText,
+        theme.fontL,
+        theme.paddingLeft,
+      ];
+
+      return (
+        <View style={wrapperStyle}>
+          <Input
+            style={[theme.border0x, styles.inputHeight]}
+            labelStyle={labelStyle}
+            placeholder={props.placeholder}
+            onChangeText={props.onChangeText}
+            value={props.value}
+            testID={props.testID}
+            clearTextOnFocus={true}
+            secureTextEntry={!DISABLE_PASSWORD_INPUTS}
+            onFocus={props.onFocus}
+            onBlur={props.onBlur ?? (() => {})}
+            onError={props.onError ?? (() => {})}
+            ref={props.ref ?? (() => {})}
+          />
+        </View>
+      );
+    },
+    [theme]
+  );
+
   return (
-    <ScrollView style={[CS.flexContainer, CS.backgroundPrimary]}>
+    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
       <KeyboardAvoidingView
-        style={[CS.flexContainer, CS.paddingTop3x]}
+        style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"
         keyboardVerticalOffset={isIphoneX ? 100 : 64}>
         {passwordFocused ? (
-          <View style={[CS.paddingLeft3x]}>
+          <View style={[theme.paddingLeft3x]}>
             <PasswordValidator password={newPassword} />
           </View>
         ) : (
-          <View
-            style={[
-              CS.paddingLeft3x,
-              CS.paddingTop3x,
-              CS.backgroundSecondary,
-              CS.border,
-              CS.borderPrimary,
-            ]}>
-            <Input
-              style={[CS.border0x, styles.inputHeight]}
-              labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-              placeholder={i18n.t('settings.currentPassword')}
-              onChangeText={setCurrentPassword}
-              value={currentPassword}
-              //editable={!this.state.inProgress}
-              testID="currentPasswordInput"
-              clearTextOnFocus={true}
-              secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-              //editable={!this.state.inProgress}
-              onFocus={currentPasswordFocus}
-              onError={i18n.t('settings.invalidPassword')}
-              ref={(input) => (currentPasswordInput = input)}
-              //onBlur={this.blurPassword}
-            />
-          </View>
+          getInput({
+            placeholder: i18n.t('settings.currentPassword'),
+            onChangeText: setCurrentPassword,
+            value: currentPassword,
+            testID: 'currentPasswordInput',
+            onFocus: currentPasswordFocus,
+            onError: i18n.t('settings.invalidPassword'),
+            ref: (input) => (currentPasswordInput = input),
+          })
         )}
-        <View
-          style={[
-            CS.paddingLeft3x,
-            CS.paddingTop3x,
-            CS.backgroundSecondary,
-            CS.border,
-            CS.borderPrimary,
-            passwordFocused ? CS.marginTop0x : CS.marginTop7x,
-          ]}>
-          <Input
-            style={[CS.border0x, styles.inputHeight]}
-            labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-            placeholder={i18n.t('settings.newPassword')}
-            onChangeText={setNewPassword}
-            value={newPassword}
-            testID="newPasswordInput"
-            clearTextOnFocus={true}
-            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-            onFocus={newPasswordFocus}
-            onBlur={newPasswordBlurred}
-            onError={i18n.t('settings.passwordsNotMatch')}
-            ref={(input) => (newPasswordInput = input)}
-          />
-        </View>
-        <View
-          style={[
-            CS.paddingLeft3x,
-            CS.paddingTop3x,
-            CS.backgroundSecondary,
-            CS.border,
-            CS.borderPrimary,
-          ]}>
-          <Input
-            style={[CS.border0x, styles.inputHeight]}
-            labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-            placeholder={i18n.t('settings.confirmNewPassword')}
-            onChangeText={setConfirmationPassword}
-            value={confirmationPassword}
-            testID="confirmationPasswordPasswordInput"
-            clearTextOnFocus={true}
-            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-            onFocus={confirmationPasswordFocus}
-            onBlur={newPasswordBlurred}
-          />
-        </View>
+        {getInput({
+          placeholder: i18n.t('settings.newPassword'),
+          onChangeText: setNewPassword,
+          value: newPassword,
+          testID: 'newPasswordInput',
+          onFocus: newPasswordFocus,
+          onBlur: newPasswordBlurred,
+          onError: i18n.t('settings.passwordsNotMatch'),
+          ref: (input) => (newPasswordInput = input)
+        })}
+        {getInput({
+          placeholder: i18n.t('settings.confirmNewPassword'),
+          onChangeText: setConfirmationPassword,
+          value: confirmationPassword,
+          testID: 'confirmationPasswordPasswordInput',
+          onFocus: confirmationPasswordFocus,
+          onBlur: newPasswordBlurred,
+        })}
       </KeyboardAvoidingView>
     </ScrollView>
   );
