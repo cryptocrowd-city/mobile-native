@@ -41,32 +41,23 @@ export default observer(function () {
     setError(password) {
       store.currentPassword = password;
     },
+    clearInputs() {
+      store.setCurrentPassword('');
+      store.setNewPassword('');
+      store.setConfirmationPassword('');
+    },
   }));
 
-  const currentPasswordFocus = useCallback(() => store.setCurrentPassword(''), [
-    store,
-  ]);
+  const currentPasswordFocus = () => store.setCurrentPassword('');
 
-  const newPasswordFocus = useCallback(() => {
+  const newPasswordFocus = () => {
     store.setNewPassword('');
     store.setPasswordFocused(true);
-  }, [store]);
+  }
 
-  const newPasswordBlurred = useCallback(
-    () => store.setPasswordFocused(false),
-    [store],
-  );
+  const newPasswordBlurred = () => store.setPasswordFocused(false);
 
-  const confirmationPasswordFocus = useCallback(
-    () => store.setConfirmationPassword(''),
-    [store],
-  );
-
-  const clearInputs = useCallback(() => {
-    store.setCurrentPassword('');
-    store.setNewPassword('');
-    store.setConfirmationPassword('');
-  }, [store]);
+  const confirmationPasswordFocus = () => store.setConfirmationPassword('');
 
   let currentPasswordInput = '';
   let newPasswordInput = '';
@@ -107,12 +98,12 @@ export default observer(function () {
 
     try {
       await settingsService.submitSettings(params);
-      clearInputs();
+      store.clearInputs();
       Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
     } catch (err) {
       Alert.alert('Error', err.message);
     }
-  }, [store, currentPasswordInput, newPasswordInput, clearInputs]);
+  }, [store, currentPasswordInput, newPasswordInput]);
 
   /**
    * Set save button on header right
