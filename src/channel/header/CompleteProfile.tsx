@@ -38,9 +38,7 @@ export default function ({ progress }) {
     );
   }, []);
 
-  let onboarding = featuresService.has('onboarding-december-2019')
-    ? 'OnboardingScreenNew'
-    : 'OnboardingScreen';
+  let onboarding = 'OnboardingScreen';
 
   return getProgressBar();
 
