@@ -5,12 +5,11 @@ import SettingsItem from '../SettingsItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import i18n from '../../common/services/i18n.service';
+import authService from '../../auth/AuthService';
 
 export default function () {
   const CS = ThemedStyles.style;
   const navigation = useNavigation();
-
-  const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
 
   const navToEmailScreen = useCallback(() => navigation.push('SettingsEmail'), [
     navigation,
@@ -35,7 +34,7 @@ export default function () {
     navigation,
   ]);
 
-  const keyExtractor = useCallback((item, index) => index.toString());
+  const keyExtractor = (item, index) => index.toString();
 
   const list = [
     {
@@ -57,6 +56,10 @@ export default function () {
     {
       title: i18n.t('settings.accountOptions.5'),
       onPress: navToNSFWScreen,
+    },
+    {
+      title: i18n.t('settings.logout'),
+      onPress: authService.logout,
     },
   ];
 
