@@ -71,7 +71,12 @@ export default class Selector extends Component {
         <Modal isVisible={this.state.show}>
           <View style={[styles.container]}>
             <Text
-              style={[styles.fontColor, theme.fontXXL, styles.marginBottom, theme.centered]}>
+              style={[
+                styles.fontColor,
+                theme.fontXXL,
+                styles.marginBottom,
+                theme.centered,
+              ]}>
               {this.props.title}
             </Text>
             <View
@@ -114,14 +119,10 @@ Selector.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: 'transparent',
-    width: 200,
-    height: 450,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    top: 50,
-    right: 70,
   },
   iconContainer: {
     backgroundColor: 'transparent',
