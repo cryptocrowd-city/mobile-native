@@ -9,8 +9,6 @@ import Selector from '../../common/components/Selector';
 export default function () {
   const CS = ThemedStyles.style;
 
-  const [showLanguages, setShowLanguages] = useState(false);
-
   const [language, setLanguage] = useState(i18n.getCurrentLocale());
   
   let selectorRef = useRef(null);
@@ -22,8 +20,6 @@ export default function () {
     },
     [setLanguage],
   );
-
-  const languages = i18n.getSupportedLocales();
 
   return (
     <View style={[CS.flexContainer, CS.backgroundPrimary, CS.paddingTop4x]}>
