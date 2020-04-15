@@ -89,7 +89,6 @@ export default class Selector extends Component<PropsType> {
             <FlatList
               data={this.props.data}
               renderItem={this.renderItem}
-              keyExtractor={this.props.keyExtractor}
               extraData={this.state.selected}
             />
           </View>
