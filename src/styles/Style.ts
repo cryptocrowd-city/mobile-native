@@ -43,7 +43,11 @@ export interface ThemedStyle {
   backgroundSeparator: any;
   backgroundIcon: any;
   backgroundIconActive: any;
+  borderBackgroundPrimary: any;
+  borderBackgroundSecondary: any;
+  borderBackgroundTertiary: any;
   borderPrimary: any;
+  borderLink: any;
   borderIconActive: any;
   borderIcon: any;
   fontXS: any;
@@ -269,6 +273,18 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
 
   // borders
+  borderBackgroundPrimary: {
+    borderColor: theme.primary_background,
+  },
+  borderBackgroundSecondary: {
+    borderColor: theme.secondary_background,
+  },
+  borderBackgroundTertiary: {
+    borderColor: theme.tertiary_background,
+  },
+  borderLink: {
+    borderColor: theme.link,
+  },
   borderPrimary: {
     borderColor: theme.primary_border,
   },

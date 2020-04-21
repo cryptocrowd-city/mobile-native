@@ -4,6 +4,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from 'react-native-screens/native-stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -50,7 +51,8 @@ import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import LicenseSelector from '../compose/LicenseSelector';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ChannelScreenV2 from '../channel/v2/ChannelScreen';
+
 import {
   RootStackParamList,
   AuthStackParamList,
@@ -152,8 +154,8 @@ const AppStack = function (props) {
       />
       <AppStackNav.Screen
         name="Channel"
-        component={ChannelScreen}
-        options={hideHeader}
+        component={ChannelScreenV2}
+        // options={hideHeader}
       />
 
       <AppStackNav.Screen

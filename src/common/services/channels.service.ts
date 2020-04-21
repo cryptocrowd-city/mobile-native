@@ -1,33 +1,33 @@
 //@ts-nocheck
-import apiService, { isApiForbidden } from "./api.service";
+import apiService, { isApiForbidden } from './api.service';
 
-import UserModel from "../../channel/UserModel";
-import { abort } from "../helpers/abortableFetch";
-import entitiesStorage from "./sql/entities.storage";
+import UserModel from '../../channel/UserModel';
+import entitiesStorage from './sql/entities.storage';
 
 /**
  * Channels services
  */
 class ChannelsService {
-
   /**
    * Get one channel
    * @param {string} guid
    */
-  async get(guid: string, defaultChannel) {
-
-    const urn = `urn:channels:${guid}`;
+  async get(
+    guidOrUsername: string,
+    defaultChannel?: UserModel | object = undefined,
+  ): Promise<UserModel> {
+    const urn = `urn:channels:${guidOrUsername}`;
 
     const local = await entitiesStorage.read(urn);
 
     if (!local && !defaultChannel) {
       // we fetch from the server
-      return await this.fetch(guid);
+      return await this.fetch(guidOrUsername);
     }
 
     const channel = UserModel.checkOrCreate(local || defaultChannel);
 
-    this.fetch(guid, channel); // Update in the background
+    this.fetch(guidOrUsername, channel); // Update in the background
 
     return channel;
   }
@@ -35,14 +35,17 @@ class ChannelsService {
   /**
    * Fetch a channel
    * on success is added or updated
-   * @param {string} guid
+   * @param {string} guidOrUsername
    */
-  async fetch(guid: string, channel: UserModel) {
+  async fetch(guidOrUsername: string, channel: UserModel) {
     try {
-      const response: any = await apiService.get(`api/v1/channel/${guid}`, {});
+      const response: any = await apiService.get(
+        `api/v1/channel/${guidOrUsername}`,
+        {},
+      );
 
       if (response.channel) {
-        const urn = `urn:channels:${guid}`;
+        const urn = `urn:channels:${response.channel.guid}`;
 
         if (channel) {
           channel.update(response.channel);
@@ -61,7 +64,7 @@ class ChannelsService {
       if (isApiForbidden(err)) {
         // remove the permissions to force the UI update\
         if (channel) {
-          channel.setPermissions({permissions:[]});
+          channel.setPermissions({ permissions: [] });
         }
         // remove it from local storage
         this.removeFromCache(channel);
@@ -87,7 +90,7 @@ class ChannelsService {
    */
   removeFromCache(channel) {
     const urn = `urn:channels:${channel.guid}`;
-    entitiesStorage.remove( urn );
+    entitiesStorage.remove(urn);
   }
 }
 
