@@ -253,7 +253,7 @@ exports[`channel header component owner should render correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="Edit your channel settings"
+          accessibilityLabel="Edit Channel"
           accessible={true}
           focusable={true}
           isTVSelectable={true}

@@ -423,6 +423,7 @@ exports[`blog card component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
           "time_created": "1468113204",
           "time_updated": false,
