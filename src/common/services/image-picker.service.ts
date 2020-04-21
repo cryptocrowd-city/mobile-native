@@ -143,6 +143,7 @@ class ImagePickerService {
       if (!err.message.includes('ancelled image selection')) {
         throw err;
       }
+      return false;
     }
   }
 
