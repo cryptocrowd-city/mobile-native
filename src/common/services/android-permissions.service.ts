@@ -106,7 +106,7 @@ class AndroidPermissionsService {
       return granted;
     } catch (err) {
       console.warn(err);
-      throw err;
+      return err;
     }
   }
 
