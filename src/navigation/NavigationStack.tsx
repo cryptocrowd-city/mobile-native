@@ -59,6 +59,7 @@ import {
   AppStackParamList,
   MainSwiperParamList,
 } from './NavigationTypes';
+import featuresService from '../common/services/features.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -154,8 +155,10 @@ const AppStack = function (props) {
       />
       <AppStackNav.Screen
         name="Channel"
-        component={ChannelScreenV2}
-        // options={hideHeader}
+        component={
+          featuresService.has('channel') ? ChannelScreenV2 : ChannelScreen
+        }
+        options={hideHeader}
       />
 
       <AppStackNav.Screen
