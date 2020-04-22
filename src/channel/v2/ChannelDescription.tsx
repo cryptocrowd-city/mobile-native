@@ -56,7 +56,9 @@ const ChannelDescription = (props: PropsType) => {
       numberOfLines={4}
       renderTruncatedFooter={renderTruncatedFooter}
       renderRevealedFooter={renderRevealedFooter}>
-      <Tags navigation={navigation} style={theme.fontL}>
+      <Tags
+        // style={[theme.fontL, theme.colorSecondaryText]} disabled because of the android issue
+        navigation={navigation}>
         {props.channel.briefdescription}
       </Tags>
     </ReadMore>
