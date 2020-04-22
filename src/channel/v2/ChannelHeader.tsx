@@ -73,7 +73,11 @@ const ChannelHeader = observer((props: PropsType) => {
         <Text style={styles.name} numberOfLines={1}>
           {channel.name}
         </Text>
-        <ChannelBadges channel={channel} size={22} iconStyle={theme.colorGreen} />
+        <ChannelBadges
+          channel={channel}
+          size={22}
+          iconStyle={theme.colorGreen}
+        />
       </View>
       <Text
         style={[

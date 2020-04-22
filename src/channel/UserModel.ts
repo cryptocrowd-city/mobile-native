@@ -126,7 +126,7 @@ export default class UserModel extends BaseModel {
       });
       throw err;
     }
-  }
+  };
 
   @action
   async toggleBlock(value: boolean | null = null) {
