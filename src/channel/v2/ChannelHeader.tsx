@@ -20,6 +20,7 @@ import ChannelButtons from './ChannelButtons';
 import ChannelHeaderTabs from './ChannelHeaderTabs';
 import FeedFilter from '../../common/components/FeedFilter';
 import { useSafeArea } from 'react-native-safe-area-context';
+import ChannelBadges from '../badges/ChannelBadges';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -67,9 +68,13 @@ const ChannelHeader = observer((props: PropsType) => {
         style={[styles.backIcon, theme.colorWhite]}
         onPress={props.navigation.goBack}
       />
-      <Text style={styles.name} numberOfLines={1}>
-        {channel.name}
-      </Text>
+      <View
+        style={[theme.rowJustifyCenter, theme.alignCenter, theme.paddingTop8x]}>
+        <Text style={styles.name} numberOfLines={1}>
+          {channel.name}
+        </Text>
+        <ChannelBadges channel={channel} size={22} iconStyle={theme.colorGreen} />
+      </View>
       <Text
         style={[
           styles.username,
@@ -158,8 +163,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     fontWeight: '600',
-    paddingTop: 40,
-    width: '100%',
     textAlign: 'center',
   },
   banner: {

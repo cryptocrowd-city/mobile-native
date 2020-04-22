@@ -98,7 +98,7 @@ const step = 5;
 
 const dynamicStyles = {};
 
-for (let index = 0; index < repetitions; index++) {
+for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
   dynamicStyles[`margin${post}`] = { margin: value };
