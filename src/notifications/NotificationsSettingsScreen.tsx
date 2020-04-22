@@ -38,16 +38,24 @@ export default class NotificationsSettingsScreen extends Component {
         </Text>
         {Object.keys(settings).map(function (key) {
           const toggle = settings[key];
+          const notificationText = i18n.t('notificationSettings.' + key);
+          if (
+            notificationText.includes('missing') &&
+            notificationText.includes('translation')
+          ) {
+            return null;
+          }
           return (
             <View
               style={[styles.row, CS.borderPrimary, CS.borderBottomHair]}
               key={key}>
-              <Text>{i18n.t('notificationSettings.' + key)}</Text>
+              <Text>{notificationText}</Text>
               <Switch
                 value={toggle}
                 onSyncPress={(val) =>
                   notificationsSettings.saveSetting(key, val)
-                }></Switch>
+                }
+              />
             </View>
           );
         })}
