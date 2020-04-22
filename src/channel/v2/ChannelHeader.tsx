@@ -1,7 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Dimensions,
+} from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import type { ChannelStoreType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
@@ -12,10 +19,17 @@ import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
 import ChannelHeaderTabs from './ChannelHeaderTabs';
 import FeedFilter from '../../common/components/FeedFilter';
+import { useSafeArea } from 'react-native-safe-area-context';
 
 type PropsType = {
   store: ChannelStoreType;
+  navigation: any;
 };
+
+const bannerAspectRatio = 3.2;
+const { width } = Dimensions.get('window');
+const bannerHeight = width / bannerAspectRatio;
+const avatarSize = Math.round(0.7 * bannerHeight);
 
 /**
  * Channel Header
@@ -26,9 +40,11 @@ const ChannelHeader = observer((props: PropsType) => {
     return null;
   }
   const channel = props.store.channel;
+  const insets = useSafeArea();
+  const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, cleanTop]}>
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -45,6 +61,12 @@ const ChannelHeader = observer((props: PropsType) => {
           onEditPress={() => console.log('enter edit mode')}
         />
       </ImageBackground>
+      <MIcon
+        size={45}
+        name="chevron-left"
+        style={[styles.backIcon, theme.colorWhite]}
+        onPress={props.navigation.goBack}
+      />
       <Text style={styles.name} numberOfLines={1}>
         {channel.name}
       </Text>
@@ -101,6 +123,15 @@ const ChannelHeader = observer((props: PropsType) => {
 });
 
 const styles = StyleSheet.create({
+  backIcon: {
+    shadowOpacity: 0.4,
+    textShadowRadius: 4,
+    textShadowOffset: { width: 0, height: 0 },
+    elevation: 4,
+    position: 'absolute',
+    top: 5,
+    left: 5,
+  },
   description: {
     height: 120,
     width: '100%',
@@ -132,18 +163,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   banner: {
-    aspectRatio: 3.2,
+    aspectRatio: bannerAspectRatio,
     width: '100%',
   },
   avatarContainer: {
     backgroundColor: '#fff',
     position: 'absolute',
-    bottom: -30,
+    bottom: -avatarSize / 4,
     alignSelf: 'center',
     borderWidth: 3,
     elevation: 20,
-    width: 106,
-    height: 106,
+    width: avatarSize + 6,
+    height: avatarSize + 6,
     borderRadius: 53,
     zIndex: 10000,
     shadowOpacity: 0.5,
@@ -152,8 +183,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: avatarSize,
+    height: avatarSize,
     borderRadius: 50,
   },
 });

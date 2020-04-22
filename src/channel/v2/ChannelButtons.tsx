@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
@@ -22,6 +22,8 @@ type PropsType = {
   channel: UserModel;
   onEditPress: Function;
 };
+
+const isIos = Platform.OS === 'ios';
 
 /**
  * Channel buttons
@@ -73,7 +75,13 @@ const ChannelButtons = observer((props: PropsType) => {
     props.channel.isOwner() && props.channel.can(FLAG_EDIT_CHANNEL);
 
   return (
-    <View style={[theme.rowJustifyEnd, theme.marginTop2x, theme.marginRight2x]}>
+    <View
+      style={[
+        theme.rowJustifyEnd,
+        theme.marginTop,
+        theme.marginRight2x,
+        styles.container,
+      ]}>
       {showEdit ? (
         <Button
           color={ThemedStyles.getColor('secondary_background')}
@@ -124,7 +132,7 @@ const ChannelButtons = observer((props: PropsType) => {
         <Button
           color={ThemedStyles.getColor('green')}
           text={subscriptionText}
-          textStyle={theme.fontL}
+          textStyle={isIos ? theme.fontL : theme.fontM}
           containerStyle={styles.button}
           textColor="white"
           onPress={props.channel.toggleSubscription}
@@ -139,8 +147,11 @@ const ChannelButtons = observer((props: PropsType) => {
 export default ChannelButtons;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 0,
+  },
   button: {
-    padding: 8,
+    padding: Platform.select({ ios: 8, android: 6 }),
     marginLeft: 5,
     shadowOpacity: 0.1,
     shadowRadius: 2,

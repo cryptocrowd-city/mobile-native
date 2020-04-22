@@ -59,7 +59,7 @@ const ChannelScreen = observer((props: PropsType) => {
     <FeedList
       feedStore={store.feedStore}
       renderActivity={renderActivity}
-      header={<ChannelHeader store={store} />}
+      header={<ChannelHeader store={store} navigation={props.navigation} />}
       navigation={props.navigation}
       emptyMessage={emptyMessage}
       style={[theme.backgroundSecondary, theme.flexContainer]}
