@@ -8,6 +8,7 @@ import { observer, inject } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import logService from '../common/services/log.service';
 
 @inject('notificationsSettings')
 @observer
@@ -43,6 +44,7 @@ export default class NotificationsSettingsScreen extends Component {
             notificationText.includes('missing') &&
             notificationText.includes('translation')
           ) {
+            logService.exception('[i18n]', new Error(notificationText));
             return null;
           }
           return (
