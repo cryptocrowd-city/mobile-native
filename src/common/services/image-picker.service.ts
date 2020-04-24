@@ -3,8 +3,6 @@ import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
 
 import androidPermissions from './android-permissions.service';
 
-import i18n from './i18n.service';
-
 export interface CustomImage extends Image {
   uri: string;
   type: string;
@@ -74,7 +72,9 @@ class ImagePickerService {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
     const opt = this.buildOptions(type);
 
@@ -90,7 +90,9 @@ class ImagePickerService {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
     const opt = this.buildOptions(type);
 
@@ -110,7 +112,9 @@ class ImagePickerService {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
     const opt = this.buildOptions(type);
 
