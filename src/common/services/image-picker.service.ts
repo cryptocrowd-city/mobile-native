@@ -107,7 +107,7 @@ class ImagePickerService {
   async show(
     title: string,
     type: mediaType = 'photo',
-    cropperCircleOverlay: boolean | undefined = false,
+    cropperCircleOverlay: boolean = false,
   ): Promise<imagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
