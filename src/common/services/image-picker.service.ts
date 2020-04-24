@@ -160,7 +160,7 @@ class ImagePickerService {
       mediaType: type,
       cropping: true,
       showCropGuidelines: false,
-    }
+    };
   }
 }
 
