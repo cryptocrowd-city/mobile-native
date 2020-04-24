@@ -10,6 +10,9 @@ export interface CustomImage extends Image {
   type: string;
 }
 
+type mediaType = 'photo' | 'video' | 'any';
+type imagePromise = false | Image | Image[];
+
 /**
  * Image picker service
  */
@@ -67,11 +70,9 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchCamera(
-    type: 'photo' | 'video' | 'any' = 'photo',
-  ): Promise<false | Image | Image[]> {
+  async launchCamera(type: mediaType = 'photo'): Promise<imagePromise> {
     // check or ask for permissions
-    const allowed = this.checkPermissions();
+    const allowed = await this.checkPermissions();
 
     if (!allowed) return false;
 
@@ -85,11 +86,9 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchImageLibrary(
-    type: 'photo' | 'video' | 'any' = 'photo',
-  ): Promise<false | Image | Image[]> {
+  async launchImageLibrary(type: mediaType = 'photo'): Promise<imagePromise> {
     // check or ask for permissions
-    const allowed = this.checkPermissions();
+    const allowed = await this.checkPermissions();
 
     if (!allowed) return false;
 
@@ -105,8 +104,9 @@ class ImagePickerService {
    */
   async show(
     title: string,
-    type: 'photo' | 'video' | 'any' = 'photo',
-  ): Promise<false | Image | Image[]> {
+    type: mediaType = 'photo',
+    cropperCircleOverlay: boolean | undefined = false,
+  ): Promise<imagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
@@ -114,13 +114,13 @@ class ImagePickerService {
 
     const opt = this.buildOptions(type);
 
-    opt.cropperCircleOverlay = title === i18n.t('channel.selectAvatar');
+    opt.cropperCircleOverlay = cropperCircleOverlay;
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
 
   async returnCustom(
-    promise: Promise<false | Image | Image[]>,
+    promise: Promise<imagePromise>,
   ): Promise<false | CustomImage | CustomImage[]> {
     try {
       const response = await promise;
@@ -140,7 +140,7 @@ class ImagePickerService {
         );
       }
     } catch (err) {
-      if (!err.message.includes('ancelled image selection')) {
+      if (!err.message.includes('cancelled image selection')) {
         throw err;
       }
       return false;
@@ -151,7 +151,7 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: 'photo' | 'video' | 'any'): Options {
+  buildOptions(type: mediaType): Options {
     return {
       mediaType: type,
       cropping: true,
