@@ -255,7 +255,7 @@ class MindsVideo extends Component {
 
     if (!this.state.sources && this.props.entity) {
       const response = await attachmentService.getVideoSources(
-        this.props.entity.entity_guid,
+        this.props.entity.entity_guid || this.props.entity.guid,
       );
 
       state.sources = response.sources.filter((v) => v.type === 'video/mp4');
