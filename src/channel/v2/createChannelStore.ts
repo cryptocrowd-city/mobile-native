@@ -236,7 +236,8 @@ const createChannelStore = () => {
       if (success && this.channel) {
         const channel = this.channel;
         channel.name = payload.name ?? this.channel.name;
-        channel.briefdescription = payload.briefdescription ?? this.channel.briefdescription;
+        channel.briefdescription =
+          payload.briefdescription ?? this.channel.briefdescription;
         channel.city = payload.city ?? this.channel.city;
         channel.dob = payload.dob ?? this.channel.dob;
         this.loadFromEntity(channel);
