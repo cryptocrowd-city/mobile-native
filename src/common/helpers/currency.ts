@@ -38,7 +38,6 @@ export default function currency(
   }
 }
 
-
 // **
 // Converts really long crypto values into friendly numbers
 // Notes:
