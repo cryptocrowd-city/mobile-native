@@ -110,11 +110,10 @@ const getTypeStringAndIcon = (
       };
       avatar = (
         <Avatar
-          width={36}
-          height={36}
+          size={36}
           rounded={true}
           source={otherUser.avatar}
-          style={[theme.padding, theme.marginRight3x]}
+          containerStyle={[theme.padding, theme.marginRight3x]}
         />
       );
       typeString = (
