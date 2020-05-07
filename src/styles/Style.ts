@@ -43,10 +43,12 @@ export interface ThemedStyle {
   backgroundSeparator: any;
   backgroundIcon: any;
   backgroundIconActive: any;
+  borderTransparent: any;
   borderBackgroundPrimary: any;
   borderBackgroundSecondary: any;
   borderBackgroundTertiary: any;
   borderPrimary: any;
+  borderTab: any;
   borderLink: any;
   borderIconActive: any;
   borderIcon: any;
@@ -63,6 +65,8 @@ export interface ThemedStyle {
   textJustify: any;
   fullWidth: any;
   halfWidth: any;
+  fullHeight: any;
+  halfHeight: any;
   bold: any;
   extraBold: any;
   fontThin: any;
@@ -273,6 +277,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
 
   // borders
+  borderTransparent: {
+    borderColor: 'transparent',
+  },
   borderBackgroundPrimary: {
     borderColor: theme.primary_background,
   },
@@ -287,6 +294,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   borderPrimary: {
     borderColor: theme.primary_border,
+  },
+  borderTab: {
+    borderColor: theme.tab_border,
   },
   borderIconActive: {
     borderColor: theme.icon_active,
@@ -338,6 +348,14 @@ export const buildStyle = (theme): ThemedStyle => ({
 
   halfWidth: {
     width: '50%',
+  },
+
+  fullHeight: {
+    height: '100%',
+  },
+
+  halfHeight: {
+    height: '50%',
   },
   bold: {
     fontWeight: '700',

@@ -1,7 +1,6 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React, { Component, Props } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { ComponentsStyle } from '../../styles/Components';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
@@ -9,10 +8,20 @@ import PhoneValidationComponent from './PhoneValidationComponent';
 import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type propsType = {
+  TFA: any;
+  TFAConfirmed: boolean;
+  inputType: string;
+  optional: boolean;
+  labelStyle: any;
+  info: any;
+  onError: any;
+} & Props;
+
 /**
  * Form input
  */
-export default class Input extends Component {
+export default class Input extends Component<propsType> {
   /**
    * State
    */
@@ -43,8 +52,8 @@ export default class Input extends Component {
    * Confirm date picker
    */
   confirmDatePicker = (date) => {
-    this.props.onChangeText(date.toLocaleDateString());
     this.dismissDatePicker();
+    this.props.onChangeText(date.toLocaleDateString());
   };
 
   /**

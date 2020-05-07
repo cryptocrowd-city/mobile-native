@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
-
 import FastImage from 'react-native-fast-image';
 import type { Source } from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
 
+import ConnectivityAwareSmartImage from '../ConnectivityAwareSmartImage';
 import { CommonStyle } from '../../../styles/Common';
 import type BaseModel from '../../BaseModel';
 
@@ -34,8 +34,7 @@ export default class ExplicitImage extends Component<
     this.props.onError && this.props.onError(event.nativeEvent.error);
   };
 
-  setActive = () => {
-    this.setState({ ready: true });
+  onLoadEnd = () => {
     // bubble event up
     this.props.onLoadEnd && this.props.onLoadEnd();
   };
@@ -70,10 +69,9 @@ export default class ExplicitImage extends Component<
     switch (loadingIndicator) {
       case undefined:
         return (
-          <FastImage
+          <ConnectivityAwareSmartImage
             source={this.props.source}
-            onError={this.imageError}
-            onLoadEnd={this.setActive}
+            onLoadEnd={this.onLoadEnd}
             style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
           />
         );
@@ -83,7 +81,7 @@ export default class ExplicitImage extends Component<
             indicator={ProgressCircle}
             threshold={150}
             source={this.props.source}
-            onLoadEnd={this.setActive}
+            onLoadEnd={this.onLoadEnd}
             onError={this.imageError}
             style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
           />

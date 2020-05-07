@@ -23,6 +23,7 @@ import BoostConsoleScreen from '../boost/BoostConsoleScreen';
 import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreen from '../wire/FabScreen';
+import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import BoostScreen from '../boost/creator/BoostScreen';
 import ContributionsScreen from '../wallet/tokens/ContributionsScreen';
@@ -60,6 +61,7 @@ import {
   MainSwiperParamList,
 } from './NavigationTypes';
 import featuresService from '../common/services/features.service';
+import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -68,7 +70,7 @@ const captureOptions = {
   title: '',
   stackAnimation: 'fade',
   headerShown: false,
-};
+} as NativeStackNavigationOptions;
 
 const activityOptions = ({ route }) => ({
   title: route.params.entity ? route.params.entity.ownerObj.name : '',
@@ -106,13 +108,19 @@ const MainSwiperScreen = () => {
   );
 };
 
-const AppStack = function (props) {
+const AppStack = function () {
+  const EditChannelScreens = EditChannelStack(AppStackNav);
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen
         name="Main"
         component={MainSwiperScreen}
         options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="StackCapture"
+        component={ComposeScreen}
+        options={captureOptions}
       />
       <AppStackNav.Screen
         name="TagSelector"
@@ -160,7 +168,7 @@ const AppStack = function (props) {
         }
         options={hideHeader}
       />
-
+      {EditChannelScreens}
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}
@@ -187,7 +195,9 @@ const AppStack = function (props) {
         component={GroupViewScreen}
         options={hideHeader}
       />
-      <AppStackNav.Screen name="Wallet" component={WalletScreen} />
+      {!featuresService.has('wallet') && (
+        <AppStackNav.Screen name="Wallet" component={WalletScreen} />
+      )}
       <AppStackNav.Screen
         name="BlogList"
         component={BlogsListScreen}
@@ -205,7 +215,7 @@ const AppStack = function (props) {
       />
       <AppStackNav.Screen
         name="WireFab"
-        component={FabScreen}
+        component={featuresService.has('pay') ? FabScreenV2 : FabScreen}
         options={hideHeader}
       />
       <AppStackNav.Screen
@@ -275,7 +285,7 @@ const AppStack = function (props) {
   );
 };
 
-const AuthStack = function (props) {
+const AuthStack = function () {
   return (
     <AuthStackNav.Navigator>
       <AuthStackNav.Screen
