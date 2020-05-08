@@ -39,6 +39,11 @@ export default class OffsetListStore {
   viewed = new Viewed();
 
   /**
+   * Response entities
+   */
+  entities = [];
+
+  /**
    * Constructor
    * @param {string} type 'shallow'|'ref'|null
    * @param {boolean} includeMetadata
