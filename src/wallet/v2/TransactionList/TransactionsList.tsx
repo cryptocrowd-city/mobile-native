@@ -24,7 +24,7 @@ const Empty = () => (
 const TransactionsList = observer(
   ({ navigation, currency, wallet }: propsType) => {
     const { user } = useLegacyStores();
-    const store = useLocalStore(createTransactionsListStore);
+    const store = useLocalStore(createTransactionsListStore, { wallet, user });
     const theme = ThemedStyles.style;
 
     const renderItem = useCallback(
@@ -70,14 +70,9 @@ const TransactionsList = observer(
 
     useEffect(() => {
       if (!store.loaded) {
-        store.initialLoad(wallet, user);
+        store.initialLoad();
       }
     }, [store, wallet, user]);
-
-    if (wallet.ledger.list.loaded && store.loading) {
-      const entities = wallet.ledger.list.entities.slice();
-      store.setList(entities, false);
-    }
 
     return (
       <SectionList

@@ -1,15 +1,15 @@
-import { toFriendlyCryptoVal } from '../../../common/helpers/currency';
 import formatDate from '../../../common/helpers/date';
 import groupBy from '../../../common/helpers/groupBy';
 import type UserStore from '../../../auth/UserStore';
 import UserModel from '../../../channel/UserModel';
 import { SectionListEntities, ExtendedEntity, deltaType } from './types';
 import { WalletStoreType as WalletStore } from '../createWalletStore';
+import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 
-const createTransactionsListStore = () => {
+const createTransactionsListStore = ({ wallet, user }) => {
   const store = {
-    wallet: {} as WalletStore,
-    user: {} as UserStore,
+    wallet: wallet as WalletStore,
+    user: user as UserStore,
     loading: true,
     loaded: false,
     from: {} as Date,
@@ -18,10 +18,7 @@ const createTransactionsListStore = () => {
     refreshing: false,
     runningTotal: 0,
     previousTxAmount: 0,
-    async initialLoad(wallet: WalletStore, user: UserStore) {
-      this.wallet = wallet;
-      this.user = user;
-
+    async initialLoad() {
       this.runningTotal = wallet.balance;
 
       this.wallet.ledger.setMode('transactions');
@@ -43,9 +40,14 @@ const createTransactionsListStore = () => {
     setLoadin(loading) {
       this.loading = loading;
     },
-    loadMore() {
-      this.refreshing = true;
-      this.wallet.ledger.loadList(this.from, this.to);
+    async loadMore() {
+      if (!this.wallet.ledger.list.cantLoadMore()) {
+        const setList = this.setList;
+        const ledger = this.wallet.ledger;
+        this.wallet.ledger.loadListAsync(this.from, this.to, () =>
+          setList(ledger.list.entities.slice(), false),
+        );
+      }
     },
     getUser(entity: ExtendedEntity) {
       const selfUsername = this.user.me.username,
@@ -103,7 +105,7 @@ const createTransactionsListStore = () => {
         entity.delta = this.getDelta(entity.contract, entity.amount);
 
         const isWithdrawal = entity.contract.includes('withdraw');
-        let txAmount = toFriendlyCryptoVal(entity.amount);
+        let txAmount = toFriendlyCrypto(entity.amount);
         if (isWithdrawal) {
           txAmount = Math.abs(txAmount);
         }
