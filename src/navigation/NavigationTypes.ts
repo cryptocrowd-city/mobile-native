@@ -87,6 +87,7 @@ export type AppStackParamList = {
   ReceiverAddressScreen: {
     walletStore: WalletStoreType;
   };
+  LearnMoreScreen: {};
 };
 
 // types for channel edit screens

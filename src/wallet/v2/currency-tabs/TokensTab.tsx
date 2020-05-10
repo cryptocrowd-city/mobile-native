@@ -43,7 +43,7 @@ type StoreType = ReturnType<typeof createStore>;
 /**
  * Tokens tab
  */
-const TokensTab = observer(({ walletStore, navigation, route }: PropsType) => {
+const TokensTab = observer(({ walletStore, navigation }: PropsType) => {
   const store = useLocalStore(createStore);
   const { user } = useLegacyStores();
   const theme = ThemedStyles.style;
@@ -68,7 +68,9 @@ const TokensTab = observer(({ walletStore, navigation, route }: PropsType) => {
   let body;
   switch (store.option) {
     case 'overview':
-      body = <TokensOverview walletStore={walletStore} />;
+      body = (
+        <TokensOverview walletStore={walletStore} navigation={navigation} />
+      );
       break;
     case 'transactions':
       body = (
