@@ -177,7 +177,8 @@ export default observer(
       sessionService.getUser().plus &&
       !store.isEdit &&
       !store.group &&
-      !store.isRemind && featuresService.has('permaweb');
+      !store.isRemind &&
+      featuresService.has('permaweb');
 
     const permawebDesc = store.postToPermaweb
       ? i18n.t('permaweb.description')
