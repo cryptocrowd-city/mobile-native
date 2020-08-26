@@ -100,6 +100,7 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
+  PermawebSelector: {};
   MonetizeSelector: {
     store: ComposeStoreType;
   };

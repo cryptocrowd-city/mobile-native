@@ -58,6 +58,7 @@ export default function ({ props, newsfeed }) {
     extra: null,
     posting: false,
     group: null,
+    postToPermaweb: false,
     onScreenFocused() {
       const params = props.route.params;
       if (
@@ -288,6 +289,7 @@ export default function ({ props, newsfeed }) {
       this.wire_threshold = DEFAULT_MONETIZE;
       this.tags = [];
       this.group = null;
+      this.postToPermaweb = false;
     },
     /**
      * On media
@@ -439,6 +441,14 @@ export default function ({ props, newsfeed }) {
           : this.wire_threshold.min;
       }
 
+      if (this.postToPermaweb) {
+        if (this.paywalled) {
+          showError(i18n.t('permaweb.cannotMonetize'));
+          return false;
+        }
+        newPost.post_to_permaweb = true;
+      }
+
       if (this.title) {
         newPost.title = this.title;
       }
@@ -522,6 +532,9 @@ export default function ({ props, newsfeed }) {
         (featuresService.has('paywall-2020') && this.haveSupportTier) ||
         (this.wire_threshold && this.wire_threshold.min > 0)
       );
+    },
+    togglePostToPermaweb() {
+      this.postToPermaweb = !this.postToPermaweb;
     },
   };
 }
