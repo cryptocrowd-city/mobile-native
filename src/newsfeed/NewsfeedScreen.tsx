@@ -38,6 +38,7 @@ type PropsType = {
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
   portraitBar = React.createRef<any>();
+  contentSizeChangeTimeout: any = 0;
   /**
    * Nav to activity full screen
    */
@@ -91,6 +92,9 @@ class NewsfeedScreen extends Component<PropsType> {
    */
   componentWillUnmount() {
     this.props.messengerList.unlisten();
+    if (this.contentSizeChangeTimeout) {
+      clearTimeout(this.contentSizeChangeTimeout);
+    }
     if (this.disposeTabPress) {
       this.disposeTabPress();
     }
@@ -105,7 +109,7 @@ class NewsfeedScreen extends Component<PropsType> {
   onContentSizeChange = () => {
     if (this.props.newsfeed.feedStore.didPrepend) {
       const listRef = this.props.newsfeed.listRef?.listRef;
-      setTimeout(() => {
+      this.contentSizeChangeTimeout = setTimeout(() => {
         if (listRef && listRef.scrollToOffset) {
           const {
             scrollOffset,
@@ -115,11 +119,10 @@ class NewsfeedScreen extends Component<PropsType> {
             offset: scrollOffset + lastActivityPrepended,
             animated: true,
           });
-          console.log('scrolled', scrollOffset, lastActivityPrepended);
         }
         this.props.newsfeed.feedStore.lastActivityPrepended = 0;
-      }, 300);
-      this.props.newsfeed.feedStore.didPrepend = false;
+        this.props.newsfeed.feedStore.didPrepend = false;
+      }, 1000);
     }
   };
 

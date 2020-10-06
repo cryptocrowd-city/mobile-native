@@ -79,7 +79,6 @@ export default class FeedList<T> extends Component<PropsType> {
 
   onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
     this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
-    console.log('this.props.feedStore.scrollOffset', this.props.feedStore.scrollOffset);
   };
 
   /**

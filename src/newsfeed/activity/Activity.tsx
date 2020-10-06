@@ -141,10 +141,6 @@ export default class Activity extends Component<PropsType> {
     ) {
       this.props.entity._list.lastActivityPrepended =
         e.nativeEvent.layout.height;
-      console.log(
-        'lastActivityPrepended',
-        this.props.entity._list.lastActivityPrepended,
-      );
     }
   };
 
