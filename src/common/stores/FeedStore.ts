@@ -67,6 +67,13 @@ export default class FeedStore {
   scrollOffset = 0;
 
   /**
+   * The last activity prepended
+   */
+  lastActivityPrepended = 0;
+
+  didPrepend = false;
+
+  /**
    * Getter fallback index
    */
   get fallbackIndex() {

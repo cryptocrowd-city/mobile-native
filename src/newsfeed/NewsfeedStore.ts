@@ -77,7 +77,7 @@ class NewsfeedStore<T> {
 
     this.feedStore.prepend(model);
 
-    model.listRef = this.listRef?.listRef;
+    this.feedStore.didPrepend = true;
   }
 
   @action

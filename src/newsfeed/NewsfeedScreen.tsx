@@ -102,6 +102,27 @@ class NewsfeedScreen extends Component<PropsType> {
     }
   };
 
+  onContentSizeChange = () => {
+    if (this.props.newsfeed.feedStore.didPrepend) {
+      const listRef = this.props.newsfeed.listRef?.listRef;
+      setTimeout(() => {
+        if (listRef && listRef.scrollToOffset) {
+          const {
+            scrollOffset,
+            lastActivityPrepended,
+          } = this.props.newsfeed.feedStore;
+          listRef.scrollToOffset({
+            offset: scrollOffset + lastActivityPrepended,
+            animated: true,
+          });
+          console.log('scrolled', scrollOffset, lastActivityPrepended);
+        }
+        this.props.newsfeed.feedStore.lastActivityPrepended = 0;
+      }, 300);
+      this.props.newsfeed.feedStore.didPrepend = false;
+    }
+  };
+
   /**
    * Render
    */
@@ -134,6 +155,7 @@ class NewsfeedScreen extends Component<PropsType> {
         feedStore={newsfeed.feedStore}
         navigation={this.props.navigation}
         onRefresh={this.refreshPortrait}
+        onContentSizeChange={this.onContentSizeChange}
         {...additionalProps}
       />
     );

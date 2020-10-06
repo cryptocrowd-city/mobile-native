@@ -134,16 +134,17 @@ export default class Activity extends Component<PropsType> {
       this.props.onLayout(e);
     }
 
-    if (this.props.entity.listRef && this.props.entity._list) {
-      const offsetToScrollTo =
-        this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
-      setTimeout(() => {
-        this.props.entity.listRef?.scrollToOffset({
-          offset: offsetToScrollTo,
-          animated: true,
-        });
-        this.props.entity.listRef = undefined;
-      }, 1000);
+    if (
+      this.props.entity._list &&
+      this.props.entity._list.didPrepend &&
+      this.props.entity._list.lastActivityPrepended === 0
+    ) {
+      this.props.entity._list.lastActivityPrepended =
+        e.nativeEvent.layout.height;
+      console.log(
+        'lastActivityPrepended',
+        this.props.entity._list.lastActivityPrepended,
+      );
     }
   };
 
