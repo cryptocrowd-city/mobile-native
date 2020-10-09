@@ -1,8 +1,10 @@
-import React, { useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, Platform, Clipboard } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useDimensions } from '@react-native-community/hooks';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFocus } from '@crowdlinker/react-native-pager';
+import { LinearGradient } from 'expo-linear-gradient';
+import { observer, useLocalStore } from 'mobx-react';
 import * as entities from 'entities';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
@@ -19,8 +21,7 @@ import Translate from '../../../common/components/Translate';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-import { useDimensions, useKeyboard } from '@react-native-community/hooks';
-import { observer, useLocalStore } from 'mobx-react';
+
 import BottomOptionPopup, {
   useBottomOption,
   BottomOptionsStoreType,
@@ -28,7 +29,6 @@ import BottomOptionPopup, {
 import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import isIphoneX from '../../../common/helpers/isIphoneX';
 import sessionService from '../../../common/services/session.service';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
@@ -37,15 +37,17 @@ import featuresService from '../../../common/services/features.service';
 import LockV2 from '../../../wire/v2/lock/Lock';
 import Lock from '../../../wire/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
+import { AppStackParamList } from '../../../navigation/NavigationTypes';
+
+type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
+  forceAutoplay?: boolean;
 };
-
-const isIos = Platform.OS === 'ios';
 
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
@@ -66,8 +68,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
       return store.scrollViewHeight + 50 > store.contentHeight;
     },
   }));
-  const keyboard = useKeyboard();
-  const route = useRoute();
+  const route = useRoute<ActivityRoute>();
   const focused = useFocus();
   const bottomStore: BottomOptionsStoreType = useBottomOption();
   const insets = useSafeArea();
@@ -81,11 +82,38 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const showText = !!entity.text || !!entity.title;
-  const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
-    insets.bottom,
-  ]);
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 10 }), [
-    insets.top,
+  const { current: cleanBottom } = useRef({
+    paddingBottom: insets.bottom - 10,
+  });
+  const { current: cleanTop } = useRef({
+    paddingTop: insets.top || 10,
+  });
+  const buttonPopUpHeight = window.height * 0.85;
+
+  // the offset of the keyboard avoiding view with the top of the screen
+  const keyboardAvoidOffset = buttonPopUpHeight - 90 - window.height;
+
+  const onPressComment = useCallback(() => {
+    bottomStore.show(
+      'Comments',
+      '',
+      <CommentList
+        entity={entity}
+        scrollToBottom={true}
+        store={store.comments}
+        navigation={navigation}
+        keyboardVerticalOffset={keyboardAvoidOffset}
+        // onInputFocus={this.onFocus}
+        route={route}
+      />,
+    );
+  }, [
+    bottomStore,
+    entity,
+    keyboardAvoidOffset,
+    navigation,
+    route,
+    store.comments,
   ]);
 
   useEffect(() => {
@@ -95,13 +123,30 @@ const ActivityFullScreen = observer((props: PropsType) => {
       // if we have some video playing we pause it and reset the current video
       videoPlayerService.setCurrent(null);
 
-      if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
-        mediaRef.current.playVideo(true);
+      if (
+        ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
+        mediaRef.current
+      ) {
+        mediaRef.current.playVideo(false);
       }
     } else {
       mediaRef.current?.pauseVideo();
     }
-  }, [focused]);
+  }, [focused, props.forceAutoplay]);
+
+  useEffect(() => {
+    let openComentsTimeOut: NodeJS.Timeout | null = null;
+    if (route && (route.params?.focusedUrn || route.params?.scrollToBottom)) {
+      openComentsTimeOut = setTimeout(() => {
+        onPressComment();
+      }, 100);
+    }
+    return () => {
+      if (openComentsTimeOut) {
+        clearTimeout(openComentsTimeOut);
+      }
+    };
+  }, [onPressComment, route]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
@@ -120,9 +165,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
 
-  const overlay = entity.shouldBeBlured() ? (
-    <ExplicitOverlay entity={entity} />
-  ) : null;
+  const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 
   const copyText = useCallback(() => {
     Clipboard.setString(
@@ -149,25 +192,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     }
   }, [translateRef]);
 
-  const onPressComment = useCallback(() => {
-    bottomStore.show(
-      'Comments',
-      '',
-      <CommentList
-        entity={entity}
-        scrollToBottom={true}
-        store={store.comments}
-        navigation={navigation}
-        keyboardVerticalOffset={isIphoneX ? -225 : -185}
-        // onInputFocus={this.onFocus}
-        route={route}
-      />,
-    );
-  }, [bottomStore, entity, navigation, route, store]);
-
-  let buttonPopUpHeight = window.height * 0.85;
-
-  const LockCmp = featuresService.has('paywalls-2020') ? LockV2 : Lock;
+  const LockCmp = featuresService.has('paywall-2020') ? LockV2 : Lock;
 
   const lock = entity.paywall ? (
     <LockCmp entity={entity} navigation={navigation} />
@@ -223,53 +248,63 @@ const ActivityFullScreen = observer((props: PropsType) => {
             theme.fullWidth,
             styles.content,
           ]}>
-          {lock}
-          {hasMedia && (
-            <MediaView
-              ref={mediaRef}
-              entity={entity}
-              navigation={navigation}
-              autoHeight={true}
-            />
-          )}
-          {overlay}
-          <TouchableOpacity
-            onLongPress={copyText}
-            style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
-            {showText && (
-              <>
-                <ExplicitText
-                  entity={entity}
-                  navigation={navigation}
-                  style={fontStyle}
-                  selectable={false}
-                  noTruncate={true}
-                />
-                <Translate
-                  ref={translateRef}
-                  entity={entity}
-                  style={fontStyle}
-                />
-              </>
-            )}
-          </TouchableOpacity>
-          {hasRemind && (
-            <View
-              style={[
-                styles.remind,
-                theme.margin2x,
-                theme.borderHair,
-                theme.borderBackgroundPrimary,
-              ]}>
-              <Activity
-                ref={remindRef}
-                hideTabs={true}
-                entity={entity.remind_object as ActivityModel}
-                navigation={navigation}
-                isReminded={true}
-                hydrateOnNav={true}
-              />
-            </View>
+          {showNSFW ? (
+            <ExplicitOverlay entity={entity} />
+          ) : (
+            <>
+              {hasMedia ? (
+                <View>
+                  {lock}
+                  <MediaView
+                    ref={mediaRef}
+                    entity={entity}
+                    navigation={navigation}
+                    autoHeight={true}
+                  />
+                </View>
+              ) : (
+                <>{lock}</>
+              )}
+              <TouchableOpacity
+                accessibilityLabel="touchableTextCopy"
+                onLongPress={copyText}
+                style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
+                {showText && (
+                  <>
+                    <ExplicitText
+                      entity={entity}
+                      navigation={navigation}
+                      style={fontStyle}
+                      selectable={false}
+                      noTruncate={true}
+                    />
+                    <Translate
+                      ref={translateRef}
+                      entity={entity}
+                      style={fontStyle}
+                    />
+                  </>
+                )}
+              </TouchableOpacity>
+              {hasRemind && (
+                <View
+                  style={[
+                    styles.remind,
+                    theme.margin2x,
+                    theme.borderHair,
+                    theme.borderBackgroundPrimary,
+                  ]}>
+                  <Activity
+                    ref={remindRef}
+                    hideTabs={true}
+                    entity={entity.remind_object as ActivityModel}
+                    navigation={navigation}
+                    isReminded={true}
+                    hydrateOnNav={true}
+                  />
+                </View>
+              )}
+            </>
           )}
         </ScrollView>
         {!store.contentFit && (
@@ -286,17 +321,11 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
-      {overlay}
       <BottomOptionPopup
         backgroundColor={
           ThemedStyles.theme === 1
             ? theme.backgroundPrimary
             : theme.backgroundSecondary
-        }
-        contentContainerStyle={
-          keyboard.keyboardShown && !isIos
-            ? { paddingBottom: keyboard.keyboardHeight }
-            : undefined
         }
         height={buttonPopUpHeight}
         title={bottomStore.title}

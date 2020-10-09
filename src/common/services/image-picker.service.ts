@@ -1,28 +1,26 @@
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
 
-import androidPermissions from './android-permissions.service';
+import permissions from './permissions.service';
 
 export interface CustomImage extends Image {
   uri: string;
   type: string;
 }
 
+// add missing property of the image type
+interface PatchImage extends Image {
+  sourceURL?: string;
+}
+
 type mediaType = 'photo' | 'video' | 'any';
-type imagePromise = false | Image | Image[];
+type imagePromise = false | PatchImage | PatchImage[];
 export type customImagePromise = false | CustomImage | CustomImage[];
 
 /**
  * Image picker service
  */
 class ImagePickerService {
-  showMessage(message: string): void {
-    setTimeout(() => {
-      // without settimeout alert is not shown
-      Alert.alert(message);
-    }, 100);
-  }
-
   /**
    * Check if we have permission or ask the user
    */
@@ -30,10 +28,14 @@ class ImagePickerService {
     let allowed = true;
 
     if (Platform.OS !== 'ios') {
-      allowed = await androidPermissions.checkReadExternalStorage();
+      allowed = await permissions.checkReadExternalStorage(true);
       if (!allowed) {
-        // request user permission
-        allowed = await androidPermissions.readExternalStorage();
+        allowed = await permissions.readExternalStorage();
+      }
+    } else {
+      allowed = await permissions.checkMediaLibrary(true);
+      if (!allowed) {
+        allowed = await permissions.mediaLibrary();
       }
     }
 
@@ -46,12 +48,10 @@ class ImagePickerService {
   async checkCameraPermissions(): Promise<boolean> {
     let allowed = true;
 
-    if (Platform.OS !== 'ios') {
-      allowed = await androidPermissions.checkCamera();
-      if (!allowed) {
-        // request user permission
-        allowed = await androidPermissions.camera();
-      }
+    allowed = await permissions.checkCamera();
+    if (!allowed) {
+      // request user permission
+      allowed = await permissions.camera();
     }
 
     return allowed;
@@ -71,11 +71,7 @@ class ImagePickerService {
    */
   async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = await this.checkPermissions();
-
-    if (!allowed) {
-      return false;
-    }
+    const allowed = await this.checkCameraPermissions();
 
     const opt = this.buildOptions(type);
 
@@ -91,12 +87,8 @@ class ImagePickerService {
     type: mediaType = 'photo',
     crop = true,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkPermissions();
-
-    if (!allowed) {
-      return false;
-    }
+    // check permissions
+    await this.checkGalleryPermissions();
 
     const opt = this.buildOptions(type, crop);
 
@@ -113,16 +105,10 @@ class ImagePickerService {
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
   ): Promise<customImagePromise> {
-    // check or ask for permissions
-    const allowed = await this.checkPermissions();
+    // check permissions
+    await this.checkGalleryPermissions();
 
-    if (!allowed) {
-      return false;
-    }
-
-    const opt = this.buildOptions(type, true);
-
-    opt.cropperCircleOverlay = cropperCircleOverlay;
+    const opt = this.buildOptions(type, true, cropperCircleOverlay);
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -138,12 +124,28 @@ class ImagePickerService {
       }
 
       if (Array.isArray(response)) {
-        return response.map((image: Image) =>
-          Object.assign({ uri: image.path, type: image.mime }, image),
+        return response.map((image: PatchImage) =>
+          Object.assign(
+            {
+              uri:
+                Platform.OS === 'ios' && image.sourceURL
+                  ? image.sourceURL // fix images not show on ios
+                  : image.path,
+              type: image.mime,
+            },
+            image,
+          ),
         );
       } else {
+        const uri =
+          Platform.OS === 'ios' && response.sourceURL
+            ? response.sourceURL // fix images not show on ios
+            : response.path;
         return Object.assign(
-          { uri: response.path, type: response.mime },
+          {
+            uri,
+            type: response.mime,
+          },
           response,
         );
       }
@@ -159,11 +161,16 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: mediaType, crop: boolean = true): Options {
+  buildOptions(
+    type: mediaType,
+    crop: boolean = true,
+    cropperCircleOverlay: boolean = false,
+  ): Options {
     return {
       mediaType: type,
       cropping: crop && type !== 'video',
       showCropGuidelines: false,
+      cropperCircleOverlay,
     };
   }
 }

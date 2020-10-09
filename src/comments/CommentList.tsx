@@ -1,6 +1,5 @@
 //@ts-nocheck
 import * as React from 'react';
-import type { ViewLayoutEvent } from 'react-native/Libraries/Components/View/ViewPropTypes';
 
 import {
   View,
@@ -11,7 +10,6 @@ import {
   Platform,
   // TextInput,
   TouchableOpacity as TouchableOpacityIos,
-  ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -46,6 +44,7 @@ import {
   FlatList,
   TouchableOpacity as TouchableOpacityAndroid,
 } from 'react-native-gesture-handler';
+import ActivityIndicator from '../common/components/ActivityIndicator';
 
 const TouchableOpacity =
   Platform.OS === 'ios' ? TouchableOpacityIos : TouchableOpacityAndroid;
@@ -186,7 +185,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     }
   };
 
-  onLayout = (e: ViewLayoutEvent) => {
+  onLayout = (e) => {
     if (!this.props.parent) {
       this.height = e.nativeEvent.layout.height || 0;
     }
@@ -263,7 +262,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         if (!this.listRef) return;
         this.listRef.scrollToIndex({
           index: comments.indexOf(item),
-          viewOffset: offset ? -(offset - (this.height - 200)) : -110,
+          viewOffset: offset ? -(offset - (this.height - 600)) : -110,
           viewPosition: 0,
         });
       }, 50);
@@ -479,26 +478,15 @@ class CommentList extends React.Component<PropsType, StateType> {
 
   commentFocusCall = (comment: CommentModel, index: number) => {
     if (comment.focused) {
-      if (this.props.parent) {
+      const onCommentFocus = this.props.parent
+        ? this.props.onCommentFocus
+        : this.onCommentFocus;
+
+      if (onCommentFocus && this.listRef && this.listRef._listRef) {
         setTimeout(() => {
-          if (
-            this.props.onCommentFocus &&
-            this.listRef &&
-            this.listRef._listRef
-          ) {
-            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-            this.props.onCommentFocus(comment, frame.offset + frame.length);
-          }
+          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+          onCommentFocus(comment, frame.offset + frame.length);
         }, 1000);
-      } else {
-        if (this.listRef && this.listRef._listRef) {
-          setTimeout(() => {
-            if (this.listRef && this.listRef._listRef) {
-              const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-              this.onCommentFocus(comment, frame.offset + frame.length);
-            }
-          }, 1000);
-        }
       }
     }
   };
@@ -698,7 +686,7 @@ class CommentList extends React.Component<PropsType, StateType> {
       <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView
           style={CS.flexContainer}
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          behavior={'padding'}
           keyboardVerticalOffset={
             this.props.keyboardVerticalOffset
               ? -this.props.keyboardVerticalOffset

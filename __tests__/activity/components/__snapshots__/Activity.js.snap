@@ -21,8 +21,7 @@ exports[`Activity component renders correctly 1`] = `
 >
   <Pinned
     entity={
-      ActivityModel {
-        "__list": null,
+      Object {
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -42,19 +41,32 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
           "confirmEmail": [Function],
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
           "tags": Array [],
@@ -63,6 +75,7 @@ exports[`Activity component renders correctly 1`] = `
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
@@ -103,8 +116,7 @@ exports[`Activity component renders correctly 1`] = `
   />
   <OwnerBlock
     entity={
-      ActivityModel {
-        "__list": null,
+      Object {
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -124,19 +136,32 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
           "confirmEmail": [Function],
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
           "tags": Array [],
@@ -145,6 +170,7 @@ exports[`Activity component renders correctly 1`] = `
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
@@ -192,8 +218,7 @@ exports[`Activity component renders correctly 1`] = `
       <View>
         <ActivityActionSheet
           entity={
-            ActivityModel {
-              "__list": null,
+            Object {
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -213,19 +238,32 @@ exports[`Activity component renders correctly 1`] = `
               "mature": false,
               "mature_visibility": false,
               "message": "Message",
-              "ownerObj": UserModel {
+              "ownerObj": Object {
                 "__list": null,
+                "allow_comments": true,
+                "blocked": undefined,
                 "confirmEmail": [Function],
+                "email_confirmed": false,
                 "eth_wallet": "",
                 "founder": false,
                 "groupsCount": 0,
                 "guid": "824853017709780997",
+                "impressions": undefined,
                 "isOwner": [Function],
                 "is_admin": false,
                 "last_accepted_tos": 0,
                 "mature": false,
+                "mature_visibility": false,
+                "mode": 0,
+                "nsfw": Array [],
+                "onchain_booster": 0,
+                "pending_subscribe": false,
+                "permissions": Object {},
                 "plus": false,
+                "pro": false,
                 "rewards": false,
+                "subscribed": undefined,
+                "subscribers_count": undefined,
                 "subscriptions_count": 0,
                 "subtype": false,
                 "tags": Array [],
@@ -234,6 +272,7 @@ exports[`Activity component renders correctly 1`] = `
                 "urn": "",
                 "username": "",
                 "verified": false,
+                "wire_rewards": undefined,
               },
               "owner_guid": "824853017709780997",
               "parent_guid": "838106762591510528",
@@ -298,7 +337,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        2 years ago
+        3 years ago
       </Text>
     </View>
   </OwnerBlock>
@@ -312,8 +351,7 @@ exports[`Activity component renders correctly 1`] = `
   >
     <MediaView
       entity={
-        ActivityModel {
-          "__list": null,
+        Object {
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -333,19 +371,32 @@ exports[`Activity component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "message": "Message",
-          "ownerObj": UserModel {
+          "ownerObj": Object {
             "__list": null,
+            "allow_comments": true,
+            "blocked": undefined,
             "confirmEmail": [Function],
+            "email_confirmed": false,
             "eth_wallet": "",
             "founder": false,
             "groupsCount": 0,
             "guid": "824853017709780997",
+            "impressions": undefined,
             "isOwner": [Function],
             "is_admin": false,
             "last_accepted_tos": 0,
             "mature": false,
+            "mature_visibility": false,
+            "mode": 0,
+            "nsfw": Array [],
+            "onchain_booster": 0,
+            "pending_subscribe": false,
+            "permissions": Object {},
             "plus": false,
+            "pro": false,
             "rewards": false,
+            "subscribed": undefined,
+            "subscribers_count": undefined,
             "subscriptions_count": 0,
             "subtype": false,
             "tags": Array [],
@@ -354,6 +405,7 @@ exports[`Activity component renders correctly 1`] = `
             "urn": "",
             "username": "",
             "verified": false,
+            "wire_rewards": undefined,
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
@@ -391,12 +443,7 @@ exports[`Activity component renders correctly 1`] = `
           },
         }
       }
-      navigation={
-        Object {
-          "navigate": [MockFunction],
-          "push": [MockFunction],
-        }
-      }
+      onPress={[Function]}
       style={
         Object {
           "flex": 1,
@@ -414,8 +461,7 @@ exports[`Activity component renders correctly 1`] = `
     >
       <ExplicitText
         entity={
-          ActivityModel {
-            "__list": null,
+          Object {
             "allow_comments": true,
             "attachment_guid": false,
             "blurb": false,
@@ -435,19 +481,32 @@ exports[`Activity component renders correctly 1`] = `
             "mature": false,
             "mature_visibility": false,
             "message": "Message",
-            "ownerObj": UserModel {
+            "ownerObj": Object {
               "__list": null,
+              "allow_comments": true,
+              "blocked": undefined,
               "confirmEmail": [Function],
+              "email_confirmed": false,
               "eth_wallet": "",
               "founder": false,
               "groupsCount": 0,
               "guid": "824853017709780997",
+              "impressions": undefined,
               "isOwner": [Function],
               "is_admin": false,
               "last_accepted_tos": 0,
               "mature": false,
+              "mature_visibility": false,
+              "mode": 0,
+              "nsfw": Array [],
+              "onchain_booster": 0,
+              "pending_subscribe": false,
+              "permissions": Object {},
               "plus": false,
+              "pro": false,
               "rewards": false,
+              "subscribed": undefined,
+              "subscribers_count": undefined,
               "subscriptions_count": 0,
               "subtype": false,
               "tags": Array [],
@@ -456,6 +515,7 @@ exports[`Activity component renders correctly 1`] = `
               "urn": "",
               "username": "",
               "verified": false,
+              "wire_rewards": undefined,
             },
             "owner_guid": "824853017709780997",
             "parent_guid": "838106762591510528",
@@ -515,8 +575,7 @@ exports[`Activity component renders correctly 1`] = `
       />
       <Translate
         entity={
-          ActivityModel {
-            "__list": null,
+          Object {
             "allow_comments": true,
             "attachment_guid": false,
             "blurb": false,
@@ -536,19 +595,32 @@ exports[`Activity component renders correctly 1`] = `
             "mature": false,
             "mature_visibility": false,
             "message": "Message",
-            "ownerObj": UserModel {
+            "ownerObj": Object {
               "__list": null,
+              "allow_comments": true,
+              "blocked": undefined,
               "confirmEmail": [Function],
+              "email_confirmed": false,
               "eth_wallet": "",
               "founder": false,
               "groupsCount": 0,
               "guid": "824853017709780997",
+              "impressions": undefined,
               "isOwner": [Function],
               "is_admin": false,
               "last_accepted_tos": 0,
               "mature": false,
+              "mature_visibility": false,
+              "mode": 0,
+              "nsfw": Array [],
+              "onchain_booster": 0,
+              "pending_subscribe": false,
+              "permissions": Object {},
               "plus": false,
+              "pro": false,
               "rewards": false,
+              "subscribed": undefined,
+              "subscribers_count": undefined,
               "subscriptions_count": 0,
               "subtype": false,
               "tags": Array [],
@@ -557,6 +629,7 @@ exports[`Activity component renders correctly 1`] = `
               "urn": "",
               "username": "",
               "verified": false,
+              "wire_rewards": undefined,
             },
             "owner_guid": "824853017709780997",
             "parent_guid": "838106762591510528",
@@ -606,8 +679,7 @@ exports[`Activity component renders correctly 1`] = `
   </View>
   <Actions
     entity={
-      ActivityModel {
-        "__list": null,
+      Object {
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -627,19 +699,32 @@ exports[`Activity component renders correctly 1`] = `
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
-        "ownerObj": UserModel {
+        "ownerObj": Object {
           "__list": null,
+          "allow_comments": true,
+          "blocked": undefined,
           "confirmEmail": [Function],
+          "email_confirmed": false,
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
           "guid": "824853017709780997",
+          "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,
           "last_accepted_tos": 0,
           "mature": false,
+          "mature_visibility": false,
+          "mode": 0,
+          "nsfw": Array [],
+          "onchain_booster": 0,
+          "pending_subscribe": false,
+          "permissions": Object {},
           "plus": false,
+          "pro": false,
           "rewards": false,
+          "subscribed": undefined,
+          "subscribers_count": undefined,
           "subscriptions_count": 0,
           "subtype": false,
           "tags": Array [],
@@ -648,6 +733,7 @@ exports[`Activity component renders correctly 1`] = `
           "urn": "",
           "username": "",
           "verified": false,
+          "wire_rewards": undefined,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",

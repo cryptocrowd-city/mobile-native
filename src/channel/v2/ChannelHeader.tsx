@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
@@ -32,6 +31,9 @@ import AboutTab from './tabs/AboutTab';
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
+  hideButtons?: boolean;
+  hideDescription?: boolean;
+  hideTabs?: boolean;
 };
 
 const bannerAspectRatio = 2.9;
@@ -106,12 +108,6 @@ const ChannelHeader = observer((props: PropsType) => {
 
   return (
     <View style={[styles.container, cleanTop]}>
-      <MIcon
-        size={30}
-        name="chevron-left"
-        style={[styles.backIcon, theme.colorIcon]}
-        onPress={props.navigation.goBack}
-      />
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -136,12 +132,16 @@ const ChannelHeader = observer((props: PropsType) => {
             </View>
           ) : null}
         </View>
-        <ChannelButtons
-          store={props.store}
-          onEditPress={() =>
-            props.navigation.push('EditChannelScreen', { store: props.store })
-          }
-        />
+        {!props.hideButtons && (
+          <ChannelButtons
+            store={props.store}
+            onEditPress={() =>
+              props.navigation.push('EditChannelScreen', { store: props.store })
+            }
+            notShow={['message', 'wire', 'more']}
+            containerStyle={styles.buttonsMarginContainer}
+          />
+        )}
         {props.store.uploading && props.store.bannerProgress ? (
           <View style={styles.tapOverlayView}>
             <Progress.Pie progress={props.store.bannerProgress} size={36} />
@@ -197,35 +197,38 @@ const ChannelHeader = observer((props: PropsType) => {
             <Text style={[theme.fontL, theme.paddingLeft]}>{channel.city}</Text>
           </View>
         )}
-        <View style={theme.paddingTop2x}>
-          <ChannelDescription channel={channel} />
-        </View>
+        {!props.hideDescription && (
+          <View style={theme.paddingTop2x}>
+            <ChannelDescription channel={channel} />
+          </View>
+        )}
       </View>
-      <TopbarTabbar
-        tabs={tabs}
-        onChange={props.store.setTab}
-        current={props.store.tab}
-      />
-      {screen()}
+      {!props.hideTabs && (
+        <>
+          <TopbarTabbar
+            tabs={tabs}
+            onChange={props.store.setTab}
+            current={props.store.tab}
+          />
+          {screen()}
+        </>
+      )}
     </View>
   );
 });
 
 const styles = StyleSheet.create({
-  backIcon: {
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    shadowOffset: { height: 3, width: 0 },
-    elevation: 4,
+  buttonsMarginContainer: {
+    marginTop: 5,
   },
   bannerSmallButton: {
     position: 'absolute',
-    top: 33,
+    top: 8,
     left: 5,
   },
   avatarSmallButton: {
     position: 'absolute',
-    top: -5,
+    top: -10,
     right: -10,
   },
   description: {

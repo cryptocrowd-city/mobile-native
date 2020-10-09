@@ -29,7 +29,6 @@ import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
-import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
 import featuresService from '../../common/services/features.service';
@@ -161,8 +160,10 @@ export default class Activity extends Component<PropsType> {
             const user = sessionService.getUser();
             if (user.plus && !user.disable_autoplay_videos) {
               const state = NavigationService.getCurrentState();
+
               // sound only for ActivityScreen (Full screen)
-              const sound = state.name === 'Activity';
+              const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
+
               this.autoplayVideoTimeout = setTimeout(() => {
                 if (this.props.entity.is_visible) {
                   this.playVideo(sound);
@@ -207,15 +208,7 @@ export default class Activity extends Component<PropsType> {
   render() {
     const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
-
-    if (blockListService.blocked.has(entity.ownerObj.guid)) {
-      return (
-        <BlockedChannel entity={entity} navigation={this.props.navigation} />
-      );
-    }
-
     const hasText = !!entity.text || !!entity.title;
-
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
@@ -235,29 +228,27 @@ export default class Activity extends Component<PropsType> {
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
         {hasText ? (
-          <ExplicitText
-            entity={entity}
-            navigation={this.props.navigation}
-            style={[styles.message, fontStyle]}
-          />
-        ) : null}
-        {hasText ? (
-          <Translate
-            ref={(r) => (this.translate = r)}
-            entity={entity}
-            style={styles.message}
-          />
+          <>
+            <ExplicitText
+              entity={entity}
+              navigation={this.props.navigation}
+              style={[styles.message, fontStyle]}
+            />
+            <Translate
+              ref={(r) => (this.translate = r)}
+              entity={entity}
+              style={styles.message}
+            />
+          </>
         ) : null}
       </View>
     );
 
-    const show_overlay =
+    const showNSFW =
       entity.shouldBeBlured() &&
       !this.props.parentMature &&
-      !(entity.shouldBeBlured() && this.props.parentMature);
-    const overlay = show_overlay ? (
-      <ExplicitOverlay entity={this.props.entity} />
-    ) : null;
+      !(entity.shouldBeBlured() && this.props.parentMature) &&
+      !entity.mature_visibility;
 
     const borderBottom = this.props.isReminded
       ? []
@@ -278,32 +269,37 @@ export default class Activity extends Component<PropsType> {
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
 
-        <View style={styles.bodyContainer}>
-          {lock}
-          {/* Shows ontop only for rich embed or reminds */}
-          {this.props.entity.perma_url || this.props.entity.remind_object
-            ? message
-            : undefined}
-          {this.showRemind()}
-          <MediaView
-            ref={(o) => {
-              this.mediaView = o;
-            }}
-            entity={entity}
-            navigation={this.props.navigation}
-            style={styles.media}
-            autoHeight={this.props.autoHeight}
-          />
-          {!(this.props.entity.perma_url || this.props.entity.remind_object)
-            ? message
-            : undefined}
-          {overlay}
-        </View>
-        {this.showActions()}
-        {this.renderScheduledMessage()}
-        {this.renderPendingMessage()}
-        {this.renderActivitySpacer()}
-        {/* {this.renderActivityMetrics()} */}
+        {showNSFW ? (
+          <ExplicitOverlay entity={this.props.entity} />
+        ) : (
+          <>
+            <View style={styles.bodyContainer}>
+              {lock}
+              {/* Shows ontop only for rich embed or reminds */}
+              {this.props.entity.perma_url || this.props.entity.remind_object
+                ? message
+                : undefined}
+              {this.showRemind()}
+              <MediaView
+                ref={(o) => {
+                  this.mediaView = o;
+                }}
+                entity={entity}
+                onPress={this.navToActivity}
+                style={styles.media}
+                autoHeight={this.props.autoHeight}
+              />
+              {!(this.props.entity.perma_url || this.props.entity.remind_object)
+                ? message
+                : undefined}
+            </View>
+            {this.showActions()}
+            {this.renderScheduledMessage()}
+            {this.renderPendingMessage()}
+            {this.renderActivitySpacer()}
+            {/* {this.renderActivityMetrics()} */}
+          </>
+        )}
       </TouchableOpacity>
     );
   }
@@ -371,7 +367,7 @@ export default class Activity extends Component<PropsType> {
   /**
    * Play video if exist
    */
-  playVideo(sound = true) {
+  playVideo(sound) {
     this.mediaView?.playVideo(sound);
   }
 

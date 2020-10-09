@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList, Text, Linking } from 'react-native';
 import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
@@ -25,6 +25,10 @@ export default function ({ navigation }) {
 
   const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
 
+  const navToReferrals = useCallback(() => navigation.push('Referrals'), [
+    navigation,
+  ]);
+
   const setDarkMode = () => {
     if (ThemedStyles.theme) {
       ThemedStyles.setLight();
@@ -45,6 +49,10 @@ export default function ({ navigation }) {
     {
       title: i18n.t('settings.billing'),
       onPress: navToBilling,
+    },
+    {
+      title: i18n.t('settings.referrals'),
+      onPress: navToReferrals,
     },
     {
       title: i18n.t('settings.other'),
@@ -74,6 +82,15 @@ export default function ({ navigation }) {
     onPress: setDarkMode,
   };
 
+  const help = {
+    title: i18n.t('help'),
+    onPress: () => Linking.openURL('https://www.minds.com/help'),
+    icon: {
+      name: 'help-circle-outline',
+      type: 'material-community',
+    },
+  };
+
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <View style={innerWrapper}>
@@ -94,7 +111,8 @@ export default function ({ navigation }) {
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
         <MenuItem item={themeChange} i={4} />
-        <MenuItem item={logOut} i={5} />
+        <MenuItem item={help} i={5} />
+        <MenuItem item={logOut} i={6} />
       </View>
     </View>
   );

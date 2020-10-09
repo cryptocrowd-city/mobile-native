@@ -32,13 +32,15 @@ import Colors from '../../styles/Colors';
 import type ActivityModel from 'src/newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import featuresService from '../services/features.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   entity: ActivityModel;
-  navigation: any;
+  navigation?: any;
   style?: ViewStyle | Array<ViewStyle>;
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
+  onPress?: () => void;
 };
 /**
  * Activity
@@ -68,7 +70,11 @@ export default class MediaView extends Component<PropsType> {
         ? this.props.entity.title.substring(0, 200) + '...'
         : this.props.entity.title;
     let type = this.props.entity.custom_type || this.props.entity.subtype;
-    if (!type && this.props.entity.hasThumbnails()) {
+    if (
+      !type &&
+      this.props.entity.hasThumbnails() &&
+      this.props.entity.type !== 'comment'
+    ) {
       type = 'image';
     }
     switch (type) {
@@ -82,7 +88,10 @@ export default class MediaView extends Component<PropsType> {
 
     if (this.props.entity.perma_url) {
       source = {
-        uri: mediaProxyUrl(this.props.entity.thumbnail_src),
+        uri:
+          this.props.entity.type === 'comment'
+            ? this.props.entity.thumbnail_src
+            : mediaProxyUrl(this.props.entity.thumbnail_src),
       };
 
       return (
@@ -277,7 +286,7 @@ export default class MediaView extends Component<PropsType> {
     return (
       <SharedElement id={`${this.props.entity.urn}.image`}>
         <TouchableOpacity
-          onPress={this.navToImage}
+          onPress={this.onImagePress}
           onLongPress={this.imageLongPress}
           style={[styles.imageContainer, { aspectRatio }]}
           activeOpacity={1}
@@ -323,10 +332,8 @@ export default class MediaView extends Component<PropsType> {
     return (
       <View style={styles.licenseContainer}>
         <Icon
-          style={styles.licenseIcon}
-          color="#b0bec5"
+          style={[styles.licenseIcon, ThemedStyles.style.colorIcon]}
           name="public"
-          onPress={[Function]}
           raised={false}
           reverse={false}
           reverseColor="white"
@@ -339,28 +346,16 @@ export default class MediaView extends Component<PropsType> {
   }
 
   /**
-   * Nav to activity full screen
+   * On image press
    */
-  navToActivity = () => {
-    this.props.navigation.push('Activity', { entity: this.props.entity });
-  };
-
-  /**
-   * Nav to full image with zoom
-   */
-  navToImage = () => {
+  onImagePress = () => {
     // if is a rich embed should load link
     if (this.props.entity.perma_url) {
       this.openLink();
     } else {
-      if (!this.props.navigation) {
-        return;
+      if (this.props.onPress) {
+        this.props.onPress();
       }
-      const source = this.props.entity.getThumbSource('xlarge');
-      this.props.navigation.push('ViewImage', {
-        source,
-        entity: this.props.entity,
-      });
     }
   };
 

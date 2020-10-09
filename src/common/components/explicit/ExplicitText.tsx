@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
@@ -16,7 +15,8 @@ import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type PropsType = {
   entity: ActivityModel;
@@ -52,9 +52,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   };
 
   /**
-   * On component will mount
+   * constructor
    */
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     Dimensions.addEventListener('change', this.dimensionChange);
   }
 
@@ -77,16 +78,14 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       entity.title && !entity.perma_url
         ? entities.decodeHTML(entity.title).trim()
         : '';
-    let message = entity.message
-      ? entities.decodeHTML(entity.message).trim()
-      : '';
+    let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 
     if (title === message) {
       message = '';
     }
 
-    let body = null;
-    let moreLess = null;
+    let body: Element | null = null;
+    let moreLess: JSX.Element | null = null;
     let explicitToggle = null;
 
     if (message !== '') {
@@ -125,12 +124,24 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     ) : null;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[styles.container, !!entity.paywall ? styles.paywalled : null]}>
         {titleCmp}
         {body}
         {moreLess}
         {explicitToggle}
+        {!!entity.paywall && this.renderGradient()}
       </View>
+    );
+  }
+
+  renderGradient() {
+    const backgroundColor = ThemedStyles.getColor('secondary_background');
+    const startColor = backgroundColor + '00';
+    const endColor = backgroundColor + 'FF';
+    console.log('LinearGradient', Text);
+    return (
+      <LinearGradient colors={[startColor, endColor]} style={styles.linear} />
     );
   }
 
@@ -184,6 +195,18 @@ export default class ExplicitText extends Component<PropsType, StateType> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  paywalled: {
+    maxHeight: 70,
+    overflow: 'hidden',
+  },
+  linear: {
+    position: 'absolute',
+    height: 50,
+    width: '100%',
+    left: 0,
+    bottom: 0,
+    zIndex: 9999,
   },
   readmore: {
     color: colors.primary,

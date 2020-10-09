@@ -33,8 +33,10 @@ export const Topbar = observer((props: PropsType) => {
   const balance = wallet.balance;
 
   useEffect(() => {
-    wallet.getTokenAccounts();
-  }, [wallet, user]);
+    if (user) {
+      wallet.getTokenAccounts();
+    }
+  });
 
   const avatar = user ? user.getAvatarSource('medium') : { uri: '' };
 
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    width: 100,
+    width: 50,
     justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',

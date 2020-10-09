@@ -40,6 +40,9 @@ export default class UserModel extends BaseModel {
   last_accepted_tos: number = 0;
   subscriptions_count: number = 0;
   carousels?: Array<any>;
+  nsfw: Array<number> = [];
+  banned?: string;
+  is_mature?: boolean;
   dob?: string;
 
   tags: Array<string> = [];
@@ -88,6 +91,8 @@ export default class UserModel extends BaseModel {
   @observable wire_rewards;
 
   @observable pro: boolean = false;
+
+  onchain_booster: number = 0;
 
   /**
    * Confirm email
