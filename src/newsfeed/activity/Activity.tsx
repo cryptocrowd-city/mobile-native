@@ -254,9 +254,6 @@ export default class Activity extends Component<PropsType> {
       ? []
       : [theme.borderBottom8x, theme.borderBackgroundPrimary];
 
-    // TODO: remove before merge - this is for demo purposes.
-    // this.props.entity.permaweb_id = '0x00!!';
-
     return (
       <TouchableOpacity
         delayPressIn={60}
