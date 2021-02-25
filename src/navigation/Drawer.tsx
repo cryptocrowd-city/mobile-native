@@ -190,12 +190,7 @@ export default function Drawer(props) {
 
   return (
     <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <View
-        style={[
-          theme.flexContainer,
-          theme.backgroundPrimary,
-          theme.marginTop11x,
-        ]}>
+      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={navToChannel}>
             <Image source={avatar} style={styles.wrappedAvatar} />
@@ -251,7 +246,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    paddingTop: 23,
+    paddingTop: Platform.select({ ios: 33, android: 23 }),
     paddingLeft: 40,
     paddingBottom: 25,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -271,8 +266,8 @@ const styles = StyleSheet.create({
     borderRadius: 55,
   },
   body: {
-    paddingLeft: 24,
-    paddingTop: 30,
+    paddingLeft: Platform.select({ ios: 35, android: 25 }),
+    paddingTop: Platform.select({ ios: 50, android: 30 }),
   },
   container: {
     borderTopWidth: 0,
