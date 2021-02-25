@@ -16,28 +16,12 @@ import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 
-const ICON_SIZE = 23;
+const ICON_SIZE = 25;
 
 const getOptionsList = (navigation) => {
   const theme = ThemedStyles.style;
 
   let list = [
-    /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
-    {
-      name: i18n.t('moreScreen.helpSupport'),
-      icon: (<Icon name='help-outline' size={ICON_SIZE} style={ theme.colorIcon }/>),
-      onPress: () => {
-        this.props.navigation.push('GroupView', { guid: '100000000000000681'});
-      }
-    },
-    {
-      name: i18n.t('moreScreen.invite'),
-      icon: (<Icon name='share' size={ICON_SIZE} style={ theme.colorIcon }/>),
-      onPress: () => {
-        shareService.invite(this.props.user.me.guid);
-      }
-    },
-    */
     {
       name: i18n.t('newsfeed.title'),
       icon: (
@@ -88,8 +72,8 @@ const getOptionsList = (navigation) => {
       ? {
           name: i18n.t('moreScreen.wallet'),
           icon: (
-            <IconFa
-              name="coins"
+            <IconMC
+              name="wallet"
               size={ICON_SIZE}
               style={[theme.colorIcon, styles.icon]}
             />
@@ -118,8 +102,8 @@ const getOptionsList = (navigation) => {
     {
       name: 'Buy Tokens',
       icon: (
-        <Icon
-          name="shopping-cart"
+        <IconFa
+          name="coins"
           size={ICON_SIZE}
           style={[theme.colorIcon, styles.icon]}
         />
