@@ -135,9 +135,7 @@ const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
-const FullScreenPostStackNav = createSharedElementStackNavigator<
-  ActivityFullScreenParamList
->();
+const FullScreenPostStackNav = createSharedElementStackNavigator<ActivityFullScreenParamList>();
 
 const FullScreenPostStack = () => (
   <FullScreenPostStackNav.Navigator>
