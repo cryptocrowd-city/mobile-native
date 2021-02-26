@@ -16,7 +16,9 @@ type PropsType = {
 /**
  * Payment method selector
  */
-export default class PaymentMethodSelector extends React.PureComponent<PropsType> {
+export default class PaymentMethodSelector extends React.PureComponent<
+  PropsType
+> {
   methods: Array<any>;
 
   /**
