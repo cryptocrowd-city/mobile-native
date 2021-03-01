@@ -9,6 +9,9 @@ export const MINDS_STAGING = false;
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
 
+// comments char limit
+export const CHAR_LIMIT = 1500;
+
 export const DATA_SAVER_THUMB_RES = 96;
 
 export const MINDS_URI = 'https://www.minds.com/';
@@ -31,6 +34,7 @@ export const MINDS_ASSETS_CDN_URI = 'https://cdn-assets.minds.com/';
 // export const MINDS_CDN_URI = 'http://dev.minds.io/';
 
 export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
+
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
 export const MINDS_LINK_URI = 'https://www.minds.com/';
 export const CODE_PUSH_TOKEN = '';

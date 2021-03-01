@@ -5,9 +5,15 @@ import {
 } from 'react-native-screens/native-stack';
 import { useDimensions } from '@react-native-community/hooks';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerNavigationOptions,
+} from '@react-navigation/drawer';
 import { Platform, StatusBar, View } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  StackNavigationOptions,
+} from '@react-navigation/stack';
 import AnalyticsScreen from '../analytics/AnalyticsScreen';
 
 import LoginScreen from '../auth/LoginScreen';
@@ -27,10 +33,6 @@ import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
-import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
-import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
-import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
-import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 // import OnboardingScreen from '../onboarding/OnboardingScreen';
@@ -55,7 +57,6 @@ import OtherScreen from '../settings/screens/OtherScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
-import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
 import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
@@ -63,7 +64,7 @@ import PlusMonetizeScreen from '../compose/monetize/PlusMonetizeScreeen';
 import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScreeen';
 import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
-import PlusScreen from '../common/components/PlusScreen';
+import UpgradeScreen from '../upgrade/UpgradeScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
 import featuresService from '../common/services/features.service';
 import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
@@ -93,7 +94,7 @@ import BillingScreen from '../settings/screens/BillingScreen';
 import RecurringPayments from '../settings/screens/RecurringPayments';
 import ReportedContentScreen from '../report/ReportedContentScreen';
 import AppInfoScreen from '../settings/screens/AppInfoScreen';
-import WalletScreen from '../wallet/v2/WalletScreen';
+import WalletScreen from '../wallet/v3/WalletScreen';
 import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 import VideoBackground from '../common/components/VideoBackground';
@@ -111,6 +112,11 @@ import SuggestedChannelsScreen from '../onboarding/v2/steps/SuggestedChannelsScr
 import SuggestedGroupsScreen from '../onboarding/v2/steps/SuggestedGroupsScreen';
 import BoostChannelScreen from '../boost/v2/BoostChannelScreen';
 import BoostPostScreen from '../boost/v2/BoostPostScreen';
+import BuyTokensScreen from '../buy-tokens/BuyTokensScreen';
+import { topBarButtonTabBarRef } from '../common/components/topbar-tabbar/TopBarButtonTabBar';
+import ExportLegacyWallet from '../settings/screens/ExportLegacyWallet';
+import Withdrawal from '../wallet/v3/currency-tabs/tokens/widthdrawal/Withdrawal';
+import EarnModal from '../earn/EarnModal';
 
 const isIos = Platform.OS === 'ios';
 
@@ -128,21 +134,31 @@ const InternalStackNav = createNativeStackNavigator<InternalStackParamList>();
 // const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 const DrawerNav = createDrawerNavigator<DrawerParamList>();
 
-const FullScreenPostStackNav = createSharedElementStackNavigator<
-  ActivityFullScreenParamList
->();
+const FullScreenPostStackNav = createSharedElementStackNavigator<ActivityFullScreenParamList>();
 
 const FullScreenPostStack = () => (
   <FullScreenPostStackNav.Navigator>
     <FullScreenPostStackNav.Screen
       name="ActivityFullScreen"
       component={ViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="PortraitViewerScreen"
       component={PortraitViewerScreen}
-      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+      options={
+        {
+          stackAnimation: 'none',
+          ...hideHeader,
+          title: '',
+        } as StackNavigationOptions
+      }
     />
     <FullScreenPostStackNav.Screen
       name="ViewImage"
@@ -255,6 +271,7 @@ export const InternalStack = () => {
       <InternalStackNav.Screen name="Onboarding" component={OnboardingScreen} />
 
       <InternalStackNav.Screen name="Settings" component={SettingsScreen} />
+      <InternalStackNav.Screen name="BuyTokens" component={BuyTokensScreen} />
     </InternalStackNav.Navigator>
   );
 };
@@ -269,7 +286,7 @@ const MainScreen = () => {
       gestureHandlerProps={{
         hitSlop: { left: 0, width: dimensions.width },
         //@ts-ignore
-        waitFor: portraitBarRef,
+        waitFor: [portraitBarRef, topBarButtonTabBarRef],
       }}
       drawerType="slide"
       drawerContent={Drawer}
@@ -277,7 +294,7 @@ const MainScreen = () => {
       <DrawerNav.Screen
         name="Tabs"
         component={TabsScreen}
-        options={hideHeader}
+        options={hideHeader as DrawerNavigationOptions}
       />
     </DrawerNav.Navigator>
   );
@@ -296,6 +313,11 @@ const AppStack = function () {
         name="ActivityFullScreenNav"
         component={FullScreenPostStack}
         options={{ stackAnimation: 'none', ...hideHeader }}
+      />
+      <AppStackNav.Screen
+        name="ExportLegacyWallet"
+        component={ExportLegacyWallet}
+        options={{ title: 'Export Wallet' }}
       />
       <AppStackNav.Screen
         name="Capture"
@@ -411,7 +433,7 @@ const AppStack = function () {
           },
         }}
       />
-      <AppStackNav.Screen
+      {/* <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
         options={BlockchainWalletScreen.navigationOptions}
@@ -423,7 +445,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="BlockchainWalletDetails"
         component={BlockchainWalletDetailsScreen}
-      />
+      /> */}
       <AppStackNav.Screen
         name="Report"
         component={ReportScreen}
@@ -439,17 +461,6 @@ const AppStack = function () {
         name="TierScreen"
         component={TierScreen}
         options={{ title: 'Tier Management' }}
-      />
-      <AppStackNav.Screen
-        name="LearnMoreScreen"
-        component={LearnMoreScreen}
-        options={{
-          title: i18n.t('wallet.learnMore.title'),
-          headerStyle: {
-            backgroundColor: ThemedStyles.getColor('primary_background'),
-          },
-          headerHideShadow: true,
-        }}
       />
       <AppStackNav.Screen
         name="ReceiverAddressScreen"
@@ -651,13 +662,13 @@ const RootStack = function (props) {
             component={JoinMembershipScreen}
             options={modalOptions}
           />
-          <RootStackNav.Screen
+          {/* <RootStackNav.Screen
             name="BlockchainWalletModal"
             component={BlockchainWalletModalScreen}
-          />
+          /> */}
           <RootStackNav.Screen
-            name="PlusScreen"
-            component={PlusScreen}
+            name="UpgradeScreen"
+            component={UpgradeScreen}
             options={modalOptions}
           />
           <RootStackNav.Screen
@@ -703,6 +714,16 @@ const RootStack = function (props) {
           <RootStackNav.Screen
             name="BoostPostScreen"
             component={BoostPostScreen}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="WalletWithdrawal"
+            component={Withdrawal}
+            options={modalOptions}
+          />
+          <RootStackNav.Screen
+            name="EarnModal"
+            component={EarnModal}
             options={modalOptions}
           />
         </Fragment>

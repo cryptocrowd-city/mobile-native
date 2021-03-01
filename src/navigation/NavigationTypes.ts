@@ -23,6 +23,8 @@ export type InternalStackParamList = {
   Analytics: {};
   Onboarding: {};
   InitialOnboarding: {};
+  BuyTokens: {};
+  Test: {};
 };
 
 export type RootStackParamList = {
@@ -38,7 +40,7 @@ export type RootStackParamList = {
   };
   BoostChannelScreen: {};
   BoostPostScreen: { entity: ActivityModel };
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };
@@ -49,6 +51,8 @@ export type RootStackParamList = {
   SuggestedChannel: {};
   SuggestedGroups: {};
   PhoneValidation: {};
+  WalletWithdrawal: {};
+  EarnModal: {};
 };
 
 export type AuthStackParamList = {
@@ -74,6 +78,7 @@ export type ActivityFullScreenParamList = {
 };
 
 export type AppStackParamList = {
+  ExportLegacyWallet: {};
   Fab: {
     disableThresholdCheck?: boolean;
     owner: UserModel;
@@ -199,7 +204,6 @@ export type AppStackParamList = {
   ReceiverAddressScreen: {
     walletStore: WalletStoreType;
   };
-  LearnMoreScreen: {};
   BtcAddressScreen: {
     walletStore: WalletStoreType;
   };
@@ -207,7 +211,7 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   TierScreen: {};
-  PlusScreen: {
+  UpgradeScreen: {
     onComplete: Function;
     pro?: boolean;
   };

@@ -1,7 +1,6 @@
 //@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
 export interface ThemedStyle {
-  width90: any;
   flexContainer: any;
   flexContainerCenter: any;
   flexColumn: any;
@@ -19,6 +18,8 @@ export interface ThemedStyle {
   alignCenter: any;
   alignEnd: any;
   alignSelfEnd: any;
+  alignSelfStart: any;
+  alignSelfCenter: any;
   centered: any;
   colorWhite: any;
   colorBlack: any;
@@ -130,6 +131,12 @@ const step = 5;
 
 const dynamicStyles = {};
 
+for (let index = 1; index <= 20; index++) {
+  let value = step * index;
+  dynamicStyles[`width${value}`] = { width: `${value}%` };
+  dynamicStyles[`height${value}`] = { height: `${value}%` };
+}
+
 for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
@@ -176,9 +183,6 @@ export const buildStyle = (theme) => ({
     opacity: 0,
   },
   // containers
-  width90: {
-    width: '90%',
-  },
   flexContainer: {
     flex: 1,
   },
@@ -245,6 +249,12 @@ export const buildStyle = (theme) => ({
   },
   alignSelfEnd: {
     alignSelf: 'flex-end',
+  },
+  alignSelfStart: {
+    alignSelf: 'flex-start',
+  },
+  alignSelfCenter: {
+    alignSelf: 'center',
   },
   centered: {
     alignContent: 'center',
@@ -493,18 +503,22 @@ export const buildStyle = (theme) => ({
   },
   fontThin: {
     fontWeight: '200',
+    fontFamily: 'Roboto-Thin',
   },
   fontHairline: {
     fontWeight: '100',
+    fontFamily: 'Roboto-Thin',
   },
   fontLight: {
     fontWeight: '300',
+    fontFamily: 'Roboto-Light',
   },
   fontNormal: {
     fontWeight: '400',
   },
   fontMedium: {
     fontWeight: '500',
+    fontFamily: 'Roboto-Medium',
   },
   fontSemibold: {
     fontWeight: '600',
